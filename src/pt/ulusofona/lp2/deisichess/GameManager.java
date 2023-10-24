@@ -6,12 +6,6 @@ import java.util.ArrayList;
 
 public class GameManager {
 
-    boolean readLine(String line) {
-
-
-        return true;
-    }
-
     boolean loadGame(File file) {
 
         BufferedReader reader = null;
@@ -26,7 +20,6 @@ public class GameManager {
         }
 
         String line = null;
-
 
         do {
 
