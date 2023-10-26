@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisichess;
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameManager {
 
@@ -20,16 +21,62 @@ public class GameManager {
         } catch (FileNotFoundException e) {
 
             return false;
-        }
+        } //tenta abrir ficheiro
+
+        int boardSize = 0;
+        int numPieces = 0;
+        HashMap<Integer, Pieces> idToPiece = new HashMap<>();
 
         String line = null;
 
         try {
-
             line = reader.readLine();
         } catch (IOException e) {
-
             throw new RuntimeException(e);
+        }
+
+        boardSize = Integer.parseInt(line);
+
+        try {
+            line = reader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        numPieces = Integer.parseInt(line);
+
+        for (int i = 0; i < numPieces; i++) {
+
+            try {
+                line = reader.readLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            String[] parts = line.split(":");
+
+            Pieces piecesTemp = new Pieces(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+            idToPiece.put(Integer.parseInt(parts[0]), piecesTemp);
+
+        }
+
+        for (int i = 0; i < boardSize; i++) {
+
+            try {
+                line = reader.readLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            String[] parts = line.split(":");
+
+            for (int j = 0; j < parts.length; j++) {
+
+                if (idToPiece.containsKey(Integer.parseInt(parts[j]))) {
+
+                    idToPiece.get(Integer.parseInt(parts[j])).setCoords(boardSize - i, j);
+                }
+            }
         }
 
         return true;
