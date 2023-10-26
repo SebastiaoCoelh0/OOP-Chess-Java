@@ -6,7 +6,10 @@ import java.util.ArrayList;
 
 public class GameManager {
 
-    boolean loadGame(File file) {
+    public GameManager() {
+    } //construtor vazio pedido pelos profs.
+
+    public boolean loadGame(File file) {
 
         BufferedReader reader = null;
 
@@ -21,58 +24,50 @@ public class GameManager {
 
         String line = null;
 
-        do {
+        try {
 
-            try {
+            line = reader.readLine();
+        } catch (IOException e) {
 
-                line = reader.readLine();
-            } catch (IOException e) {
-
-                throw new RuntimeException(e);
-            }
-
-            if (line != null) {
-
-
-            }
-        } while (line != null);
+            throw new RuntimeException(e);
+        }
 
         return true;
     }
 
-    int getBoardSize() {
+    public int getBoardSize() {
         return 0;
     }
 
-    boolean move(int x0, int y0, int x1, int y1) {
+    public boolean move(int x0, int y0, int x1, int y1) {
         return true;
     }
 
-    String[] getSquareInfo(int x, int y) {
+    public String[] getSquareInfo(int x, int y) {
         return new String[]{};
     }
 
-    String[] getPieceInfo(int ID) {
+    public String[] getPieceInfo(int ID) {
         return new String[]{};
     }
 
-    String getPieceInfoAsString(int ID) {
+    public String getPieceInfoAsString(int ID) {
         return "";
     }
 
-    int getCurrentTeamID() {
+    public int getCurrentTeamID() {
         return 0;
     }
 
-    boolean gameOver() {
+    public boolean gameOver() {
         return true;
     }
 
-    ArrayList<String> getGameResults() {
+    public ArrayList<String> getGameResults() {
         return new ArrayList<>();
     }
 
-    JPanel getAuthorsPanel() {
+    public JPanel getAuthorsPanel() {
         return new JPanel();
     }
 
