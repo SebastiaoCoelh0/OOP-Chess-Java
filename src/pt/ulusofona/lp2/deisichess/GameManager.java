@@ -10,8 +10,11 @@ public class GameManager {
     public GameManager() {
     } //construtor vazio pedido pelos profs.
 
+    Board board = new Board();
+
     public boolean loadGame(File file) {
 
+        board = new Board(); //reset
         BufferedReader reader = null;
 
         try {
@@ -23,8 +26,7 @@ public class GameManager {
             return false;
         } //tenta abrir ficheiro
 
-        int boardSize = 0;
-        int numPieces = 0;
+
         HashMap<Integer, Pieces> idToPiece = new HashMap<>();
 
         String line = null;
@@ -35,7 +37,7 @@ public class GameManager {
             throw new RuntimeException(e);
         }
 
-        boardSize = Integer.parseInt(line);
+        board.setSize(Integer.parseInt(line));
 
         try {
             line = reader.readLine();
@@ -43,9 +45,9 @@ public class GameManager {
             throw new RuntimeException(e);
         }
 
-        numPieces = Integer.parseInt(line);
+        board.setNumPieces(Integer.parseInt(line));
 
-        for (int i = 0; i < numPieces; i++) {
+        for (int i = 0; i < board.getNumPieces(); i++) {
 
             try {
                 line = reader.readLine();
@@ -60,7 +62,7 @@ public class GameManager {
 
         }
 
-        for (int i = 0; i < boardSize; i++) {
+        for (int i = 0; i < board.getSize(); i++) {
 
             try {
                 line = reader.readLine();
@@ -74,10 +76,11 @@ public class GameManager {
 
                 if (idToPiece.containsKey(Integer.parseInt(parts[j]))) {
 
-                    idToPiece.get(Integer.parseInt(parts[j])).setCoords(boardSize - i, j);
+                    idToPiece.get(Integer.parseInt(parts[j])).setCoords(board.getSize() - i, j);
                 }
             }
         }
+        board.setIdToPiece(idToPiece);
 
         return true;
     }
