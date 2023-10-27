@@ -9,6 +9,9 @@ public class Pieces {
     int team;
     HashMap<Integer, Integer> coords = new HashMap<>();
 
+    public Pieces() {
+    }
+
     public Pieces(int nrId, int pieceType, int team) {
         this.nrId = nrId;
         this.pieceType = pieceType;

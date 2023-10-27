@@ -62,7 +62,7 @@ public class GameManager {
 
         }
 
-        for (int i = 0; i < board.getSize(); i++) {
+        for (int lineBoard = 0; lineBoard < board.getSize(); lineBoard++) {
 
             try {
                 line = reader.readLine();
@@ -72,11 +72,19 @@ public class GameManager {
 
             String[] parts = line.split(":");
 
-            for (int j = 0; j < parts.length; j++) {
+            for (int columnBoard = 0; columnBoard < parts.length; columnBoard++) {
 
-                if (idToPiece.containsKey(Integer.parseInt(parts[j]))) {
+                HashMap<Integer, Integer> coordsTemp = new HashMap<>();
+                coordsTemp.put(board.getSize() - lineBoard, columnBoard);
 
-                    idToPiece.get(Integer.parseInt(parts[j])).setCoords(board.getSize() - i, j);
+                if (idToPiece.containsKey(Integer.parseInt(parts[columnBoard]))) {
+
+                    board.setCoordsToId((HashMap<HashMap<Integer, Integer>, Integer>) new HashMap<>().put(coordsTemp, Integer.parseInt(parts[columnBoard])));
+                    idToPiece.get(Integer.parseInt(parts[columnBoard])).setCoords(board.getSize() - lineBoard, columnBoard);
+
+                } else {
+
+                    board.setCoordsToId((HashMap<HashMap<Integer, Integer>, Integer>) new HashMap<>().put(coordsTemp, Integer.parseInt(parts[columnBoard])));
                 }
             }
         }
@@ -86,14 +94,26 @@ public class GameManager {
     }
 
     public int getBoardSize() {
-        return 0;
+        return board.getSize();
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
+
+        if (x0 < 0 || x1 < 0 || y0 < 0 || y1 < 0 || x0 > getBoardSize() || x1 > getBoardSize() || y0 > getBoardSize() || y1 > getBoardSize()) {
+
+            return false;
+        }
+
+        HashMap<Integer, Integer> coordsStart = new HashMap<>();
+        HashMap<Integer, Integer> coordsEnd = new HashMap<>();
+        //TODO
+
         return true;
     }
 
     public String[] getSquareInfo(int x, int y) {
+
+        HashMap<Integer, Integer> coodrs = new HashMap<>();
         return new String[]{};
     }
 
