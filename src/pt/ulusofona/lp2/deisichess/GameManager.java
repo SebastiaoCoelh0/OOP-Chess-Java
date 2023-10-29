@@ -149,12 +149,15 @@ public class GameManager {
 
         pieceInfo[5] = String.valueOf(entry.getKey());
         pieceInfo[6] = String.valueOf(entry.getValue());
-        
+
         return pieceInfo;
     }
 
     public String getPieceInfoAsString(int ID) {
-        return "";
+
+        String[] pieceInfo = getPieceInfo(ID);
+
+        return pieceInfo[0] + "|" + pieceInfo[1] + "|" + pieceInfo[2] + "|" + pieceInfo[3] + "@(" + pieceInfo[5] + "," + pieceInfo[6] + ")";
     }
 
     public int getCurrentTeamID() {
