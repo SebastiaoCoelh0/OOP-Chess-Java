@@ -147,8 +147,8 @@ public class GameManager {
         Iterator<Map.Entry<Integer, Integer>> iterator = board.getIdToPiece().get(ID).getCoords().entrySet().iterator();
         Map.Entry<Integer, Integer> entry = iterator.next();
 
-        pieceInfo[5] = String.valueOf(entry.getKey());
-        pieceInfo[6] = String.valueOf(entry.getValue());
+        pieceInfo[5] = String.valueOf(entry.getValue());
+        pieceInfo[6] = String.valueOf(entry.getKey());
 
         return pieceInfo;
     }
