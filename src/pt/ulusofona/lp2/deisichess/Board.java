@@ -8,7 +8,7 @@ public class Board {
     int numPieces;
     HashMap<HashMap<Integer, Integer>, Integer> coordsToId;
     HashMap<Integer, Piece> idToPiece; //id,Pieces
-    int team = 1; //1 white, 2 black
+    int team = 0;
 
     public Board() {
     }
@@ -39,7 +39,6 @@ public class Board {
     }
 
     public void setNumPieces(int numPieces) {
-
         this.numPieces = numPieces;
     }
 
@@ -48,7 +47,6 @@ public class Board {
     }
 
     public void setIdToPiece(HashMap<Integer, Piece> idToPiece) {
-
         this.idToPiece = idToPiece;
     }
 }

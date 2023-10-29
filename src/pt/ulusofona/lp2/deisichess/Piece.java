@@ -9,7 +9,7 @@ public class Piece {
     int pieceType;
     int team;
     HashMap<Integer, Integer> coords = new HashMap<>();
-    boolean inGame = true;
+    String inGame = "em jogo"; //ou capturado
 
     public Piece() {
     }
@@ -22,12 +22,11 @@ public class Piece {
         this.team = team;
     }
 
-    public boolean getInGame() {
+    public String getInGame() {
         return inGame;
     }
 
     public void setCoords(int x, int y) {
-
         this.coords.put(x, y);
     }
 
