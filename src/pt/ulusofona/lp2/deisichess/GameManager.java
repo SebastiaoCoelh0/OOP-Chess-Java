@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class GameManager {
 
@@ -24,10 +26,9 @@ public class GameManager {
         } catch (FileNotFoundException e) {
 
             return false;
-        } //tenta abrir ficheiro
+        } //trys to open file
 
-
-        HashMap<Integer, Pieces> idToPiece = new HashMap<>();
+        HashMap<Integer, Piece> idToPiece = new HashMap<>();
 
         String line = null;
 
@@ -57,7 +58,7 @@ public class GameManager {
 
             String[] parts = line.split(":");
 
-            Pieces piecesTemp = new Pieces(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+            Piece piecesTemp = new Piece(Integer.parseInt(parts[0]), parts[3], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
             idToPiece.put(Integer.parseInt(parts[0]), piecesTemp);
 
         }
@@ -113,12 +114,43 @@ public class GameManager {
 
     public String[] getSquareInfo(int x, int y) {
 
-        HashMap<Integer, Integer> coodrs = new HashMap<>();
-        return new String[]{};
+        String[] squareInfo = new String[5];
+        HashMap<Integer, Integer> coodrs = new HashMap<Integer, Integer>(x, y);
+
+        squareInfo[0] = String.valueOf(board.getCoordsToId().get(coodrs));
+
+        Piece tempPiece = board.getIdToPiece().get(Integer.parseInt(squareInfo[0]));
+
+        squareInfo[1] = String.valueOf(tempPiece.getPieceType());
+        squareInfo[2] = String.valueOf(tempPiece.getTeam());
+        squareInfo[3] = tempPiece.getName();
+
+        if (tempPiece.getTeam() == 0) {
+            squareInfo[4] = "team1.png";
+        } else {
+            squareInfo[4] = "team2.png";
+        }
+
+        return squareInfo;
     }
 
     public String[] getPieceInfo(int ID) {
-        return new String[]{};
+
+        String[] pieceInfo = new String[7];
+
+        pieceInfo[0] = String.valueOf(ID);
+        pieceInfo[1] = String.valueOf(board.getIdToPiece().get(ID).getPieceType());
+        pieceInfo[2] = String.valueOf(board.getIdToPiece().get(ID).getTeam());
+        pieceInfo[3] = String.valueOf(board.getIdToPiece().get(ID).getName());
+        pieceInfo[4] = String.valueOf(board.getIdToPiece().get(ID).getInGame());
+
+        Iterator<Map.Entry<Integer, Integer>> iterator = board.getIdToPiece().get(ID).getCoords().entrySet().iterator();
+        Map.Entry<Integer, Integer> entry = iterator.next();
+
+        pieceInfo[5] = String.valueOf(entry.getKey());
+        pieceInfo[6] = String.valueOf(entry.getValue());
+        
+        return pieceInfo;
     }
 
     public String getPieceInfoAsString(int ID) {
@@ -126,7 +158,8 @@ public class GameManager {
     }
 
     public int getCurrentTeamID() {
-        return 0;
+
+        return board.getTeam();
     }
 
     public boolean gameOver() {
