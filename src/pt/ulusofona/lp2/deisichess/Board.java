@@ -10,6 +10,7 @@ public class Board {
     HashMap<Integer, Piece> idToPiece = new HashMap<Integer, Piece>(); //id,Pieces
     int team = 0;
     int numPlays = 0;
+    int playsWhitoutCaptures = 0;
     int capturesBlack = 0;
     int capturesWhite = 0;
     int notValidPlaysBlack = 0;
@@ -19,6 +20,11 @@ public class Board {
 
     public Board() {
     }
+
+    public int getPlaysWhitoutCaptures() {
+        return playsWhitoutCaptures;
+    }
+
 
     public int getNumPlays() {
         return numPlays;
@@ -87,6 +93,10 @@ public class Board {
 
     public void addMissedAttemptsWhite() {
         missedAttemptsWhite++;
+    }
+
+    public void addPlaysWithoutCaptures() {
+        playsWhitoutCaptures++;
     }
 
     public int getCapturesBlack() {

@@ -197,8 +197,8 @@ public class GameManager {
             }
         }
 
-        if (piecesTeamBlack == 0 || piecesTeamWhite == 0 || (piecesTeamWhite == 1 && piecesTeamBlack == 1) || (piecesTeamWhite + piecesTeamBlack == board.getNumPieces() && board.getNumPlays() >= 10)) {
-
+        if ((piecesTeamBlack == 0 || piecesTeamWhite == 0) || (piecesTeamWhite == 1 && piecesTeamBlack == 1) ||
+                ((board.getCapturesWhite() != 0 || board.capturesBlack != 0) && board.getPlaysWhitoutCaptures() == 10)) {
 
             return true;
         }
@@ -226,7 +226,7 @@ public class GameManager {
             }
         }
 
-        if ((piecesTeamBlack == 0 && piecesTeamWhite == 0) || (piecesTeamWhite==1&&piecesTeamBlack==1)) {
+        if ((piecesTeamBlack == 0 && piecesTeamWhite == 0) || (piecesTeamWhite == 1 && piecesTeamBlack == 1)) {
 
             results.add("RESULTADO: EMPATE");
 
