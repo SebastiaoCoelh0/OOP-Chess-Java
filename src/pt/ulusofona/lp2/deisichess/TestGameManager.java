@@ -12,7 +12,8 @@ public class TestGameManager {
     public void test4x4() {
 
         GameManager gameManager = new GameManager();
-        gameManager.loadGame(new File("test-files/4x4.txt"));
+
+        Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
 
         Assertions.assertEquals("[1, 0, 0, Chefe, em jogo, 1, 0]", Arrays.toString(gameManager.getPieceInfo(1)));
         Assertions.assertEquals("[2, 0, 0, Selvagem, em jogo, 3, 0]", Arrays.toString(gameManager.getPieceInfo(2)));

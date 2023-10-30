@@ -10,6 +10,12 @@ public class Board {
     HashMap<Integer, Piece> idToPiece = new HashMap<Integer, Piece>(); //id,Pieces
     int team = 0;
     int numPlays = 0;
+    int capturesBlack = 0;
+    int capturesWhite = 0;
+    int notValidPlaysBlack = 0;
+    int notValidPlaysWhite = 0;
+    int missedAttemptsBlack = 0;
+    int missedAttemptsWhite = 0;
 
     public Board() {
     }
@@ -57,5 +63,53 @@ public class Board {
 
     public void setIdToPiece(HashMap<Integer, Piece> idToPiece) {
         this.idToPiece = idToPiece;
+    }
+
+    public void addCapturesBlack() {
+        capturesBlack++;
+    }
+
+    public void addCapturesWhite() {
+        capturesWhite++;
+    }
+
+    public void addNotValidPlaysBlack() {
+        notValidPlaysBlack++;
+    }
+
+    public void addNotValidPLaysWhite() {
+        notValidPlaysWhite++;
+    }
+
+    public void addMissedAttemptsBlack() {
+        missedAttemptsBlack++;
+    }
+
+    public void addMissedAttemptsWhite() {
+        missedAttemptsWhite++;
+    }
+
+    public int getCapturesBlack() {
+        return capturesBlack;
+    }
+
+    public int getCapturesWhite() {
+        return capturesWhite;
+    }
+
+    public int getNotValidPlaysBlack() {
+        return notValidPlaysBlack;
+    }
+
+    public int getNotValidPlaysWhite() {
+        return notValidPlaysWhite;
+    }
+
+    public int getMissedAttemptsBlack() {
+        return missedAttemptsBlack;
+    }
+
+    public int getMissedAttemptsWhite() {
+        return missedAttemptsWhite;
     }
 }

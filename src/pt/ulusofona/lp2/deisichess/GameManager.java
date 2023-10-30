@@ -97,7 +97,7 @@ public class GameManager {
         return board.getSize();
     }
 
-    public boolean move(int x0, int y0, int x1, int y1) {
+    public boolean move(int x0, int y0, int x1, int y1) { //TODO
 
         if (x0 < 0 || x1 < 0 || y0 < 0 || y1 < 0 || x0 > getBoardSize() || x1 > getBoardSize() || y0 > getBoardSize() || y1 > getBoardSize()) {
 
@@ -130,7 +130,7 @@ public class GameManager {
 
         if (board.getCoordsToId(coodrs) == null || board.getIdToPiece(Integer.parseInt(squareInfo[0])) == null) {
 
-            return null;
+            return new String[]{};
         }
 
         Piece tempPiece = board.getIdToPiece(Integer.parseInt(squareInfo[0]));
@@ -181,31 +181,84 @@ public class GameManager {
 
     public boolean gameOver() {
 
-        int piecesTeam0 = 0;
-        int piecesTeam1 = 0;
+        int piecesTeamBlack = 0;
+        int piecesTeamWhite = 0;
 
         for (int pieceId = 1; pieceId < board.getNumPieces(); pieceId++) {
-            
+
             if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
                 if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
 
-                    piecesTeam0++;
+                    piecesTeamBlack++;
                 } else {
-                    piecesTeam1++;
+                    piecesTeamWhite++;
                 }
             }
         }
 
-        return piecesTeam0 == 0 || piecesTeam1 == 0 || (piecesTeam1 == 1 && piecesTeam0 == 1) || (piecesTeam1 + piecesTeam0 == board.getNumPieces() && board.getNumPlays() >= 10);
+        if (piecesTeamBlack == 0 || piecesTeamWhite == 0 || (piecesTeamWhite == 1 && piecesTeamBlack == 1) || (piecesTeamWhite + piecesTeamBlack == board.getNumPieces() && board.getNumPlays() >= 10)) {
+
+
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<String> getGameResults() {
-        return new ArrayList<>();
+
+        ArrayList<String> results = new ArrayList<>();
+        results.add("JOGO DE CRAZY CHESS");
+
+        int piecesTeamBlack = 0;
+        int piecesTeamWhite = 0;
+
+        for (int pieceId = 1; pieceId < board.getNumPieces(); pieceId++) {
+
+            if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
+
+                if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
+
+                    piecesTeamBlack++;
+                } else {
+                    piecesTeamWhite++;
+                }
+            }
+        }
+
+        if (piecesTeamBlack == 0) {
+
+            results.add("RESULTADO: VENCERAM AS BRANCAS");
+
+        } else if (piecesTeamWhite == 0) {
+
+            results.add("RESULTADO: VENCERAM AS PRETAS");
+
+        } else {
+
+            results.add("RESULTADO: EMPATE");
+        }
+
+        results.add("---");
+
+        results.add("Equipa das Pretas");
+        results.add(String.valueOf(board.getCapturesBlack()));
+        results.add(String.valueOf(board.getNotValidPlaysBlack()));
+        results.add(String.valueOf(board.getMissedAttemptsBlack()));
+
+        results.add("Equipa das Brancas");
+        results.add(String.valueOf(board.getCapturesWhite()));
+        results.add(String.valueOf(board.getNotValidPlaysWhite()));
+        results.add(String.valueOf(board.getMissedAttemptsWhite()));
+
+        return results;
     }
 
-    public JPanel getAuthorsPanel() {
-        return new JPanel();
+    public JPanel getAuthorsPanel() {//TODO
+
+        JPanel jpanel = new JPanel();
+
+        return jpanel;
     }
 
 }
