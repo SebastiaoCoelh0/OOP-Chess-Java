@@ -12,9 +12,9 @@ public class GameManager {
     public GameManager() {
     } //construtor vazio pedido pelos profs.
 
-    Board board = new Board();
+    static Board board = new Board();
 
-    public boolean loadGame(File file) {
+    public static boolean loadGame(File file) {
 
         board = new Board(); //reset
         BufferedReader reader = null;
@@ -81,7 +81,7 @@ public class GameManager {
                 if (idToPiece.containsKey(Integer.parseInt(parts[columnBoard]))) {
 
                     board.setCoordsToId((HashMap<HashMap<Integer, Integer>, Integer>) new HashMap<>().put(coordsTemp, Integer.parseInt(parts[columnBoard])));
-                    idToPiece.get(Integer.parseInt(parts[columnBoard])).setCoords(columnBoard,lineBoard);
+                    idToPiece.get(Integer.parseInt(parts[columnBoard])).setCoords(columnBoard, lineBoard);
 
                 } else {
 
@@ -111,7 +111,7 @@ public class GameManager {
         coordsStart.put(x0, y0);
         coordsEnd.put(x1, y1);
 
-        String id = getSquareInfo(x0, y0)[0];
+        String id = getSquareInfo(x0, y0)[0]; //TODO out of bounds for lentgth 0
 
         String[] info = getPieceInfo(Integer.parseInt(id));
 
@@ -119,13 +119,14 @@ public class GameManager {
         return true;
     }
 
-    public String[] getSquareInfo(int x, int y) {
+    public static String[] getSquareInfo(int x, int y) {
 
         String[] squareInfo = new String[5];
         HashMap<Integer, Integer> coodrs = new HashMap<Integer, Integer>();
         coodrs.put(x, y);
 
-        if (board.getCoordsToId() == null) {
+        if (board.getCoordsToId().get(coodrs) == null) {
+            System.out.println("ops");
             return new String[]{};
         }
 
@@ -146,7 +147,7 @@ public class GameManager {
         return squareInfo;
     }
 
-    public String[] getPieceInfo(int ID) {
+    public static String[] getPieceInfo(int ID) {
 
         String[] pieceInfo = new String[7];
 
@@ -169,7 +170,7 @@ public class GameManager {
 
         String[] pieceInfo = getPieceInfo(ID);
 
-        return pieceInfo[0] + "|" + pieceInfo[1] + "|" + pieceInfo[2] + "|" + pieceInfo[3] + "@(" + pieceInfo[5] + "," + pieceInfo[6] + ")";
+        return pieceInfo[0] + " | " + pieceInfo[1] + " | " + pieceInfo[2] + " | " + pieceInfo[3] + " @(" + pieceInfo[5] + ", " + pieceInfo[6] + ")";
     }
 
     public int getCurrentTeamID() {
