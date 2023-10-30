@@ -9,8 +9,17 @@ public class Board {
     HashMap<HashMap<Integer, Integer>, Integer> coordsToId;
     HashMap<Integer, Piece> idToPiece; //id,Pieces
     int team = 0;
+    int numPlays = 0;
 
     public Board() {
+    }
+
+    public int getNumPlays() {
+        return numPlays;
+    }
+
+    public void addPlay() {
+        numPlays++;
     }
 
     public int getTeam() {

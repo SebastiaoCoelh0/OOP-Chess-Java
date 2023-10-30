@@ -2,10 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class GameManager {
 
@@ -111,11 +108,13 @@ public class GameManager {
         coordsStart.put(x0, y0);
         coordsEnd.put(x1, y1);
 
-        String id = getSquareInfo(x0, y0)[0]; //TODO out of bounds for lentgth 0
+        if (!board.getCoordsToId().containsKey(coordsStart)) {
+            return false;
+        }
 
-        String[] info = getPieceInfo(Integer.parseInt(id));
+        //String[] info = getPieceInfo(Integer.parseInt());
 
-
+        board.addPlay();
         return true;
     }
 
@@ -126,8 +125,8 @@ public class GameManager {
         coodrs.put(x, y);
 
         if (board.getCoordsToId().get(coodrs) == null) {
-            System.out.println("ops");
-            return new String[]{};
+
+            return null;
         }
 
         squareInfo[0] = String.valueOf(board.getCoordsToId().get(coodrs));
@@ -179,7 +178,24 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        return true;
+
+        int piecesTeam0 = 0;
+        int piecesTeam1 = 0;
+
+        for (int pieceId = 0; pieceId < board.getNumPieces(); pieceId++) {
+
+            if (Objects.equals(board.getIdToPiece().get(pieceId).inGame, "em jogo")) {
+
+                if (Objects.equals(board.getIdToPiece().get(pieceId).getTeam(), 0)) {
+
+                    piecesTeam0++;
+                } else {
+                    piecesTeam1++;
+                }
+            }
+        }
+
+        return piecesTeam0 == 0 || piecesTeam1 == 0 || (piecesTeam1 == 1 && piecesTeam0 == 1) || (piecesTeam1 + piecesTeam0 == board.getNumPieces() && board.getNumPlays() >= 10);
     }
 
     public ArrayList<String> getGameResults() {
