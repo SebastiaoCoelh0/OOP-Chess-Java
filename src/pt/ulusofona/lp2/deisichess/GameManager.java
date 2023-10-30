@@ -107,7 +107,14 @@ public class GameManager {
 
         HashMap<Integer, Integer> coordsStart = new HashMap<>();
         HashMap<Integer, Integer> coordsEnd = new HashMap<>();
-        //TODO
+
+        coordsStart.put(x0, y0);
+        coordsEnd.put(x1, y1);
+
+        String id = getSquareInfo(x0, y0)[0];
+
+        String[] info = getPieceInfo(Integer.parseInt(id));
+
 
         return true;
     }
@@ -115,7 +122,12 @@ public class GameManager {
     public String[] getSquareInfo(int x, int y) {
 
         String[] squareInfo = new String[5];
-        HashMap<Integer, Integer> coodrs = new HashMap<Integer, Integer>(x, y);
+        HashMap<Integer, Integer> coodrs = new HashMap<Integer, Integer>();
+        coodrs.put(x, y);
+
+        if (board.getCoordsToId() == null) {
+            return new String[]{};
+        }
 
         squareInfo[0] = String.valueOf(board.getCoordsToId().get(coodrs));
 
@@ -126,9 +138,9 @@ public class GameManager {
         squareInfo[3] = tempPiece.getName();
 
         if (tempPiece.getTeam() == 0) {
-            squareInfo[4] = "team1.png";
+            squareInfo[4] = "crazy_emoji_white.png";
         } else {
-            squareInfo[4] = "team2.png";
+            squareInfo[4] = "crazy_emoji_black.png";
         }
 
         return squareInfo;
@@ -147,8 +159,8 @@ public class GameManager {
         Iterator<Map.Entry<Integer, Integer>> iterator = board.getIdToPiece().get(ID).getCoords().entrySet().iterator();
         Map.Entry<Integer, Integer> entry = iterator.next();
 
-        pieceInfo[5] = String.valueOf(entry.getValue());
-        pieceInfo[6] = String.valueOf(entry.getKey());
+        pieceInfo[5] = String.valueOf(entry.getKey());
+        pieceInfo[6] = String.valueOf(entry.getValue());
 
         return pieceInfo;
     }

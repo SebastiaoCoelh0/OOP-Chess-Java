@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 public class TestGameManager {
 
     @Test
-    void loadInfo() {
+    public void loadInfo() {
 
+        
     }
 
 
