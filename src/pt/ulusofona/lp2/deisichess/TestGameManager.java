@@ -9,17 +9,28 @@ import java.util.Arrays;
 public class TestGameManager {
 
     @Test
+    public void vitoriaInicio() {
+
+        GameManager gameManager = new GameManager();
+
+        gameManager.loadGame(new File("test-files/vitoriaInicio1.txt"));
+        Assertions.assertTrue(gameManager.gameOver());
+        Assertions.assertEquals("RESULTADO: VENCERAM AS PRETAS", gameManager.getGameResults().get(1));
+
+        gameManager.loadGame(new File("test-files/vitoriaInicio2.txt"));
+        Assertions.assertTrue(gameManager.gameOver());
+        Assertions.assertEquals("RESULTADO: VENCERAM AS PRETAS", gameManager.getGameResults().get(1));
+    }
+
+    @Test
     public void empateInicio() {
 
         GameManager gameManager = new GameManager();
 
-        gameManager.loadGame(new File("test-files/empateInicio1.txt"));
+        gameManager.loadGame(new File("test-files/empateInicio.txt"));
         Assertions.assertTrue(gameManager.gameOver());
-        Assertions.assertEquals("RESULTADO: VENCERAM AS PRETAS", gameManager.getGameResults().get(1));
+        Assertions.assertEquals("RESULTADO: EMPATE", gameManager.getGameResults().get(1));
 
-        gameManager.loadGame(new File("test-files/empateInicio2.txt"));
-        Assertions.assertTrue(gameManager.gameOver());
-        Assertions.assertEquals("RESULTADO: VENCERAM AS PRETAS", gameManager.getGameResults().get(1));
     }
 
     @Test

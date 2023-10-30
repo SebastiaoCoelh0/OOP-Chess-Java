@@ -184,7 +184,7 @@ public class GameManager {
         int piecesTeamBlack = 0;
         int piecesTeamWhite = 0;
 
-        for (int pieceId = 1; pieceId < board.getNumPieces(); pieceId++) {
+        for (int pieceId = 1; pieceId <= board.getNumPieces(); pieceId++) {
 
             if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
@@ -213,7 +213,7 @@ public class GameManager {
         int piecesTeamBlack = 0;
         int piecesTeamWhite = 0;
 
-        for (int pieceId = 1; pieceId < board.getNumPieces(); pieceId++) {
+        for (int pieceId = 1; pieceId <= board.getNumPieces(); pieceId++) {
 
             if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
@@ -221,6 +221,7 @@ public class GameManager {
 
                     piecesTeamBlack++;
                 } else {
+
                     piecesTeamWhite++;
                 }
             }
@@ -228,6 +229,7 @@ public class GameManager {
 
         if (piecesTeamBlack == 0 && piecesTeamWhite != 0) {
 
+            System.out.println("bruh");
             results.add("RESULTADO: VENCERAM AS BRANCAS");
 
         } else if (piecesTeamWhite == 0 && piecesTeamBlack != 0) {
