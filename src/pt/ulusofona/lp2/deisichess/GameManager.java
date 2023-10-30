@@ -226,9 +226,9 @@ public class GameManager {
             }
         }
 
-        if (piecesTeamBlack == 0) {
+        if ((piecesTeamBlack == 0 && piecesTeamWhite == 0) || (piecesTeamWhite==1&&piecesTeamBlack==1)) {
 
-            results.add("RESULTADO: VENCERAM AS BRANCAS");
+            results.add("RESULTADO: EMPATE");
 
         } else if (piecesTeamWhite == 0) {
 
@@ -236,7 +236,7 @@ public class GameManager {
 
         } else {
 
-            results.add("RESULTADO: EMPATE");
+            results.add("RESULTADO: VENCERAM AS BRANCAS");
         }
 
         results.add("---");
