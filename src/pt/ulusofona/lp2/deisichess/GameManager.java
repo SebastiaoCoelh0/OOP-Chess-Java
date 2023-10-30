@@ -170,7 +170,7 @@ public class GameManager {
 
         String[] pieceInfo = getPieceInfo(ID);
 
-        return pieceInfo[0] + " | " + pieceInfo[1] + " | " + pieceInfo[2] + " | " + pieceInfo[3] + " @(" + pieceInfo[5] + ", " + pieceInfo[6] + ")";
+        return pieceInfo[0] + " | " + pieceInfo[1] + " | " + pieceInfo[2] + " | " + pieceInfo[3] + " @ (" + pieceInfo[5] + ", " + pieceInfo[6] + ")";
     }
 
     public int getCurrentTeamID() {
