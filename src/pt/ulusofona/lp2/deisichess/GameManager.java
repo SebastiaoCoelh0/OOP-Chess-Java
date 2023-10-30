@@ -76,12 +76,12 @@ public class GameManager {
             for (int columnBoard = 0; columnBoard < parts.length; columnBoard++) {
 
                 HashMap<Integer, Integer> coordsTemp = new HashMap<>();
-                coordsTemp.put(board.getSize() - lineBoard, columnBoard);
+                coordsTemp.put(lineBoard, columnBoard);
 
                 if (idToPiece.containsKey(Integer.parseInt(parts[columnBoard]))) {
 
                     board.setCoordsToId((HashMap<HashMap<Integer, Integer>, Integer>) new HashMap<>().put(coordsTemp, Integer.parseInt(parts[columnBoard])));
-                    idToPiece.get(Integer.parseInt(parts[columnBoard])).setCoords(board.getSize() - lineBoard, columnBoard);
+                    idToPiece.get(Integer.parseInt(parts[columnBoard])).setCoords(lineBoard, columnBoard);
 
                 } else {
 
