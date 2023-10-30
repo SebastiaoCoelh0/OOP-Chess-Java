@@ -9,7 +9,7 @@ public class Piece {
     int pieceType;
     int team;
     HashMap<Integer, Integer> coords = new HashMap<>();
-    String inGame = "em jogo"; //ou capturado
+    String inGame = "capturado"; //ou em jogo
 
     public Piece() {
     }
@@ -20,6 +20,10 @@ public class Piece {
         this.name = name;
         this.pieceType = pieceType;
         this.team = team;
+    }
+
+    public void setInGame(String inGame) {
+        this.inGame = inGame;
     }
 
     public String getInGame() {

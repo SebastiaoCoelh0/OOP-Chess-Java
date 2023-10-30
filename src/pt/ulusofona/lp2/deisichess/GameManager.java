@@ -77,8 +77,10 @@ public class GameManager {
 
                 if (idToPiece.containsKey(Integer.parseInt(parts[columnBoard]))) {
 
+
                     board.setCoordsToId(coordsTemp, Integer.parseInt(parts[columnBoard]));
                     idToPiece.get(Integer.parseInt(parts[columnBoard])).setCoords(columnBoard, lineBoard);
+                    idToPiece.get(Integer.parseInt(parts[columnBoard])).setInGame("em jogo");
 
                 } else {
 
@@ -182,8 +184,8 @@ public class GameManager {
         int piecesTeam0 = 0;
         int piecesTeam1 = 0;
 
-        for (int pieceId = 0; pieceId < board.getNumPieces(); pieceId++) {
-
+        for (int pieceId = 1; pieceId < board.getNumPieces(); pieceId++) {
+            
             if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
                 if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
