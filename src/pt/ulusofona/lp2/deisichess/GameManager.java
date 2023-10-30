@@ -9,9 +9,9 @@ public class GameManager {
     public GameManager() {
     } //construtor vazio pedido pelos profs.
 
-    static Board board = new Board();
+    Board board = new Board();
 
-    public static boolean loadGame(File file) {
+    public boolean loadGame(File file) {
 
         board = new Board(); //reset
         BufferedReader reader = null;
@@ -77,12 +77,12 @@ public class GameManager {
 
                 if (idToPiece.containsKey(Integer.parseInt(parts[columnBoard]))) {
 
-                    board.setCoordsToId((HashMap<HashMap<Integer, Integer>, Integer>) new HashMap<>().put(coordsTemp, Integer.parseInt(parts[columnBoard])));
+                    board.setCoordsToId(coordsTemp, Integer.parseInt(parts[columnBoard]));
                     idToPiece.get(Integer.parseInt(parts[columnBoard])).setCoords(columnBoard, lineBoard);
 
                 } else {
 
-                    board.setCoordsToId((HashMap<HashMap<Integer, Integer>, Integer>) new HashMap<>().put(coordsTemp, Integer.parseInt(parts[columnBoard])));
+                    board.setCoordsToId(coordsTemp, Integer.parseInt(parts[columnBoard]));
                 }
             }
         }
@@ -108,7 +108,7 @@ public class GameManager {
         coordsStart.put(x0, y0);
         coordsEnd.put(x1, y1);
 
-        if (!board.getCoordsToId().containsKey(coordsStart)) {
+        if (board.getCoordsToId(coordsStart) == null) {
             return false;
         }
 
@@ -118,20 +118,20 @@ public class GameManager {
         return true;
     }
 
-    public static String[] getSquareInfo(int x, int y) {
+    public String[] getSquareInfo(int x, int y) {
 
         String[] squareInfo = new String[5];
         HashMap<Integer, Integer> coodrs = new HashMap<Integer, Integer>();
         coodrs.put(x, y);
 
-        if (board.getCoordsToId().get(coodrs) == null) {
+        squareInfo[0] = String.valueOf(board.getCoordsToId(coodrs));
+
+        if (board.getCoordsToId(coodrs) == null || board.getIdToPiece(Integer.parseInt(squareInfo[0])) == null) {
 
             return null;
         }
 
-        squareInfo[0] = String.valueOf(board.getCoordsToId().get(coodrs));
-
-        Piece tempPiece = board.getIdToPiece().get(Integer.parseInt(squareInfo[0]));
+        Piece tempPiece = board.getIdToPiece(Integer.parseInt(squareInfo[0]));
 
         squareInfo[1] = String.valueOf(tempPiece.getPieceType());
         squareInfo[2] = String.valueOf(tempPiece.getTeam());
@@ -146,17 +146,17 @@ public class GameManager {
         return squareInfo;
     }
 
-    public static String[] getPieceInfo(int ID) {
+    public String[] getPieceInfo(int ID) {
 
         String[] pieceInfo = new String[7];
 
         pieceInfo[0] = String.valueOf(ID);
-        pieceInfo[1] = String.valueOf(board.getIdToPiece().get(ID).getPieceType());
-        pieceInfo[2] = String.valueOf(board.getIdToPiece().get(ID).getTeam());
-        pieceInfo[3] = String.valueOf(board.getIdToPiece().get(ID).getName());
-        pieceInfo[4] = String.valueOf(board.getIdToPiece().get(ID).getInGame());
+        pieceInfo[1] = String.valueOf(board.getIdToPiece(ID).getPieceType());
+        pieceInfo[2] = String.valueOf(board.getIdToPiece(ID).getTeam());
+        pieceInfo[3] = String.valueOf(board.getIdToPiece(ID).getName());
+        pieceInfo[4] = String.valueOf(board.getIdToPiece(ID).getInGame());
 
-        Iterator<Map.Entry<Integer, Integer>> iterator = board.getIdToPiece().get(ID).getCoords().entrySet().iterator();
+        Iterator<Map.Entry<Integer, Integer>> iterator = board.getIdToPiece(ID).getCoords().entrySet().iterator();
         Map.Entry<Integer, Integer> entry = iterator.next();
 
         pieceInfo[5] = String.valueOf(entry.getKey());
@@ -184,9 +184,9 @@ public class GameManager {
 
         for (int pieceId = 0; pieceId < board.getNumPieces(); pieceId++) {
 
-            if (Objects.equals(board.getIdToPiece().get(pieceId).inGame, "em jogo")) {
+            if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
-                if (Objects.equals(board.getIdToPiece().get(pieceId).getTeam(), 0)) {
+                if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
 
                     piecesTeam0++;
                 } else {
