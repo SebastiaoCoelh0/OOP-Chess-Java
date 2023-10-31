@@ -176,7 +176,10 @@ public class GameManager {
 
     public int getCurrentTeamID() {
 
-        return board.getTeam();
+        if (board.getTeam().equals("BLACK")) {
+            return 1;
+        }
+        return 0;
     }
 
     public boolean gameOver() {

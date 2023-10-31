@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class TestGameManager {
 
@@ -54,9 +55,6 @@ public class TestGameManager {
         Assertions.assertEquals("5 | 0 | 1 | O Amigo @ (1, 3)", gameManager.getPieceInfoAsString(5));
         Assertions.assertEquals("6 | 0 | 1 | O Beberolas @ (1, 2)", gameManager.getPieceInfoAsString(6));
 
-        System.out.println(Arrays.toString(gameManager.getSquareInfo(0, 0)));
-        System.out.println(Arrays.toString(gameManager.getSquareInfo(1, 0)));
-        System.out.println(Arrays.toString(gameManager.getSquareInfo(2, 1)));
         Assertions.assertEquals(4, gameManager.getBoardSize());
         Assertions.assertEquals(0, gameManager.getCurrentTeamID());
         Assertions.assertFalse(gameManager.gameOver());

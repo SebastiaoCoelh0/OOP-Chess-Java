@@ -8,7 +8,7 @@ public class Board {
     int numPieces;
     HashMap<HashMap<Integer, Integer>, Integer> coordsToId = new HashMap<HashMap<Integer, Integer>, Integer>();
     HashMap<Integer, Piece> idToPiece = new HashMap<Integer, Piece>(); //id,Pieces
-    int team = 0;
+    String team = "BLACK";
     int numPlays = 0;
     int playsWhitoutCaptures = 0;
     int capturesBlack = 0;
@@ -34,7 +34,7 @@ public class Board {
         numPlays++;
     }
 
-    public int getTeam() {
+    public String getTeam() {
         return team;
     }
 
