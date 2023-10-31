@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class TestGameManager {
 
@@ -57,6 +56,30 @@ public class TestGameManager {
 
         Assertions.assertEquals(4, gameManager.getBoardSize());
         Assertions.assertEquals(0, gameManager.getCurrentTeamID());
+        Assertions.assertFalse(gameManager.gameOver());
+
+        gameManager.move(1, 0, 1, 1);
+        Assertions.assertEquals("[1, 0, 0, Chefe, em jogo, 1, 1]", Arrays.toString(gameManager.getPieceInfo(1)));
+        Assertions.assertEquals(0, gameManager.getCurrentTeamID());
+        Assertions.assertFalse(gameManager.gameOver());
+
+    }
+
+    @Test
+    public void testMoves() {
+
+        GameManager gameManager = new GameManager();
+
+        Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
+
+        Assertions.assertEquals("[1, 0, 0, Chefe, em jogo, 1, 0]", Arrays.toString(gameManager.getPieceInfo(1)));
+        Assertions.assertEquals(0, gameManager.getCurrentTeamID());
+        Assertions.assertFalse(gameManager.gameOver());
+
+        gameManager.move(1, 0, 1, 1);
+
+        Assertions.assertEquals("[1, 0, 0, Chefe, em jogo, 1, 1]", Arrays.toString(gameManager.getPieceInfo(1)));
+        Assertions.assertEquals(1, gameManager.getCurrentTeamID());
         Assertions.assertFalse(gameManager.gameOver());
 
     }

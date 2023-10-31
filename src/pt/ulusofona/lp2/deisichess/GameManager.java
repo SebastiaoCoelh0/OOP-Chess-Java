@@ -1,6 +1,8 @@
 package pt.ulusofona.lp2.deisichess;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
@@ -97,25 +99,63 @@ public class GameManager {
         return board.getSize();
     }
 
-    public boolean move(int x0, int y0, int x1, int y1) { //TODO
+    boolean checkCoordsLimits(int x0, int y0, int x1, int y1) {
 
-        if (x0 < 0 || x1 < 0 || y0 < 0 || y1 < 0 || x0 > getBoardSize() || x1 > getBoardSize() || y0 > getBoardSize() || y1 > getBoardSize()) {
+        if (x0 < 0 || x1 < 0 || y0 < 0 || y1 < 0) {
+
+            return false;
+        }
+
+        return x0 <= getBoardSize() && x1 <= getBoardSize() && y0 <= getBoardSize() && y1 <= getBoardSize();
+    }
+
+    boolean checkTeamPlaying(int x0, int y0) {
+
+        if (Integer.parseInt(getSquareInfo(x0, y0)[2]) != getCurrentTeamID()) {
+
+            if (getCurrentTeamID() == 0) {
+
+                board.addNotValidPlaysBlack();
+            } else {
+
+                board.addNotValidPLaysWhite();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    boolean checkSameTeamMove(int x0, int y0, int x1, int y1) {
+
+        if (Integer.parseInt(getSquareInfo(x0, y0)[2]) != Integer.parseInt(getSquareInfo(x1, y1)[2])) {
+
+            if (getCurrentTeamID() == 0) {
+
+                board.addNotValidPlaysBlack();
+            } else {
+
+                board.addNotValidPLaysWhite();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    public boolean move(int x0, int y0, int x1, int y1) {
+
+        if (!checkCoordsLimits(x0, y0, x1, y1) && !checkTeamPlaying(x0, y0) && !checkSameTeamMove(x0, y0, x1, y1)) {
 
             return false;
         }
 
         HashMap<Integer, Integer> coordsStart = new HashMap<>();
         HashMap<Integer, Integer> coordsEnd = new HashMap<>();
-
         coordsStart.put(x0, y0);
         coordsEnd.put(x1, y1);
 
-        if (board.getCoordsToId(coordsStart) == null) {
-            return false;
-        }
+        //TODO confirmar se move para um lugar vazio ou com peca adversaria
 
-        //String[] info = getPieceInfo(Integer.parseInt());
-
+        board.changeTeam();
         board.addPlay();
         return true;
     }
@@ -232,7 +272,6 @@ public class GameManager {
 
         if (piecesTeamBlack == 0 && piecesTeamWhite != 0) {
 
-            System.out.println("bruh");
             results.add("RESULTADO: VENCERAM AS BRANCAS");
 
         } else if (piecesTeamWhite == 0 && piecesTeamBlack != 0) {
@@ -262,7 +301,15 @@ public class GameManager {
     public JPanel getAuthorsPanel() {//TODO
 
         JPanel jpanel = new JPanel();
+        BufferedImage image;
 
+        try {
+            image = ImageIO.read(new File("src/images/memeSebastiao.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        JLabel icon = new JLabel(new ImageIcon(image));
+        jpanel.add(icon);
         return jpanel;
     }
 

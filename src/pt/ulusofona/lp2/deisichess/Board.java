@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisichess;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Board {
 
@@ -36,6 +37,17 @@ public class Board {
 
     public String getTeam() {
         return team;
+    }
+
+    public void changeTeam() {
+
+        if (Objects.equals(team, "BLACK")) {
+
+            team = "WHITE";
+        } else {
+
+            team = "BLACK";
+        }
     }
 
     public int getSize() {
