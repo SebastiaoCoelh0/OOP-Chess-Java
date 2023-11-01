@@ -199,7 +199,6 @@ public class GameManager {
 
         if (!checkValidMove(x0, y0, x1, y1)) {
 
-            board.changeTeam();
             return false;
         }
 
