@@ -202,15 +202,14 @@ public class GameManager {
             return false;
         }
 
-        HashMap<Integer, Integer> coordsfinal = new HashMap<>();
-        coordsfinal.put(x1, y1);
-
         if (board.getCoordsToId(x1, y1) != 0) {
 
             board.getIdToPiece(Integer.parseInt(getSquareInfo(x1, y1)[0])).capture();
         }
 
         board.getIdToPiece(Integer.parseInt(getSquareInfo(x0, y0)[0])).move(x1, y1);
+        board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0]));
+        board.setCoordsToId(x0, y0, 0);
 
         board.changeTeam();
         board.addPlay();
@@ -325,7 +324,7 @@ public class GameManager {
         return results;
     }
 
-    public JPanel getAuthorsPanel() {//TODO
+    public JPanel getAuthorsPanel() {
 
         JPanel jpanel = new JPanel();
         BufferedImage image;
