@@ -4,7 +4,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class GameManager {
 
@@ -29,84 +31,105 @@ public class GameManager {
 
         HashMap<Integer, Piece> idToPiece = new HashMap<>();
 
-        String line = null;
+        String lineReader = null;
 
         try {
-            line = reader.readLine();
+            lineReader = reader.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        board.setSize(Integer.parseInt(line));
+        board.setSize(Integer.parseInt(lineReader));
 
         try {
-            line = reader.readLine();
+            lineReader = reader.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        board.setNumPieces(Integer.parseInt(line));
+        board.setNumPieces(Integer.parseInt(lineReader));
 
         for (int i = 0; i < board.getNumPieces(); i++) {
 
             try {
-                line = reader.readLine();
+                lineReader = reader.readLine();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            String[] parts = line.split(":");
+            String[] parts = lineReader.split(":");
 
             Piece piecesTemp = new Piece(Integer.parseInt(parts[0]), parts[3], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
             idToPiece.put(Integer.parseInt(parts[0]), piecesTemp);
 
         }
 
-        for (int lineBoard = 0; lineBoard < board.getSize(); lineBoard++) {
+        for (int line = 0; line < board.getSize(); line++) {
 
             try {
-                line = reader.readLine();
+                lineReader = reader.readLine();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            String[] parts = line.split(":");
+            String[] parts = lineReader.split(":");
 
-            for (int columnBoard = 0; columnBoard < parts.length; columnBoard++) {
+            for (int column = 0; column < parts.length; column++) {
 
-                HashMap<Integer, Integer> coordsTemp = new HashMap<>();
-                coordsTemp.put(columnBoard, lineBoard);
+                if (idToPiece.containsKey(Integer.parseInt(parts[column]))) {
 
-                if (idToPiece.containsKey(Integer.parseInt(parts[columnBoard]))) {
-
-
-                    board.setCoordsToId(coordsTemp, Integer.parseInt(parts[columnBoard]));
-                    idToPiece.get(Integer.parseInt(parts[columnBoard])).setCoords(columnBoard, lineBoard);
-                    idToPiece.get(Integer.parseInt(parts[columnBoard])).setInGame("em jogo");
+                    board.setCoordsToId(column, line, Integer.parseInt(parts[column]));
+                    idToPiece.get(Integer.parseInt(parts[column])).move(column, line);
+                    idToPiece.get(Integer.parseInt(parts[column])).setInGame("em jogo");
 
                 } else {
 
-                    board.setCoordsToId(coordsTemp, Integer.parseInt(parts[columnBoard]));
+                    board.setCoordsToId(column, line, 0);
                 }
             }
         }
-        board.setIdToPiece(idToPiece);
 
+        board.setIdToPiece(idToPiece);
         return true;
+    }
+
+    public String[] getSquareInfo(int x, int y) {
+
+        String[] squareInfo = new String[5];
+        squareInfo[0] = String.valueOf(board.getCoordsToId(x, y));
+
+        if (board.getCoordsToId(x, y) == null || board.getIdToPiece(Integer.parseInt(squareInfo[0])) == null) {
+
+            return new String[]{};
+        }
+
+        Piece tempPiece = board.getIdToPiece(Integer.parseInt(squareInfo[0]));
+
+        squareInfo[1] = String.valueOf(tempPiece.getPieceType());
+        squareInfo[2] = String.valueOf(tempPiece.getTeam());
+        squareInfo[3] = tempPiece.getName();
+
+        if (tempPiece.getTeam() == 0) {
+            squareInfo[4] = "crazy_emoji_black.png"; //TODO alterar para um rei de C e rei java
+        } else {
+            squareInfo[4] = "crazy_emoji_white.png";
+        }
+
+        return squareInfo;
     }
 
     public int getBoardSize() {
         return board.getSize();
     }
 
-    boolean checkCoordsLimits(int x0, int y0, int x1, int y1) {
+    boolean checkCoordsLimits(int val) {
 
-        if (x0 < 0 || x1 < 0 || y0 < 0 || y1 < 0) {
+        return val >= 0 && val < getBoardSize();
+    }
 
-            return false;
-        }
+    boolean checkPieceExists(int x, int y) {
 
-        return x0 <= getBoardSize() && x1 <= getBoardSize() && y0 <= getBoardSize() && y1 <= getBoardSize();
+        return getSquareInfo(x, y).length != 0;
     }
 
     boolean checkTeamPlaying(int x0, int y0) {
@@ -125,68 +148,76 @@ public class GameManager {
         return true;
     }
 
+    boolean checkKingMove(int x0, int y0, int x1, int y1) {
+
+        return (x1 == x0 + 1 || x1 == x0 || x1 == x0 - 1) && (y1 == y0 + 1 || y1 == y0 || y1 == y0 - 1);
+    }
+
     boolean checkSameTeamMove(int x0, int y0, int x1, int y1) {
 
-        if (Integer.parseInt(getSquareInfo(x0, y0)[2]) != Integer.parseInt(getSquareInfo(x1, y1)[2])) {
+        if (getSquareInfo(x1, y1).length != 0) {
 
-            if (getCurrentTeamID() == 0) {
+            if (Integer.parseInt(getSquareInfo(x0, y0)[2]) == Integer.parseInt(getSquareInfo(x1, y1)[2])) {
 
-                board.addNotValidPlaysBlack();
-            } else {
+                if (getCurrentTeamID() == 0) {
 
-                board.addNotValidPLaysWhite();
+                    board.addNotValidPlaysBlack();
+                } else {
+
+                    board.addNotValidPLaysWhite();
+                }
+                return false;
             }
+        }
+
+        return true;
+    }
+
+    boolean checkValidMove(int x0, int y0, int x1, int y1) {
+
+
+        if (!checkCoordsLimits(x0) || !checkCoordsLimits(y0) || !checkCoordsLimits(x1) || !checkCoordsLimits(y1)) {
+
             return false;
         }
-        return true;
+
+        if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0)) {
+
+            return false;
+        }
+
+        if (!checkKingMove(x0, y0, x1, y1) || !checkSameTeamMove(x0, y0, x1, y1)) {
+
+            return false;
+        }
+
+        return true; //se for valido
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
 
-        if (!checkCoordsLimits(x0, y0, x1, y1) && !checkTeamPlaying(x0, y0) && !checkSameTeamMove(x0, y0, x1, y1)) {
 
+        if (!checkValidMove(x0, y0, x1, y1)) {
+
+            board.changeTeam();
             return false;
         }
 
-        HashMap<Integer, Integer> coordsStart = new HashMap<>();
-        HashMap<Integer, Integer> coordsEnd = new HashMap<>();
-        coordsStart.put(x0, y0);
-        coordsEnd.put(x1, y1);
+        HashMap<Integer, Integer> coordsfinal = new HashMap<>();
+        coordsfinal.put(x1, y1);
 
-        //TODO confirmar se move para um lugar vazio ou com peca adversaria
+        if (board.getCoordsToId(x1, y1) != 0) {
+
+            board.getIdToPiece(Integer.parseInt(getSquareInfo(x1, y1)[0])).capture();
+        }
+
+        board.getIdToPiece(Integer.parseInt(getSquareInfo(x0, y0)[0])).move(x1, y1);
 
         board.changeTeam();
         board.addPlay();
         return true;
     }
 
-    public String[] getSquareInfo(int x, int y) {
-
-        String[] squareInfo = new String[5];
-        HashMap<Integer, Integer> coodrs = new HashMap<Integer, Integer>();
-        coodrs.put(x, y);
-
-        squareInfo[0] = String.valueOf(board.getCoordsToId(coodrs));
-
-        if (board.getCoordsToId(coodrs) == null || board.getIdToPiece(Integer.parseInt(squareInfo[0])) == null) {
-
-            return new String[]{};
-        }
-
-        Piece tempPiece = board.getIdToPiece(Integer.parseInt(squareInfo[0]));
-
-        squareInfo[1] = String.valueOf(tempPiece.getPieceType());
-        squareInfo[2] = String.valueOf(tempPiece.getTeam());
-        squareInfo[3] = tempPiece.getName();
-
-        if (tempPiece.getTeam() == 0) {
-            squareInfo[4] = "crazy_emoji_white.png";
-        } else {
-            squareInfo[4] = "crazy_emoji_black.png";
-        }
-
-        return squareInfo;
-    }
 
     public String[] getPieceInfo(int ID) {
 
@@ -198,11 +229,8 @@ public class GameManager {
         pieceInfo[3] = String.valueOf(board.getIdToPiece(ID).getName());
         pieceInfo[4] = String.valueOf(board.getIdToPiece(ID).getInGame());
 
-        Iterator<Map.Entry<Integer, Integer>> iterator = board.getIdToPiece(ID).getCoords().entrySet().iterator();
-        Map.Entry<Integer, Integer> entry = iterator.next();
-
-        pieceInfo[5] = String.valueOf(entry.getKey());
-        pieceInfo[6] = String.valueOf(entry.getValue());
+        pieceInfo[5] = board.getIdToPiece(ID).getCoords().split(",")[0];
+        pieceInfo[6] = board.getIdToPiece(ID).getCoords().split(",")[1];
 
         return pieceInfo;
     }

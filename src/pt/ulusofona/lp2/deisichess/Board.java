@@ -7,7 +7,7 @@ public class Board {
 
     int size;
     int numPieces;
-    HashMap<HashMap<Integer, Integer>, Integer> coordsToId = new HashMap<HashMap<Integer, Integer>, Integer>();
+    HashMap<String, Integer> coordsToId = new HashMap<String, Integer>(); //"x,y" to id
     HashMap<Integer, Piece> idToPiece = new HashMap<Integer, Piece>(); //id,Pieces
     String team = "BLACK";
     int numPlays = 0;
@@ -62,8 +62,8 @@ public class Board {
         return idToPiece.get(id);
     }
 
-    public Integer getCoordsToId(HashMap<Integer, Integer> coords) {
-        return coordsToId.get(coords);
+    public Integer getCoordsToId(int x, int y) {
+        return coordsToId.get(x + "," + y);
     }
 
     public void setSize(int size) {
@@ -75,8 +75,8 @@ public class Board {
         this.numPieces = numPieces;
     }
 
-    public void setCoordsToId(HashMap<Integer, Integer> coords, int id) {
-        this.coordsToId.put(coords, id);
+    public void setCoordsToId(int x, int y, int id) {
+        this.coordsToId.put(x + "," + y, id);
     }
 
     public void setIdToPiece(HashMap<Integer, Piece> idToPiece) {

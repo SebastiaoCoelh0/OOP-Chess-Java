@@ -54,12 +54,14 @@ public class TestGameManager {
         Assertions.assertEquals("5 | 0 | 1 | O Amigo @ (1, 3)", gameManager.getPieceInfoAsString(5));
         Assertions.assertEquals("6 | 0 | 1 | O Beberolas @ (1, 2)", gameManager.getPieceInfoAsString(6));
 
-        Assertions.assertEquals(4, gameManager.getBoardSize());
-        Assertions.assertEquals(0, gameManager.getCurrentTeamID());
-        Assertions.assertFalse(gameManager.gameOver());
+        Assertions.assertEquals(1, gameManager.board.getCoordsToId(1, 0));
+        Assertions.assertEquals(2, gameManager.board.getCoordsToId(3, 0));
+        Assertions.assertEquals(3, gameManager.board.getCoordsToId(2, 1));
+        Assertions.assertEquals(4, gameManager.board.getCoordsToId(2, 3));
+        Assertions.assertEquals(5, gameManager.board.getCoordsToId(1, 3));
+        Assertions.assertEquals(6, gameManager.board.getCoordsToId(1, 2));
 
-        gameManager.move(1, 0, 1, 1);
-        Assertions.assertEquals("[1, 0, 0, Chefe, em jogo, 1, 1]", Arrays.toString(gameManager.getPieceInfo(1)));
+        Assertions.assertEquals(4, gameManager.getBoardSize());
         Assertions.assertEquals(0, gameManager.getCurrentTeamID());
         Assertions.assertFalse(gameManager.gameOver());
 
@@ -71,17 +73,42 @@ public class TestGameManager {
         GameManager gameManager = new GameManager();
 
         Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
+        Assertions.assertFalse(gameManager.move(1, 0, 0, -1));//limits
 
-        Assertions.assertEquals("[1, 0, 0, Chefe, em jogo, 1, 0]", Arrays.toString(gameManager.getPieceInfo(1)));
-        Assertions.assertEquals(0, gameManager.getCurrentTeamID());
-        Assertions.assertFalse(gameManager.gameOver());
+        Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
+        Assertions.assertFalse(gameManager.move(10, 3, 1, 1));//limits
 
-        gameManager.move(1, 0, 1, 1);
+        Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
+        Assertions.assertFalse(gameManager.move(0, 0, 1, 1));//piece exists
+
+        Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
+        Assertions.assertFalse(gameManager.move(1, 2, 2, 0));//team playing
+
+        Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
+        Assertions.assertFalse(gameManager.move(1, 0, 0, 2));//king move
+
+        Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
+        Assertions.assertFalse(gameManager.move(1, 0, 2, 1));//same team move
+
+        Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
+        Assertions.assertTrue(gameManager.move(1, 0, 1, 1));
+
 
         Assertions.assertEquals("[1, 0, 0, Chefe, em jogo, 1, 1]", Arrays.toString(gameManager.getPieceInfo(1)));
         Assertions.assertEquals(1, gameManager.getCurrentTeamID());
         Assertions.assertFalse(gameManager.gameOver());
 
+    }
+
+    @Test
+    void testMoves1() {
+        GameManager gameManager = new GameManager();
+        gameManager.loadGame(new File("test-files/4x4.txt"));
+
+
+        Assertions.assertTrue(gameManager.move(2, 1, 1, 2));
+        Assertions.assertEquals("[3, 0, 0, Grande Artista, em jogo, 1, 2]", Arrays.toString(gameManager.getPieceInfo(3)));
+        Assertions.assertEquals("[6, 0, 1, O Beberolas, capturado, 1, 2]", Arrays.toString(gameManager.getPieceInfo(6)));
     }
 
 }

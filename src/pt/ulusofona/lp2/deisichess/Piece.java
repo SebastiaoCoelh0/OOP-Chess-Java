@@ -1,14 +1,12 @@
 package pt.ulusofona.lp2.deisichess;
 
-import java.util.HashMap;
-
 public class Piece {
 
     int nrId;
     String name;
     int pieceType;
     int team;
-    HashMap<Integer, Integer> coords = new HashMap<>();
+    String coords; //x,y
     String inGame = "capturado"; //ou em jogo
 
     public Piece() {
@@ -22,16 +20,22 @@ public class Piece {
         this.team = team;
     }
 
+    public void capture() {
+        
+        inGame = "capturado";
+    }
+
     public void setInGame(String inGame) {
         this.inGame = inGame;
     }
 
-    public String getInGame() {
-        return inGame;
+    public void move(int x, int y) {
+
+        coords = x + "," + y;
     }
 
-    public void setCoords(int x, int y) {
-        this.coords.put(x, y);
+    public String getInGame() {
+        return inGame;
     }
 
     public int getNrId() {
@@ -50,7 +54,7 @@ public class Piece {
         return name;
     }
 
-    public HashMap<Integer, Integer> getCoords() {
+    public String getCoords() {
         return coords;
     }
 }
