@@ -205,11 +205,22 @@ public class GameManager {
         if (board.getCoordsToId(x1, y1) != 0) {
 
             board.getIdToPiece(Integer.parseInt(getSquareInfo(x1, y1)[0])).capture();
+
+            if (getCurrentTeamID() == 0) {
+
+                board.addCapturesBlack();
+            } else {
+
+                board.addCapturesWhite();
+            }
+
+        } else {
+            board.addPlaysWithoutCaptures();
         }
 
-        board.getIdToPiece(Integer.parseInt(getSquareInfo(x0, y0)[0])).move(x1, y1);
-        board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0]));
-        board.setCoordsToId(x0, y0, 0);
+        board.getIdToPiece(Integer.parseInt(getSquareInfo(x0, y0)[0])).move(x1, y1); //atualiza as coords na peça
+        board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0])); //atualiza as coords da peça na nova posição no tabuleiro
+        board.setCoordsToId(x0, y0, 0); //atualiza as coords antigas da peça no tabuleiro
 
         board.changeTeam();
         board.addPlay();
