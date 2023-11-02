@@ -110,9 +110,9 @@ public class GameManager {
         squareInfo[3] = tempPiece.getName();
 
         if (tempPiece.getTeam() == 0) {
-            squareInfo[4] = "src/images/kingB50.png";
+            squareInfo[4] = "crazy_emoji_black.png"; //TODO alterar
         } else {
-            squareInfo[4] = "src/images/kingW50.png";
+            squareInfo[4] = "crazy_emoji_white.png";
         }
 
         return squareInfo;
@@ -319,19 +319,25 @@ public class GameManager {
 
         int piecesTeamBlack = 0;
         int piecesTeamWhite = 0;
+        int count = 0;
 
-        for (int pieceId = 1; pieceId <= board.getNumPieces(); pieceId++) {
+        for (int pieceId = 0; count < board.getNumPieces(); pieceId++) {
 
-            if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
+            if (board.getIdToPiece(pieceId) != null) {
 
-                if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
+                count++;
+                if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
-                    piecesTeamBlack++;
-                } else {
+                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
 
-                    piecesTeamWhite++;
+                        piecesTeamBlack++;
+                    } else {
+
+                        piecesTeamWhite++;
+                    }
                 }
             }
+
         }
 
         if (piecesTeamBlack == 0 && piecesTeamWhite != 0) {
