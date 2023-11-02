@@ -110,9 +110,9 @@ public class GameManager {
         squareInfo[3] = tempPiece.getName();
 
         if (tempPiece.getTeam() == 0) {
-            squareInfo[4] = "crazy_emoji_black.png"; //TODO alterar para um rei de C e rei java
+            squareInfo[4] = "src/images/kingB50.png";
         } else {
-            squareInfo[4] = "crazy_emoji_white.png";
+            squareInfo[4] = "src/images/kingW50.png";
         }
 
         return squareInfo;
