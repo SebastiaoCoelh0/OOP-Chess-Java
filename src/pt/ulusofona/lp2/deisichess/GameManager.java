@@ -325,19 +325,23 @@ public class GameManager {
 
         int piecesTeamBlack = 0;
         int piecesTeamWhite = 0;
+        int count = 0;
 
+        for (int pieceId = 1; count < board.getNumPieces(); pieceId++) {
 
-        for (int pieceId = 1; pieceId <= board.getNumPieces(); pieceId++) {
+            if (board.getIdToPiece(pieceId) != null) {
 
-            if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
+                count++;
+                if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
-                if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
+                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
 
-                    piecesTeamBlack++;
+                        piecesTeamBlack++;
 
-                } else {
+                    } else {
 
-                    piecesTeamWhite++;
+                        piecesTeamWhite++;
+                    }
                 }
             }
         }
