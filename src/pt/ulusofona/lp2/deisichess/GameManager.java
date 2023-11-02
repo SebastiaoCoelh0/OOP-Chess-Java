@@ -239,8 +239,15 @@ public class GameManager {
         pieceInfo[3] = String.valueOf(board.getIdToPiece(ID).getName());
         pieceInfo[4] = String.valueOf(board.getIdToPiece(ID).getInGame());
 
-        pieceInfo[5] = board.getIdToPiece(ID).getCoords().split(",")[0];
-        pieceInfo[6] = board.getIdToPiece(ID).getCoords().split(",")[1];
+        if (pieceInfo[4] == "em jogo") {
+
+            pieceInfo[5] = board.getIdToPiece(ID).getCoords().split(",")[0];
+            pieceInfo[6] = board.getIdToPiece(ID).getCoords().split(",")[1];
+        } else {
+            pieceInfo[5] = "";
+            pieceInfo[6] = "";
+        }
+
 
         return pieceInfo;
     }
@@ -249,7 +256,15 @@ public class GameManager {
 
         String[] pieceInfo = getPieceInfo(ID);
 
-        return pieceInfo[0] + " | " + pieceInfo[1] + " | " + pieceInfo[2] + " | " + pieceInfo[3] + " @ (" + pieceInfo[5] + ", " + pieceInfo[6] + ")";
+        if (pieceInfo[4] == "em jogo") {
+
+            return pieceInfo[0] + " | " + pieceInfo[1] + " | " + pieceInfo[2] + " | " + pieceInfo[3] + " @ (" + pieceInfo[5] + ", " + pieceInfo[6] + ")";
+
+        } else {
+
+            return pieceInfo[0] + " | " + pieceInfo[1] + " | " + pieceInfo[2] + " | " + pieceInfo[3] + " @ (n/a)";
+        }
+
     }
 
     public int getCurrentTeamID() {

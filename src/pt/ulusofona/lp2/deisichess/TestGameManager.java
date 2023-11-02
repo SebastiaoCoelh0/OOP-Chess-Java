@@ -107,7 +107,7 @@ public class TestGameManager {
 
         Assertions.assertTrue(gameManager.move(2, 1, 1, 2));
         Assertions.assertEquals("[3, 0, 0, Grande Artista, em jogo, 1, 2]", Arrays.toString(gameManager.getPieceInfo(3)));
-        Assertions.assertEquals("[6, 0, 1, O Beberolas, capturado, 1, 2]", Arrays.toString(gameManager.getPieceInfo(6)));
+        Assertions.assertEquals("[6, 0, 1, O Beberolas, capturado, , ]", Arrays.toString(gameManager.getPieceInfo(6)));
     }
 
 }
