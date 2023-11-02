@@ -111,6 +111,10 @@ public class Board {
         playsWhitoutCaptures++;
     }
 
+    public void resetPlaysWithoutCaptures() {
+        playsWhitoutCaptures = 0;
+    }
+
     public int getCapturesBlack() {
         return capturesBlack;
     }

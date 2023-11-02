@@ -93,8 +93,6 @@ public class TestGameManager {
         Assertions.assertTrue(gameManager.loadGame(new File("test-files/4x4.txt")));
         Assertions.assertTrue(gameManager.move(1, 0, 1, 1));
 
-        System.out.println(Arrays.toString(gameManager.getSquareInfo(1, 0)));
-        System.out.println(gameManager.board.getCoordsToId(1, 0));
         Assertions.assertEquals("[1, 0, 0, Chefe, em jogo, 1, 1]", Arrays.toString(gameManager.getPieceInfo(1)));
         Assertions.assertEquals(1, gameManager.getCurrentTeamID());
         Assertions.assertFalse(gameManager.gameOver());

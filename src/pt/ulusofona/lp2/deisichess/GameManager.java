@@ -204,6 +204,7 @@ public class GameManager {
 
         if (board.getCoordsToId(x1, y1) != 0) {
 
+            board.resetPlaysWithoutCaptures();
             board.getIdToPiece(Integer.parseInt(getSquareInfo(x1, y1)[0])).capture();
 
             if (getCurrentTeamID() == 0) {
