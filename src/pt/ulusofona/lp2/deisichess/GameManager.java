@@ -290,18 +290,24 @@ public class GameManager {
 
         int piecesTeamBlack = 0;
         int piecesTeamWhite = 0;
+        int count = 0;
 
-        for (int pieceId = 1; pieceId <= board.getNumPieces(); pieceId++) {
+        for (int pieceId = 1; count < board.getNumPieces(); pieceId++) {
 
-            if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
+            if (board.getIdToPiece(pieceId) != null) {
 
-                if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
+                count++;
+                if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
-                    piecesTeamBlack++;
-                } else {
-                    piecesTeamWhite++;
+                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
+
+                        piecesTeamBlack++;
+                    } else {
+                        piecesTeamWhite++;
+                    }
                 }
             }
+
         }
 
         if ((piecesTeamBlack == 0 || piecesTeamWhite == 0) || (piecesTeamWhite == 1 && piecesTeamBlack == 1) ||
@@ -319,25 +325,21 @@ public class GameManager {
 
         int piecesTeamBlack = 0;
         int piecesTeamWhite = 0;
-        int count = 0;
 
-        for (int pieceId = 0; count < board.getNumPieces(); pieceId++) {
 
-            if (board.getIdToPiece(pieceId) != null) {
+        for (int pieceId = 1; pieceId <= board.getNumPieces(); pieceId++) {
 
-                count++;
-                if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
+            if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
-                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
+                if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
 
-                        piecesTeamBlack++;
-                    } else {
+                    piecesTeamBlack++;
 
-                        piecesTeamWhite++;
-                    }
+                } else {
+
+                    piecesTeamWhite++;
                 }
             }
-
         }
 
         if (piecesTeamBlack == 0 && piecesTeamWhite != 0) {
