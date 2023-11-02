@@ -22,7 +22,6 @@ public class Piece {
 
     public void capture() {
 
-        coords = ",";
         inGame = "capturado";
     }
 
