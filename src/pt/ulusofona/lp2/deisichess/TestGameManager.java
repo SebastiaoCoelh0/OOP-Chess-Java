@@ -15,11 +15,11 @@ public class TestGameManager {
 
         gameManager.loadGame(new File("test-files/vitoriaInicio1.txt"));
         Assertions.assertTrue(gameManager.gameOver());
-        Assertions.assertEquals("RESULTADO: VENCERAM AS PRETAS", gameManager.getGameResults().get(1));
+        Assertions.assertEquals("Resultado: VENCERAM AS PRETAS", gameManager.getGameResults().get(1));
 
         gameManager.loadGame(new File("test-files/vitoriaInicio2.txt"));
         Assertions.assertTrue(gameManager.gameOver());
-        Assertions.assertEquals("RESULTADO: VENCERAM AS PRETAS", gameManager.getGameResults().get(1));
+        Assertions.assertEquals("Resultado: VENCERAM AS PRETAS", gameManager.getGameResults().get(1));
     }
 
     @Test

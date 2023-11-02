@@ -325,15 +325,15 @@ public class GameManager {
 
         if (piecesTeamBlack == 0 && piecesTeamWhite != 0) {
 
-            results.add("RESULTADO: VENCERAM AS BRANCAS");
+            results.add("Resultado: VENCERAM AS BRANCAS");
 
         } else if (piecesTeamWhite == 0 && piecesTeamBlack != 0) {
 
-            results.add("RESULTADO: VENCERAM AS PRETAS");
+            results.add("Resultado: VENCERAM AS PRETAS");
 
         } else {
 
-            results.add("RESULTADO: EMPATE");
+            results.add("Resultado: EMPATE");
         }
 
         results.add("---");
