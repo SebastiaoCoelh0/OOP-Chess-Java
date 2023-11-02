@@ -138,10 +138,10 @@ public class GameManager {
 
             if (getCurrentTeamID() == 0) {
 
-                board.addNotValidPlaysBlack();
+                board.addMissedAttemptsBlack();
             } else {
 
-                board.addNotValidPLaysWhite();
+                board.addMissedAttemptsWhite();
             }
             return false;
         }
@@ -161,10 +161,10 @@ public class GameManager {
 
                 if (getCurrentTeamID() == 0) {
 
-                    board.addNotValidPlaysBlack();
+                    board.addMissedAttemptsBlack();
                 } else {
 
-                    board.addNotValidPLaysWhite();
+                    board.addMissedAttemptsWhite();
                 }
                 return false;
             }
@@ -209,14 +209,25 @@ public class GameManager {
 
             if (getCurrentTeamID() == 0) {
 
+                board.addValidPlaysBlack();
                 board.addCapturesBlack();
             } else {
 
+                board.addValidPLaysWhite();
                 board.addCapturesWhite();
             }
 
         } else {
+
             board.addPlaysWithoutCaptures();
+
+            if (getCurrentTeamID() == 0) {
+
+                board.addValidPlaysBlack();
+            } else {
+
+                board.addValidPLaysWhite();
+            }
         }
 
         board.getIdToPiece(Integer.parseInt(getSquareInfo(x0, y0)[0])).move(x1, y1); //atualiza as coords na peça
@@ -340,12 +351,12 @@ public class GameManager {
 
         results.add("Equipa das Pretas");
         results.add(String.valueOf(board.getCapturesBlack()));
-        results.add(String.valueOf(board.getNotValidPlaysBlack()));
+        results.add(String.valueOf(board.getValidPlaysBlack()));
         results.add(String.valueOf(board.getMissedAttemptsBlack()));
 
         results.add("Equipa das Brancas");
         results.add(String.valueOf(board.getCapturesWhite()));
-        results.add(String.valueOf(board.getNotValidPlaysWhite()));
+        results.add(String.valueOf(board.getValidPlaysWhite()));
         results.add(String.valueOf(board.getMissedAttemptsWhite()));
 
         return results;

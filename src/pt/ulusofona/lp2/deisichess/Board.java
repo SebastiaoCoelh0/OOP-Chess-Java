@@ -14,8 +14,8 @@ public class Board {
     int playsWhitoutCaptures = 0;
     int capturesBlack = 0;
     int capturesWhite = 0;
-    int notValidPlaysBlack = 0;
-    int notValidPlaysWhite = 0;
+    int validPlaysBlack = 0;
+    int validPlaysWhite = 0;
     int missedAttemptsBlack = 0;
     int missedAttemptsWhite = 0;
 
@@ -91,12 +91,12 @@ public class Board {
         capturesWhite++;
     }
 
-    public void addNotValidPlaysBlack() {
-        notValidPlaysBlack++;
+    public void addValidPlaysBlack() {
+        validPlaysBlack++;
     }
 
-    public void addNotValidPLaysWhite() {
-        notValidPlaysWhite++;
+    public void addValidPLaysWhite() {
+        validPlaysWhite++;
     }
 
     public void addMissedAttemptsBlack() {
@@ -123,12 +123,12 @@ public class Board {
         return capturesWhite;
     }
 
-    public int getNotValidPlaysBlack() {
-        return notValidPlaysBlack;
+    public int getValidPlaysBlack() {
+        return validPlaysBlack;
     }
 
-    public int getNotValidPlaysWhite() {
-        return notValidPlaysWhite;
+    public int getValidPlaysWhite() {
+        return validPlaysWhite;
     }
 
     public int getMissedAttemptsBlack() {
