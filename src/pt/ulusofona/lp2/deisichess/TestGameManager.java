@@ -29,7 +29,7 @@ public class TestGameManager {
 
         gameManager.loadGame(new File("test-files/empateInicio.txt"));
         Assertions.assertTrue(gameManager.gameOver());
-        Assertions.assertEquals("RESULTADO: EMPATE", gameManager.getGameResults().get(1));
+        Assertions.assertEquals("Resultado: EMPATE", gameManager.getGameResults().get(1));
 
     }
 
@@ -104,10 +104,22 @@ public class TestGameManager {
         GameManager gameManager = new GameManager();
         gameManager.loadGame(new File("test-files/4x4.txt"));
 
-
         Assertions.assertTrue(gameManager.move(2, 1, 1, 2));
         Assertions.assertEquals("[3, 0, 0, Grande Artista, em jogo, 1, 2]", Arrays.toString(gameManager.getPieceInfo(3)));
         Assertions.assertEquals("[6, 0, 1, O Beberolas, capturado, , ]", Arrays.toString(gameManager.getPieceInfo(6)));
+
+        Assertions.assertTrue(gameManager.move(2, 3, 2, 2));
+        Assertions.assertEquals("[4, 0, 1, O Maior, em jogo, 2, 2]", Arrays.toString(gameManager.getPieceInfo(4)));
+
+        Assertions.assertTrue(gameManager.move(1, 2, 1, 3));
+        Assertions.assertEquals("[3, 0, 0, Grande Artista, em jogo, 1, 3]", Arrays.toString(gameManager.getPieceInfo(3)));
+
+        Assertions.assertTrue(gameManager.move(2, 2, 2, 3));
+        Assertions.assertEquals("[4, 0, 1, O Maior, em jogo, 2, 3]", Arrays.toString(gameManager.getPieceInfo(4)));
+
+        Assertions.assertTrue(gameManager.move(1, 3, 2, 3));
+        Assertions.assertTrue(gameManager.gameOver());
+
     }
 
 }
