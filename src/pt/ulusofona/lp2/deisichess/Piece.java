@@ -9,9 +9,6 @@ public class Piece {
     String coords; //x,y
     String inGame = "capturado"; //ou em jogo
 
-    public Piece() {
-    }
-
     public Piece(int nrId, String name, int pieceType, int team) {
 
         this.nrId = nrId;
@@ -36,10 +33,6 @@ public class Piece {
 
     public String getInGame() {
         return inGame;
-    }
-
-    public int getNrId() {
-        return nrId;
     }
 
     public int getPieceType() {

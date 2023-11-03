@@ -10,7 +10,6 @@ public class Board {
     HashMap<String, Integer> coordsToId = new HashMap<String, Integer>(); //"x,y" to id
     HashMap<Integer, Piece> idToPiece = new HashMap<Integer, Piece>(); //id,Pieces
     String team = "BLACK";
-    int numPlays = 0;
     int playsWhitoutCaptures = 0;
     int capturesBlack = 0;
     int capturesWhite = 0;
@@ -24,15 +23,6 @@ public class Board {
 
     public int getPlaysWhitoutCaptures() {
         return playsWhitoutCaptures;
-    }
-
-
-    public int getNumPlays() {
-        return numPlays;
-    }
-
-    public void addPlay() {
-        numPlays++;
     }
 
     public String getTeam() {

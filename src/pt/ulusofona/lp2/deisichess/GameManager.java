@@ -18,7 +18,7 @@ public class GameManager {
     public boolean loadGame(File file) {
 
         board = new Board(); //reset
-        BufferedReader reader = null;
+        BufferedReader reader;
 
         try {
 
@@ -31,7 +31,7 @@ public class GameManager {
 
         HashMap<Integer, Piece> idToPiece = new HashMap<>();
 
-        String lineReader = null;
+        String lineReader;
 
         try {
             lineReader = reader.readLine();
@@ -110,9 +110,9 @@ public class GameManager {
         squareInfo[3] = tempPiece.getName();
 
         if (tempPiece.getTeam() == 0) {
-            squareInfo[4] = "crazy_emoji_black.png"; //TODO alterar
+            squareInfo[4] = "homerSimpson.png"; //TODO alterar
         } else {
-            squareInfo[4] = "crazy_emoji_white.png";
+            squareInfo[4] = "peterGriffin.png";
         }
 
         return squareInfo;
@@ -235,7 +235,6 @@ public class GameManager {
         board.setCoordsToId(x0, y0, 0); //atualiza as coords antigas da peça no tabuleiro
 
         board.changeTeam();
-        board.addPlay();
         return true;
     }
 
@@ -250,7 +249,7 @@ public class GameManager {
         pieceInfo[3] = String.valueOf(board.getIdToPiece(ID).getName());
         pieceInfo[4] = String.valueOf(board.getIdToPiece(ID).getInGame());
 
-        if (pieceInfo[4] == "em jogo") {
+        if (Objects.equals(pieceInfo[4], "em jogo")) {
 
             pieceInfo[5] = board.getIdToPiece(ID).getCoords().split(",")[0];
             pieceInfo[6] = board.getIdToPiece(ID).getCoords().split(",")[1];
@@ -267,7 +266,7 @@ public class GameManager {
 
         String[] pieceInfo = getPieceInfo(ID);
 
-        if (pieceInfo[4] == "em jogo") {
+        if (Objects.equals(pieceInfo[4], "em jogo")) {
 
             return pieceInfo[0] + " | " + pieceInfo[1] + " | " + pieceInfo[2] + " | " + pieceInfo[3] + " @ (" + pieceInfo[5] + ", " + pieceInfo[6] + ")";
 
