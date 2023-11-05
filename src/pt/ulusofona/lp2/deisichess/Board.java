@@ -10,19 +10,19 @@ public class Board {
     HashMap<String, Integer> coordsToId = new HashMap<String, Integer>(); //"x,y" to id
     HashMap<Integer, Piece> idToPiece = new HashMap<Integer, Piece>(); //id,Pieces
     String team = "BLACK";
-    int playsWhitoutCaptures = 0;
+    int playsWithoutCaptures = 0;
     int capturesBlack = 0;
     int capturesWhite = 0;
     int validPlaysBlack = 0;
     int validPlaysWhite = 0;
-    int missedAttemptsBlack = 0;
-    int missedAttemptsWhite = 0;
+    int invalidAttemptsBlack = 0;
+    int invalidAttemptsWhite = 0;
 
     public Board() {
     }
 
-    public int getPlaysWhitoutCaptures() {
-        return playsWhitoutCaptures;
+    public int getPlaysWithoutCaptures() {
+        return playsWithoutCaptures;
     }
 
     public String getTeam() {
@@ -89,20 +89,20 @@ public class Board {
         validPlaysWhite++;
     }
 
-    public void addMissedAttemptsBlack() {
-        missedAttemptsBlack++;
+    public void addInvalidAttemptsBlack() {
+        invalidAttemptsBlack++;
     }
 
-    public void addMissedAttemptsWhite() {
-        missedAttemptsWhite++;
+    public void addInvalidAttemptsWhite() {
+        invalidAttemptsWhite++;
     }
 
     public void addPlaysWithoutCaptures() {
-        playsWhitoutCaptures++;
+        playsWithoutCaptures++;
     }
 
     public void resetPlaysWithoutCaptures() {
-        playsWhitoutCaptures = 0;
+        playsWithoutCaptures = 0;
     }
 
     public int getCapturesBlack() {
@@ -121,11 +121,11 @@ public class Board {
         return validPlaysWhite;
     }
 
-    public int getMissedAttemptsBlack() {
-        return missedAttemptsBlack;
+    public int getInvalidAttemptsBlack() {
+        return invalidAttemptsBlack;
     }
 
-    public int getMissedAttemptsWhite() {
-        return missedAttemptsWhite;
+    public int getInvalidAttemptsWhite() {
+        return invalidAttemptsWhite;
     }
 }

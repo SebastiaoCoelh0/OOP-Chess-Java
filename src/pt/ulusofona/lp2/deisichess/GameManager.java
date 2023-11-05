@@ -132,16 +132,16 @@ public class GameManager {
         return getSquareInfo(x, y).length != 0;
     }
 
-    boolean checkTeamPlaying(int x0, int y0) {
+    boolean checkTeamPlaying(int x, int y) {
 
-        if (Integer.parseInt(getSquareInfo(x0, y0)[2]) != getCurrentTeamID()) {
+        if (Integer.parseInt(getSquareInfo(x, y)[2]) != getCurrentTeamID()) {
 
             if (getCurrentTeamID() == 0) {
 
-                board.addMissedAttemptsBlack();
+                board.addInvalidAttemptsBlack();
             } else {
 
-                board.addMissedAttemptsWhite();
+                board.addInvalidAttemptsWhite();
             }
             return false;
         }
@@ -161,10 +161,10 @@ public class GameManager {
 
                 if (getCurrentTeamID() == 0) {
 
-                    board.addMissedAttemptsBlack();
+                    board.addInvalidAttemptsBlack();
                 } else {
 
-                    board.addMissedAttemptsWhite();
+                    board.addInvalidAttemptsWhite();
                 }
                 return false;
             }
@@ -310,7 +310,7 @@ public class GameManager {
         }
 
         if ((piecesTeamBlack == 0 || piecesTeamWhite == 0) || (piecesTeamWhite == 1 && piecesTeamBlack == 1) ||
-                ((board.getCapturesWhite() != 0 || board.capturesBlack != 0) && board.getPlaysWhitoutCaptures() == 10)) {
+                ((board.getCapturesWhite() != 0 || board.capturesBlack != 0) && board.getPlaysWithoutCaptures() == 10)) {
 
             return true;
         }
@@ -363,12 +363,12 @@ public class GameManager {
         results.add("Equipa das Pretas");
         results.add(String.valueOf(board.getCapturesBlack()));
         results.add(String.valueOf(board.getValidPlaysBlack()));
-        results.add(String.valueOf(board.getMissedAttemptsBlack()));
+        results.add(String.valueOf(board.getInvalidAttemptsBlack()));
 
         results.add("Equipa das Brancas");
         results.add(String.valueOf(board.getCapturesWhite()));
         results.add(String.valueOf(board.getValidPlaysWhite()));
-        results.add(String.valueOf(board.getMissedAttemptsWhite()));
+        results.add(String.valueOf(board.getInvalidAttemptsWhite()));
 
         return results;
     }
