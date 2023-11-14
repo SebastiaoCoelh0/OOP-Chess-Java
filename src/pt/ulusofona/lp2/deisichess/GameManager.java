@@ -110,7 +110,7 @@ public class GameManager {
         squareInfo[3] = tempPiece.getName();
 
         if (tempPiece.getTeam() == 0) {
-            squareInfo[4] = "homerSimpson.png"; //TODO alterar
+            squareInfo[4] = "homerSimpson.png";
         } else {
             squareInfo[4] = "peterGriffin.png";
         }
@@ -124,7 +124,7 @@ public class GameManager {
 
     boolean checkCoordsLimits(int val) {
 
-        return val >= 0 && val < getBoardSize();
+        return val >= 0 && val < board.getSize();
     }
 
     boolean checkPieceExists(int x, int y) {
@@ -310,7 +310,7 @@ public class GameManager {
         }
 
         if ((piecesTeamBlack == 0 || piecesTeamWhite == 0) || (piecesTeamWhite == 1 && piecesTeamBlack == 1) ||
-                ((board.getCapturesWhite() != 0 || board.capturesBlack != 0) && board.getPlaysWithoutCaptures() == 10)) {
+                board.getPlaysWithoutCaptures() == 10) {
 
             return true;
         }
