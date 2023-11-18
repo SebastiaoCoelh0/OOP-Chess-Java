@@ -8,6 +8,45 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+/*TODO LIST
+
+    8 tipos de peças
+        0- Rei 1 quadrado cada diracao -1000
+        1- Rainha 5 quadrados cada direcao RAINHA NAO PODE CAPTURAR RAINHA -8
+        2- Ponei magico 2 casas em qualquer direcao, roda 90 graus e depois mais 2 casas -5
+        3- Padre da vila move se nas diagonais no maximo 3 posiçoes -3
+        4- Torre Horizontal -3
+        5- Torre Vertical -3
+        6- Hommer Simpson esta a dormir de 3 em 3 turnos começando no primeiro (no turno 0, 3, 6, 9, 12, ...)
+           move se na diagonal apenas uma posição -2
+        7- Joker vai mudando de turno a turno 1º turno rainha - ponei - padre - th - tv - hommer -4
+
+    Peças nao podem saltar por cima de outras
+    Tool tip alterada agora aparece
+        nome da peca
+        valor
+
+    Equipa preta passou a ser a 10 e a branca a equipa 20
+
+    Termina o jogo quando:
+        a equipa adversaria deixa de ter reis
+        apenas ha um rei de cada equipa e o jogo empata
+        10 jogadas sem capturas
+
+     Ficheiro Gravar:
+        grava o jogo numa alura especifica
+        em que pode ser qualquer equipa a jogar e ja com stats
+
+     Alteração do ficheiro txt que guarda a info pertinente na ultima linha, NAO ALTERAR O RESTO DA ESTRUTURA
+     caso nao tenha nada nessa linha e um jogo normal
+
+     UNDO vai desfazendo ate voltar ao estado inicial
+
+     Sugerir jogada mostra todas as coordenadas de movimento possivel de uma peca selecionada, oordenada por pontos
+
+     //TODO ALTERACOES API 16:30
+
+ */
 public class GameManager {
 
     public GameManager() {
@@ -15,8 +54,9 @@ public class GameManager {
 
     Board board = new Board();
 
+    //TODO
+    //public void loadGame(File file) throws InvalidGameInputException, IOException {
     public boolean loadGame(File file) {
-
         board = new Board(); //reset
         BufferedReader reader;
 
@@ -373,6 +413,13 @@ public class GameManager {
         return results;
     }
 
+    //TODO
+    /*
+    public void saveGame(File file) throws IOException
+    public void undo()
+    public List<Comparable> getHints(int x, int y)
+    public Map<String,String> customizeBoard() (*)
+    */
     public JPanel getAuthorsPanel() {
 
         JPanel jpanel = new JPanel();
