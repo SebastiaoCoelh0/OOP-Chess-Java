@@ -7,20 +7,34 @@ import pt.ulusofona.lp2.deisichess.movement.Movement;
 
 public class HommerSimpson extends Piece {
 
+    boolean sleeping = true;
+
     public HommerSimpson(int nrId, String name, int team) {
         super(nrId, name, team, 2, 6, new Movement[]{new MoveDiagonally()});
     }
 
     @Override
     public String toString() {
-        //TODO Doh! zzzzzzz
 
-        return super.toString();
+        if (!sleeping) {
+            return super.toString();
+        }
+        return "TODO Doh! zzzzzzz";
+    }
+
+    public void isSleeping() {
+
+        sleeping = true;
+    }
+
+    public void isNotSleeping() {
+
+        sleeping = false;
     }
 
     public boolean validPieceMovement(int x0, int y0, int x1, int y1, Board board) {
 
-        if (board.hommerCanMove()) {
+        if (!sleeping) {
 
             for (Movement movement : getMovementsPiece()) {
 

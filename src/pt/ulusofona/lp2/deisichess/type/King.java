@@ -19,12 +19,12 @@ public class King extends Piece {
         if (getInGame()) {
 
             return getNrId() + " | Rei | (infinito) | " + getTeam() + " | "
-                    + getName() + " @ (" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
+                    + getName() + " @(" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
 
         } else {
 
             return getNrId() + " | " + getPieceType() + " | " + getPoints() + " | " + getTeam() + " | "
-                    + getName() + " @ (n/a)";
+                    + getName() + " @(n/a)";
         }
     }
 

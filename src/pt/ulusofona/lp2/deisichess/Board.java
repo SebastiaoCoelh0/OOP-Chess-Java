@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.deisichess;
 
+import pt.ulusofona.lp2.deisichess.type.HommerSimpson;
 import pt.ulusofona.lp2.deisichess.type.Joker;
 
 import java.util.HashMap;
@@ -142,6 +143,7 @@ public class Board {
 
     public void endTurn() {
         turn++;
+        hommerCanMove();
         jokerUpdate();
         changeTeam();
     }
@@ -157,11 +159,26 @@ public class Board {
         }
     }
 
-    public boolean hommerCanMove() {
+    public void hommerCanMove() {
 
-        int result = getTurn() % 3;
+        for (int id = 0; id < getNumPieces(); id++) {
 
-        return result == 0;
+            if (getIdToPiece(id) != null) {
+
+                if (getIdToPiece(id).isHommer()) {
+
+                    HommerSimpson hommerSimpson = (HommerSimpson) getIdToPiece(id);
+
+                    if (getTurn() % 3 == 0) {
+
+                        hommerSimpson.isNotSleeping();
+                    } else {
+
+                        hommerSimpson.isSleeping();
+                    }
+                }
+            }
+        }
     }
 
     public void jokerUpdate() {
