@@ -12,6 +12,22 @@ public class VerticalTower extends Piece {
     }
 
     @Override
+    public String toString() {
+
+        if (getInGame()) {
+
+            return getNrId() + " | TorreVert | " + getPoints() + " | " + getTeam() + " | "
+                    + getName() + " @(" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
+
+        } else {
+
+            return getNrId() + " | TorreVert | " + getPoints() + " | " + getTeam() + " | "
+                    + getName() + " @(n/a)";
+        }
+
+    }
+
+    @Override
     public String[] getPieceInfo() {
         return new String[0];
     }

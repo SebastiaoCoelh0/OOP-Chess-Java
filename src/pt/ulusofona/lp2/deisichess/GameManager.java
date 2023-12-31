@@ -240,7 +240,6 @@ public class GameManager {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
-
         if (board.getCoordsToId(x1, y1) != 0) { //eats piece
 
             board.resetPlaysWithoutCaptures();
@@ -271,11 +270,9 @@ public class GameManager {
                 board.addValidPLaysWhite();
             }
         }
-
         board.getIdToPiece(Integer.parseInt(getSquareInfo(x0, y0)[0])).move(x1, y1); //atualiza as coords na peça
         board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0])); //atualiza as coords da peça na nova posição no tabuleiro
         board.setCoordsToId(x0, y0, 0); //atualiza as coords antigas da peça no tabuleiro
-
         board.endTurn();
         boardHistory.push(board);
         return true;
@@ -287,7 +284,7 @@ public class GameManager {
         return board.getPieceInfo(ID);
     }
 
-    public String getPieceInfoAsString(int ID) {//TODO
+    public String getPieceInfoAsString(int ID) {
 
         return board.getPieceInfoAsString(ID);
     }
@@ -301,30 +298,37 @@ public class GameManager {
 
         int kingsTeamBlack = 0;
         int kingsTeamWhite = 0;
+        int otherPiece = 0;
         int count = 0;
 
         for (int pieceId = 1; count < board.getNumPieces(); pieceId++) {
 
-            if (board.getIdToPiece(pieceId) != null && board.getIdToPiece(pieceId).isKing()) {
+            if (board.getIdToPiece(pieceId) != null) {
 
                 count++;
                 if (board.getIdToPiece(pieceId).getInGame()) {
 
-                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 10)) {
+                    if (board.getIdToPiece(pieceId).isKing()) {
 
-                        kingsTeamBlack++;
+                        if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 10)) {
+
+                            kingsTeamBlack++;
+                        } else {
+                            kingsTeamWhite++;
+                        }
                     } else {
-                        kingsTeamWhite++;
+                        otherPiece++;
                     }
                 }
             }
         }
 
-        if ((kingsTeamBlack == 0 || kingsTeamWhite == 0) || (kingsTeamWhite == 1 && kingsTeamBlack == 1) ||
+        if ((kingsTeamBlack == 0 || kingsTeamWhite == 0) || (kingsTeamWhite == 1 && kingsTeamBlack == 1 && otherPiece == 0) ||
                 ((board.getCapturesWhite() != 0 || board.getCapturesBlack() != 0) && board.getPlaysWithoutCaptures() == 10)) {
 
             return true;
         }
+
         return false;
     }
 
@@ -392,7 +396,8 @@ public class GameManager {
     public void undo() {
 
         if (!boardHistory.isEmpty()) {
-
+            System.out.println("undo");
+            System.out.println(boardHistory.size());
             board = boardHistory.pop();
         }
 

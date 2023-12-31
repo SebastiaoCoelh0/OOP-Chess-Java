@@ -12,6 +12,22 @@ public class VillagePriest extends Piece {
     }
 
     @Override
+    public String toString() {
+
+        if (getInGame()) {
+
+            return getNrId() + " | Padre da Vila | " + getPoints() + " | " + getTeam() + " | "
+                    + getName() + " @(" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
+
+        } else {
+
+            return getNrId() + " | Padre da Vila | " + getPoints() + " | " + getTeam() + " | "
+                    + getName() + " @(n/a)";
+        }
+
+    }
+
+    @Override
     public String[] getPieceInfo() {
         return new String[0];
     }

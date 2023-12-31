@@ -6,7 +6,7 @@ import pt.ulusofona.lp2.deisichess.movement.Movement;
 
 public class Joker extends Piece {
 
-    Piece currentPiece;
+    Piece currentPiece = new Queen(getNrId(), getName(), getTeam());
 
     public Joker(int nrId, String name, int team) {
         super(nrId, name, team, 4, 7, new Movement[]{});
@@ -42,6 +42,47 @@ public class Joker extends Piece {
 
     public void changeType(int turn) {
         currentPiece = jokerMovement(turn);
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder str = new StringBuilder();
+        str.append(getNrId()).append(" | Joker/");
+
+        switch (currentPiece.getPieceType()) {
+            case 1:
+                str.append("Rainha | ");
+                break;
+            case 2:
+                str.append("Ponei Mágico | ");
+                break;
+            case 3:
+                str.append("Padre da Vila | ");
+                break;
+            case 4:
+                str.append("TorreHor | ");
+                break;
+            case 5:
+                str.append("TorreVert | ");
+                break;
+            case 6:
+                str.append("Hommer Simpson | ");
+                break;
+            default:
+                str.append("Joker | ");
+        }
+
+        if (getInGame()) {
+
+            str.append(getPoints()).append(" | ").append(getTeam()).append(" | ").append(getName()).append(" @(");
+            str.append(getCoords().split(",")[0]).append(", ").append(getCoords().split(",")[1]).append(")");
+
+        } else {
+
+            str.append(getPoints()).append(" | ").append(getTeam()).append(" | ").append(getName()).append(" @(n/a)");
+        }
+        return str.toString();
     }
 
     public Board cloneBoard(Board board) throws CloneNotSupportedException {

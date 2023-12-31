@@ -14,6 +14,22 @@ public class Queen extends Piece {
     }
 
     @Override
+    public String toString() {
+
+        if (getInGame()) {
+
+            return getNrId() + " | Rainha | " + getPoints() + " | " + getTeam() + " | "
+                    + getName() + " @(" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
+
+        } else {
+
+            return getNrId() + " | Rainha | " + getPoints() + " | " + getTeam() + " | "
+                    + getName() + " @(n/a)";
+        }
+
+    }
+
+    @Override
     public String[] getPieceInfo() {
         return new String[0];
     }
