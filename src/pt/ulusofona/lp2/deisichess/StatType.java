@@ -7,6 +7,7 @@ public enum StatType {
     PECAS_MAIS_5_CAPTURAS,
     PECAS_MAIS_BARALHADAS,
     TIPOS_CAPTURADOS;
+
 }
 
 

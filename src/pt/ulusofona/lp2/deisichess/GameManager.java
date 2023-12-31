@@ -179,21 +179,21 @@ public class GameManager {
         return board.getSize();
     }
 
-    boolean checkCoordsLimits(int val) {
+    public boolean checkCoordsLimits(int val) {
 
         return val >= 0 && val < board.getSize();
     }
 
-    boolean checkPieceExists(int x, int y) {
+    public boolean checkPieceExists(int x, int y) {
 
         return getSquareInfo(x, y) != null && getSquareInfo(x, y).length != 0;
     }
 
-    boolean checkTeamPlaying(int x, int y) {
+    public boolean checkTeamPlaying(int x, int y) {
         return board.checkTeamPlaying(x, y);
     }
 
-    boolean checkSameTeamMove(int x0, int y0, int x1, int y1) {
+    public boolean checkSameTeamMove(int x0, int y0, int x1, int y1) {
 
         if (getSquareInfo(x1, y1) != null && getSquareInfo(x1, y1).length != 0) {
 
@@ -212,7 +212,7 @@ public class GameManager {
         return true;
     }
 
-    boolean checkValidMove(int x0, int y0, int x1, int y1) {
+    public boolean checkValidMove(int x0, int y0, int x1, int y1) {
 
 
         if (!checkCoordsLimits(x0) || !checkCoordsLimits(y0) || !checkCoordsLimits(x1) || !checkCoordsLimits(y1)) {
@@ -282,7 +282,7 @@ public class GameManager {
     }
 
 
-    public String[] getPieceInfo(int ID) {//TODO
+    public String[] getPieceInfo(int ID) {
 
         return board.getPieceInfo(ID);
     }
@@ -290,8 +290,6 @@ public class GameManager {
     public String getPieceInfoAsString(int ID) {//TODO
 
         return board.getPieceInfoAsString(ID);
-
-
     }
 
     public int getCurrentTeamID() {
@@ -407,7 +405,7 @@ public class GameManager {
     }
 
     public Map<String, String> customizeBoard() {
-        return new HashMap<>();
+        return Collections.emptyMap();
     }
 
     public JPanel getAuthorsPanel() {

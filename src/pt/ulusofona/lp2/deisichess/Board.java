@@ -84,8 +84,7 @@ public class Board {
 
             return info;
         }
-
-        return null;
+        return new String[]{};
     }
 
 
