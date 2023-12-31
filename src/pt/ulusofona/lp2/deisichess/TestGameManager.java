@@ -54,6 +54,25 @@ public class TestGameManager {
     }
 
     @Test
+    public void info() {
+
+        GameManager gameManager = new GameManager();
+        gameManager.loadGameTest(new File("test-files/8x8.txt"));
+        
+        Assertions.assertEquals("[]", Arrays.toString(gameManager.getSquareInfo(0, 1)));
+        Assertions.assertEquals("[1, 0, 10, O Poderoso Chefao, 0_10.png]", Arrays.toString(gameManager.getSquareInfo(0, 0)));
+        Assertions.assertEquals("[2, 1, 10, A Dama Selvagem, 1_10.png]", Arrays.toString(gameManager.getSquareInfo(1, 0)));
+        Assertions.assertEquals("[3, 2, 10, O Grande Artista, 2_10.png]", Arrays.toString(gameManager.getSquareInfo(2, 0)));
+        Assertions.assertEquals("[4, 3, 10, Amante de Praia, 3_10.png]", Arrays.toString(gameManager.getSquareInfo(3, 0)));
+        Assertions.assertEquals("[5, 4, 10, Artolas, 4_10.png]", Arrays.toString(gameManager.getSquareInfo(4, 0)));
+        Assertions.assertEquals("[6, 5, 10, O Maior Grande, 5_10.png]", Arrays.toString(gameManager.getSquareInfo(5, 0)));
+        Assertions.assertEquals("[7, 6, 10, Hommie, 6_10.png]", Arrays.toString(gameManager.getSquareInfo(6, 0)));
+        Assertions.assertEquals("[8, 7, 10, O Beberolas, 7_10.png]", Arrays.toString(gameManager.getSquareInfo(7, 0)));
+
+
+    }
+
+    @Test
     public void vitoriaInicio() {
 
         GameManager gameManager = new GameManager();

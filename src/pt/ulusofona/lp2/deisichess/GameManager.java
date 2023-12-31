@@ -172,10 +172,7 @@ public class GameManager {
 
     public String[] getSquareInfo(int x, int y) {
 
-        if (board.getCoordsToPiece(x, y) != null) {
-
-            return board.getPieceInfo(board.getCoordsToId(x, y));
-        } else return null;
+        return board.getSquareInfo(x, y);
     }
 
     public int getBoardSize() {
@@ -284,12 +281,12 @@ public class GameManager {
     }
 
 
-    public String[] getPieceInfo(int ID) {
+    public String[] getPieceInfo(int ID) {//TODO
 
         return board.getPieceInfo(ID);
     }
 
-    public String getPieceInfoAsString(int ID) {
+    public String getPieceInfoAsString(int ID) {//TODO
 
         return board.getPieceInfoAsString(ID);
 
@@ -298,10 +295,7 @@ public class GameManager {
 
     public int getCurrentTeamID() {
 
-        if (board.getTeam().equals("BLACK")) {
-            return 10;
-        }
-        return 20;
+        return board.getTeamID();
     }
 
     public boolean gameOver() {
@@ -325,7 +319,6 @@ public class GameManager {
                     }
                 }
             }
-
         }
 
         if ((kingsTeamBlack == 0 || kingsTeamWhite == 0) || (kingsTeamWhite == 1 && kingsTeamBlack == 1) ||
@@ -393,7 +386,9 @@ public class GameManager {
         return results;
     }
 
-    //TODO
+    public void saveGame(File file) throws IOException {
+
+    }
 
     public void undo() {
 

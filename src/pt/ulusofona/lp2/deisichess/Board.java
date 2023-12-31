@@ -68,6 +68,25 @@ public class Board {
         return getIdToPiece(id).toString();
     }
 
+    public String[] getSquareInfo(int x, int y) {
+
+        if (getCoordsToPiece(x, y) != null) {
+
+            String[] info = new String[5];
+            Piece temp = getCoordsToPiece(x, y);
+
+            info[0] = String.valueOf(temp.getNrId());
+            info[1] = String.valueOf(temp.getPieceType());
+            info[2] = String.valueOf(temp.getTeam());
+            info[3] = temp.getName();
+            info[4] = temp.getPieceType() + "_" + getTeamID() + ".png";
+
+            return info;
+        }
+
+        return null;
+    }
+
 
     public String[] getPieceInfo(int id) {
 
@@ -107,6 +126,14 @@ public class Board {
 
     public String getTeam() {
         return team;
+    }
+
+    public int getTeamID() {
+
+        if (Objects.equals(getTeam(), "BLACK")) {
+            return 10;
+        }
+        return 20;
     }
 
     public int getTurn() {
