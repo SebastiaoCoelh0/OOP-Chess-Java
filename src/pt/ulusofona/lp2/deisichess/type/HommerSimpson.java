@@ -19,7 +19,7 @@ public class HommerSimpson extends Piece {
         if (!sleeping) {
             return super.toString();
         }
-        return "TODO Doh! zzzzzzz";
+        return "Doh! zzzzzzz";
     }
 
     public void isSleeping() {

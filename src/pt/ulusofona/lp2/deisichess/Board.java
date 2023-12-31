@@ -80,7 +80,7 @@ public class Board {
             info[1] = String.valueOf(temp.getPieceType());
             info[2] = String.valueOf(temp.getTeam());
             info[3] = temp.getName();
-            info[4] = temp.getPieceType() + "_" + getTeamID() + ".png";
+            info[4] = temp.getPieceType() + "_" + temp.getTeam() + ".png";
 
             return info;
         }
