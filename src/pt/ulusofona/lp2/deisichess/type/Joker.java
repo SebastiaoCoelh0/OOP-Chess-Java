@@ -72,7 +72,7 @@ public class Joker extends Piece {
                 str.append("TorreVert | ");
                 break;
             case 6:
-                str.append("Hommer Simpson | ");
+                str.append("Homer Simpson | ");
                 break;
             default:
                 str.append("Joker | ");
