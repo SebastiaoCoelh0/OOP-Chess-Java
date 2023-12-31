@@ -20,7 +20,7 @@ public class Queen extends Piece {
 
     public boolean validPieceMovement(int x0, int y0, int x1, int y1, Board board) {
 
-        if (board.getCoordsToPiece(x1, y1).isQueen()) { //cannot eat queen piece
+        if (board.getCoordsToPiece(x1, y1) != null && board.getCoordsToPiece(x1, y1).isQueen()) { //cannot eat queen piece
             return false;
         }
 

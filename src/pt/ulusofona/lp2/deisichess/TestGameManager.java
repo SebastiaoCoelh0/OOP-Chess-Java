@@ -68,8 +68,6 @@ public class TestGameManager {
         Assertions.assertEquals("[7, 6, 10, Hommie, 6_10.png]", Arrays.toString(gameManager.getSquareInfo(6, 0)));
         Assertions.assertEquals("[8, 7, 10, O Beberolas, 7_10.png]", Arrays.toString(gameManager.getSquareInfo(7, 0)));
 
-        System.out.println(gameManager.getPieceInfoAsString(1));
-
     }
 
     @Test
@@ -113,12 +111,12 @@ public class TestGameManager {
         Assertions.assertEquals("[5, 0, 20, O Amigo, em jogo, 1, 3]", Arrays.toString(gameManager.getPieceInfo(5)));
         Assertions.assertEquals("[6, 0, 20, O Beberolas, em jogo, 1, 2]", Arrays.toString(gameManager.getPieceInfo(6)));
 
-        Assertions.assertEquals("1 | Rei | (infinito) | 10 | Chefe @ (1, 0)", gameManager.getPieceInfoAsString(1));
-        Assertions.assertEquals("2 | Rei | (infinito) | 10 | Selvagem @ (3, 0)", gameManager.getPieceInfoAsString(2));
-        Assertions.assertEquals("3 | Rei | (infinito) | 10 | Grande Artista @ (2, 1)", gameManager.getPieceInfoAsString(3));
-        Assertions.assertEquals("4 | Rei | (infinito) | 20 | O Maior @ (2, 3)", gameManager.getPieceInfoAsString(4));
-        Assertions.assertEquals("5 | Rei | (infinito) | 20 | O Amigo @ (1, 3)", gameManager.getPieceInfoAsString(5));
-        Assertions.assertEquals("6 | Rei | (infinito) | 20 | O Beberolas @ (1, 2)", gameManager.getPieceInfoAsString(6));
+        Assertions.assertEquals("1 | Rei | (infinito) | 10 | Chefe @(1, 0)", gameManager.getPieceInfoAsString(1));
+        Assertions.assertEquals("2 | Rei | (infinito) | 10 | Selvagem @(3, 0)", gameManager.getPieceInfoAsString(2));
+        Assertions.assertEquals("3 | Rei | (infinito) | 10 | Grande Artista @(2, 1)", gameManager.getPieceInfoAsString(3));
+        Assertions.assertEquals("4 | Rei | (infinito) | 20 | O Maior @(2, 3)", gameManager.getPieceInfoAsString(4));
+        Assertions.assertEquals("5 | Rei | (infinito) | 20 | O Amigo @(1, 3)", gameManager.getPieceInfoAsString(5));
+        Assertions.assertEquals("6 | Rei | (infinito) | 20 | O Beberolas @(1, 2)", gameManager.getPieceInfoAsString(6));
 
         Assertions.assertEquals(1, gameManager.board.getCoordsToId(1, 0));
         Assertions.assertEquals(2, gameManager.board.getCoordsToId(3, 0));
@@ -186,6 +184,16 @@ public class TestGameManager {
         Assertions.assertEquals("1", gameManager.getGameResults().get(10));
 
         Assertions.assertTrue(gameManager.gameOver());
+
+        Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/8x8.txt")));
+        Assertions.assertFalse(gameManager.move(6, 0, 7, 1));//hommer sleep
+        Assertions.assertTrue(gameManager.move(1, 0, 1, 3));
+        Assertions.assertFalse(gameManager.move(1, 7, 1, 3));//queen cannot eat queen
+        Assertions.assertFalse(gameManager.move(3, 7, 7, 3));//delta
+        Assertions.assertTrue(gameManager.move(3, 7, 0, 4));
+        Assertions.assertTrue(gameManager.move(7, 1, 6, 2));//hommer sleep
+
+
     }
 
     @Test

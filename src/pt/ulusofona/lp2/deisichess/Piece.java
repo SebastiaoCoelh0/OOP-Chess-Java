@@ -10,6 +10,7 @@ abstract public class Piece {
     int team;
     String coords; //x,y
     int points;
+    int pointsCaptured = 0;
     Boolean inGame = false; //ou true caso em jogo
     Movement[] movementsPiece = null;
 
@@ -44,6 +45,7 @@ abstract public class Piece {
         clonedPiece.team = this.team;
         clonedPiece.coords = new String(this.coords);
         clonedPiece.points = this.points;
+        clonedPiece.pointsCaptured = this.pointsCaptured;
         clonedPiece.inGame = this.inGame;
 
         return clonedPiece;
@@ -68,6 +70,10 @@ abstract public class Piece {
 
     public Movement[] getMovementsPiece() {
         return movementsPiece;
+    }
+
+    public void addPointCapture(int points) {
+        pointsCaptured += points;
     }
 
     public abstract boolean validPieceMovement(int x0, int y0, int x1, int y1, Board board) throws CloneNotSupportedException;

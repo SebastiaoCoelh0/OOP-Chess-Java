@@ -98,6 +98,11 @@ public class Board {
         return getIdToPiece(id).getPieceInfo();
     }
 
+    public void addPointCapture(int x0, int y0, int x1, int y1) {
+
+        getCoordsToPiece(x0, y0).addPointCapture(getCoordsToPiece(x1, y1).getPoints());
+    }
+
     public Boolean checkTeamPlaying(int x, int y) {
 
         int temp;
@@ -171,10 +176,10 @@ public class Board {
 
                     if (getTurn() % 3 == 0) {
 
-                        hommerSimpson.isNotSleeping();
+                        hommerSimpson.isSleeping();
                     } else {
 
-                        hommerSimpson.isSleeping();
+                        hommerSimpson.isNotSleeping();
                     }
                 }
             }

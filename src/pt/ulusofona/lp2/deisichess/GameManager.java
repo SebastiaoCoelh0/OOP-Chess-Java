@@ -244,6 +244,7 @@ public class GameManager {
         if (board.getCoordsToId(x1, y1) != 0) { //eats piece
 
             board.resetPlaysWithoutCaptures();
+            board.addPointCapture(x0, y0, x1, y1);
             board.getIdToPiece(Integer.parseInt(getSquareInfo(x1, y1)[0])).capture();
 
             if (getCurrentTeamID() == 10) {
