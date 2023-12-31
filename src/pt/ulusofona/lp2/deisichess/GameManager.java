@@ -1,13 +1,17 @@
 package pt.ulusofona.lp2.deisichess;
 
+import pt.ulusofona.lp2.deisichess.type.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
+//TODO tirar getter e setters com funcoes que façam as tarefas na classe
 /*TODO LIST
 
     8 tipos de peças
@@ -20,6 +24,7 @@ import java.util.Objects;
         6- Hommer Simpson esta a dormir de 3 em 3 turnos começando no primeiro (no turno 0, 3, 6, 9, 12, ...)
            move se na diagonal apenas uma posição -2
         7- Joker vai mudando de turno a turno 1º turno rainha - ponei - padre - th - tv - hommer -4
+        8- peça extra: ideia petter griffin
 
     Peças nao podem saltar por cima de outras
     Tool tip alterada agora aparece
@@ -39,6 +44,7 @@ import java.util.Objects;
 
      Alteração do ficheiro txt que guarda a info pertinente na ultima linha, NAO ALTERAR O RESTO DA ESTRUTURA
      caso nao tenha nada nessa linha e um jogo normal
+     tem que ler e guardar com o mesmo formato
 
      UNDO vai desfazendo ate voltar ao estado inicial
 
@@ -53,26 +59,58 @@ public class GameManager {
     } //construtor vazio pedido pelos profs.
 
     Board board = new Board();
+    Stack<Board> boardHistory = new Stack<>();
 
     //TODO
-    //public void loadGame(File file) throws InvalidGameInputException, IOException {
-    public boolean loadGame(File file) {
-        board = new Board(); //reset
-        BufferedReader reader;
-
+    public boolean loadGameTest(File file) { //chamar esta funcao nos testes
         try {
+            loadGame(file);
+            return true;
 
-            reader = new BufferedReader(new FileReader(file));
-
-        } catch (FileNotFoundException e) {
-
+        } catch (IOException io) {
             return false;
-        } //trys to open file
+        }
+    }
+
+    public Piece createNewPiece(int type, int nrID, String name, int team) {
+
+        switch (type) {
+
+            case 0:
+                return new King(nrID, name, team);
+            case 1:
+                return new Queen(nrID, name, team);
+            case 2:
+                return new MagicPony(nrID, name, team);
+            case 3:
+                return new VillagePriest(nrID, name, team);
+            case 4:
+                return new HorizontalTower(nrID, name, team);
+            case 5:
+                return new VerticalTower(nrID, name, team);
+            case 6:
+                return new HommerSimpson(nrID, name, team);
+            case 7:
+                return new Joker(nrID, name, team);
+            case 8:
+                return new PeterGriffin(nrID, name, team);
+            default:
+                return null;
+        }
+    }
+
+    public void loadGame(File file) throws InvalidGameInputException, IOException {
+
+        board = new Board(); //reset
+        boardHistory = new Stack<>(); //reset
+
+        BufferedReader reader;
+        reader = new BufferedReader(new FileReader(file));
 
         HashMap<Integer, Piece> idToPiece = new HashMap<>();
 
         String lineReader;
-
+        //TODO FORMATO VALIDO
         try {
             lineReader = reader.readLine();
         } catch (IOException e) {
@@ -99,7 +137,7 @@ public class GameManager {
 
             String[] parts = lineReader.split(":");
 
-            Piece piecesTemp = new Piece(Integer.parseInt(parts[0]), parts[3], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+            Piece piecesTemp = createNewPiece(Integer.parseInt(parts[1]), Integer.parseInt(parts[0]), parts[3], Integer.parseInt(parts[2]));
             idToPiece.put(Integer.parseInt(parts[0]), piecesTemp);
 
         }
@@ -119,43 +157,25 @@ public class GameManager {
                 if (idToPiece.containsKey(Integer.parseInt(parts[column]))) {
 
                     board.setCoordsToId(column, line, Integer.parseInt(parts[column]));
-                    idToPiece.get(Integer.parseInt(parts[column])).move(column, line);
-                    idToPiece.get(Integer.parseInt(parts[column])).setInGame("em jogo");
+                    idToPiece.get(Integer.parseInt(parts[column])).setCoords(column, line);
+                    idToPiece.get(Integer.parseInt(parts[column])).setInGame(true);
 
                 } else {
-
-                    board.setCoordsToId(column, line, 0);
+                    board.setCoordsToId(column, line, 0); //empty square
                 }
             }
         }
 
         board.setIdToPiece(idToPiece);
-        return true;
+        boardHistory.push(board);
     }
 
     public String[] getSquareInfo(int x, int y) {
 
-        String[] squareInfo = new String[5];
-        squareInfo[0] = String.valueOf(board.getCoordsToId(x, y));
+        if (board.getCoordsToPiece(x, y) != null) {
 
-        if (board.getCoordsToId(x, y) == null || board.getIdToPiece(Integer.parseInt(squareInfo[0])) == null) {
-
-            return new String[]{};
-        }
-
-        Piece tempPiece = board.getIdToPiece(Integer.parseInt(squareInfo[0]));
-
-        squareInfo[1] = String.valueOf(tempPiece.getPieceType());
-        squareInfo[2] = String.valueOf(tempPiece.getTeam());
-        squareInfo[3] = tempPiece.getName();
-
-        if (tempPiece.getTeam() == 0) {
-            squareInfo[4] = "homerSimpson.png";
-        } else {
-            squareInfo[4] = "peterGriffin.png";
-        }
-
-        return squareInfo;
+            return board.getPieceInfo(board.getCoordsToId(x, y));
+        } else return null;
     }
 
     public int getBoardSize() {
@@ -169,37 +189,20 @@ public class GameManager {
 
     boolean checkPieceExists(int x, int y) {
 
-        return getSquareInfo(x, y).length != 0;
+        return getSquareInfo(x, y) != null && getSquareInfo(x, y).length != 0;
     }
 
     boolean checkTeamPlaying(int x, int y) {
-
-        if (Integer.parseInt(getSquareInfo(x, y)[2]) != getCurrentTeamID()) {
-
-            if (getCurrentTeamID() == 0) {
-
-                board.addInvalidAttemptsBlack();
-            } else {
-
-                board.addInvalidAttemptsWhite();
-            }
-            return false;
-        }
-        return true;
-    }
-
-    boolean checkKingMove(int x0, int y0, int x1, int y1) {
-
-        return (x1 == x0 + 1 || x1 == x0 || x1 == x0 - 1) && (y1 == y0 + 1 || y1 == y0 || y1 == y0 - 1);
+        return board.checkTeamPlaying(x, y);
     }
 
     boolean checkSameTeamMove(int x0, int y0, int x1, int y1) {
 
-        if (getSquareInfo(x1, y1).length != 0) {
+        if (getSquareInfo(x1, y1) != null && getSquareInfo(x1, y1).length != 0) {
 
             if (Integer.parseInt(getSquareInfo(x0, y0)[2]) == Integer.parseInt(getSquareInfo(x1, y1)[2])) {
 
-                if (getCurrentTeamID() == 0) {
+                if (getCurrentTeamID() == 10) {
 
                     board.addInvalidAttemptsBlack();
                 } else {
@@ -209,7 +212,6 @@ public class GameManager {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -217,16 +219,9 @@ public class GameManager {
 
 
         if (!checkCoordsLimits(x0) || !checkCoordsLimits(y0) || !checkCoordsLimits(x1) || !checkCoordsLimits(y1)) {
-
             return false;
         }
-
-        if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0)) {
-
-            return false;
-        }
-
-        if (!checkKingMove(x0, y0, x1, y1) || !checkSameTeamMove(x0, y0, x1, y1)) {
+        if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0) || !checkSameTeamMove(x0, y0, x1, y1)) {
 
             return false;
         }
@@ -236,32 +231,41 @@ public class GameManager {
 
     public boolean move(int x0, int y0, int x1, int y1) {
 
-
         if (!checkValidMove(x0, y0, x1, y1)) {
 
             return false;
         }
 
-        if (board.getCoordsToId(x1, y1) != 0) {
+        try {
+            if (!board.getCoordsToPiece(x0, y0).validPieceMovement(x0, y0, x1, y1, board)) {
+                return false;
+            }
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (board.getCoordsToId(x1, y1) != 0) { //eats piece
 
             board.resetPlaysWithoutCaptures();
             board.getIdToPiece(Integer.parseInt(getSquareInfo(x1, y1)[0])).capture();
 
-            if (getCurrentTeamID() == 0) {
+            if (getCurrentTeamID() == 10) {
 
                 board.addValidPlaysBlack();
                 board.addCapturesBlack();
+                board.addPointsBlack(board.getIdToPiece(board.getCoordsToId(x1, y1)).getPoints());
             } else {
 
                 board.addValidPLaysWhite();
                 board.addCapturesWhite();
+                board.addPointsWhite(board.getIdToPiece(board.getCoordsToId(x1, y1)).getPoints());
             }
 
         } else {
 
             board.addPlaysWithoutCaptures();
 
-            if (getCurrentTeamID() == 0) {
+            if (getCurrentTeamID() == 10) {
 
                 board.addValidPlaysBlack();
             } else {
@@ -274,83 +278,58 @@ public class GameManager {
         board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0])); //atualiza as coords da peça na nova posição no tabuleiro
         board.setCoordsToId(x0, y0, 0); //atualiza as coords antigas da peça no tabuleiro
 
-        board.changeTeam();
+        board.endTurn();
+        boardHistory.push(board);
         return true;
     }
 
 
     public String[] getPieceInfo(int ID) {
 
-        String[] pieceInfo = new String[7];
-
-        pieceInfo[0] = String.valueOf(ID);
-        pieceInfo[1] = String.valueOf(board.getIdToPiece(ID).getPieceType());
-        pieceInfo[2] = String.valueOf(board.getIdToPiece(ID).getTeam());
-        pieceInfo[3] = String.valueOf(board.getIdToPiece(ID).getName());
-        pieceInfo[4] = String.valueOf(board.getIdToPiece(ID).getInGame());
-
-        if (Objects.equals(pieceInfo[4], "em jogo")) {
-
-            pieceInfo[5] = board.getIdToPiece(ID).getCoords().split(",")[0];
-            pieceInfo[6] = board.getIdToPiece(ID).getCoords().split(",")[1];
-        } else {
-            pieceInfo[5] = "";
-            pieceInfo[6] = "";
-        }
-
-
-        return pieceInfo;
+        return board.getPieceInfo(ID);
     }
 
     public String getPieceInfoAsString(int ID) {
 
-        String[] pieceInfo = getPieceInfo(ID);
+        return board.getPieceInfoAsString(ID);
 
-        if (Objects.equals(pieceInfo[4], "em jogo")) {
-
-            return pieceInfo[0] + " | " + pieceInfo[1] + " | " + pieceInfo[2] + " | " + pieceInfo[3] + " @ (" + pieceInfo[5] + ", " + pieceInfo[6] + ")";
-
-        } else {
-
-            return pieceInfo[0] + " | " + pieceInfo[1] + " | " + pieceInfo[2] + " | " + pieceInfo[3] + " @ (n/a)";
-        }
 
     }
 
     public int getCurrentTeamID() {
 
         if (board.getTeam().equals("BLACK")) {
-            return 0;
+            return 10;
         }
-        return 1;
+        return 20;
     }
 
     public boolean gameOver() {
 
-        int piecesTeamBlack = 0;
-        int piecesTeamWhite = 0;
+        int kingsTeamBlack = 0;
+        int kingsTeamWhite = 0;
         int count = 0;
 
         for (int pieceId = 1; count < board.getNumPieces(); pieceId++) {
 
-            if (board.getIdToPiece(pieceId) != null) {
+            if (board.getIdToPiece(pieceId) != null && board.getIdToPiece(pieceId).isKing()) {
 
                 count++;
-                if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
+                if (board.getIdToPiece(pieceId).getInGame()) {
 
-                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
+                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 10)) {
 
-                        piecesTeamBlack++;
+                        kingsTeamBlack++;
                     } else {
-                        piecesTeamWhite++;
+                        kingsTeamWhite++;
                     }
                 }
             }
 
         }
 
-        if ((piecesTeamBlack == 0 || piecesTeamWhite == 0) || (piecesTeamWhite == 1 && piecesTeamBlack == 1) ||
-                board.getPlaysWithoutCaptures() == 10) {
+        if ((kingsTeamBlack == 0 || kingsTeamWhite == 0) || (kingsTeamWhite == 1 && kingsTeamBlack == 1) ||
+                ((board.getCapturesWhite() != 0 || board.getCapturesBlack() != 0) && board.getPlaysWithoutCaptures() == 10)) {
 
             return true;
         }
@@ -371,9 +350,10 @@ public class GameManager {
             if (board.getIdToPiece(pieceId) != null) {
 
                 count++;
-                if (Objects.equals(board.getIdToPiece(pieceId).inGame, "em jogo")) {
 
-                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 0)) {
+                if (board.getIdToPiece(pieceId).getInGame()) {
+
+                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 10)) {
 
                         piecesTeamBlack++;
 
@@ -414,12 +394,26 @@ public class GameManager {
     }
 
     //TODO
-    /*
-    public void saveGame(File file) throws IOException
-    public void undo()
-    public List<Comparable> getHints(int x, int y)
-    public Map<String,String> customizeBoard() (*)
-    */
+
+    public void undo() {
+
+        if (!boardHistory.isEmpty()) {
+
+            board = boardHistory.pop();
+        }
+
+    }
+
+    public List<Comparable> getHints(int x, int y) {
+
+        //se for pedido para a outra equipa ou um quadrado vazio da return de null
+        return new ArrayList<>();
+    }
+
+    public Map<String, String> customizeBoard() {
+        return new HashMap<>();
+    }
+
     public JPanel getAuthorsPanel() {
 
         JPanel jpanel = new JPanel();

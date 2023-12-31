@@ -1,15 +1,21 @@
 package pt.ulusofona.lp2.deisichess;
 
+import pt.ulusofona.lp2.deisichess.type.Joker;
+
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Board {
 
     int size;
     int numPieces;
+    int turn = 0;
     HashMap<String, Integer> coordsToId = new HashMap<String, Integer>(); //"x,y" to id
     HashMap<Integer, Piece> idToPiece = new HashMap<Integer, Piece>(); //id,Pieces
     String team = "BLACK";
+    int pointsBlack = 0;
+    int pointsWhite = 0;
     int playsWithoutCaptures = 0;
     int capturesBlack = 0;
     int capturesWhite = 0;
@@ -21,12 +27,96 @@ public class Board {
     public Board() {
     }
 
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Board clonedBoard = (Board) super.clone();
+
+        // Create new HashMap instances to avoid sharing references
+        clonedBoard.coordsToId = new HashMap<>(this.coordsToId);
+        clonedBoard.idToPiece = new HashMap<>(this.idToPiece.size());
+
+        for (Map.Entry<Integer, Piece> entry : this.idToPiece.entrySet()) {
+
+            clonedBoard.idToPiece.put(entry.getKey(), (Piece) entry.getValue().clone());
+        }
+
+
+        clonedBoard.size = this.size;
+        clonedBoard.numPieces = this.numPieces;
+        clonedBoard.turn = this.turn;
+        clonedBoard.team = this.team;
+        clonedBoard.pointsBlack = this.pointsBlack;
+        clonedBoard.pointsWhite = this.pointsWhite;
+        clonedBoard.playsWithoutCaptures = this.playsWithoutCaptures;
+        clonedBoard.capturesBlack = this.capturesBlack;
+        clonedBoard.capturesWhite = this.capturesWhite;
+        clonedBoard.validPlaysBlack = this.validPlaysBlack;
+        clonedBoard.validPlaysWhite = this.validPlaysWhite;
+        clonedBoard.invalidAttemptsBlack = this.invalidAttemptsBlack;
+        clonedBoard.invalidAttemptsWhite = this.invalidAttemptsWhite;
+
+        return clonedBoard;
+    }
+
+    public String getPieceInfoAsString(int id) {
+
+        if (getIdToPiece(id) == null) {
+            return null;
+        }
+
+        return getIdToPiece(id).toString();
+    }
+
+
+    public String[] getPieceInfo(int id) {
+
+        if (getIdToPiece(id) == null) {
+            return null;
+        }
+
+        return getIdToPiece(id).getPieceInfo();
+    }
+
+    public Boolean checkTeamPlaying(int x, int y) {
+
+        int temp;
+
+        if (Objects.equals(team, "BLACK")) {
+
+            temp = 10;
+        } else {
+
+            temp = 20;
+        }
+
+        return getCoordsToPiece(x, y).getTeam() == temp;
+    }
+
+    public void addPointsWhite(int points) {
+        pointsWhite += points;
+    }
+
+    public void addPointsBlack(int points) {
+        pointsBlack += points;
+    }
+
     public int getPlaysWithoutCaptures() {
         return playsWithoutCaptures;
     }
 
     public String getTeam() {
         return team;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void endTurn() {
+        turn++;
+        jokerUpdate();
+        changeTeam();
     }
 
     public void changeTeam() {
@@ -37,6 +127,30 @@ public class Board {
         } else {
 
             team = "BLACK";
+        }
+    }
+
+    public boolean hommerCanMove() {
+
+        int result = getTurn() % 3;
+
+        return result == 0;
+    }
+
+    public void jokerUpdate() {
+
+        for (int id = 0; id < getNumPieces(); id++) {
+
+            if (getIdToPiece(id) != null) {
+
+                if (getIdToPiece(id).isJoker()) {
+
+                    Joker joker = (Joker) getIdToPiece(id);
+
+                    joker.changeType(getTurn());
+
+                }
+            }
         }
     }
 
@@ -54,6 +168,10 @@ public class Board {
 
     public Integer getCoordsToId(int x, int y) {
         return coordsToId.get(x + "," + y);
+    }
+
+    public Piece getCoordsToPiece(int x, int y) {
+        return getIdToPiece(getCoordsToId(x, y));
     }
 
     public void setSize(int size) {

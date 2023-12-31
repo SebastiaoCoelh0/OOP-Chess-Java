@@ -1,8 +1,8 @@
 4
 3
-1:0:0:Chefe
-2:0:0:Selvagem
-3:0:0:Grande Artista
+1:0:10:Chefe
+2:0:10:Selvagem
+3:0:10:Grande Artista
 0:1:0:2
 0:0:3:0
 0:0:0:0
