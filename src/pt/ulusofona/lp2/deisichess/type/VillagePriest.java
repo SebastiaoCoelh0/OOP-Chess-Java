@@ -17,12 +17,12 @@ public class VillagePriest extends Piece {
         if (getInGame()) {
 
             return getNrId() + " | Padre da Vila | " + getPoints() + " | " + getTeam() + " | "
-                    + getName() + " @(" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
+                    + getName() + " @ (" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
 
         } else {
 
             return getNrId() + " | Padre da Vila | " + getPoints() + " | " + getTeam() + " | "
-                    + getName() + " @(n/a)";
+                    + getName() + " @ (n/a)";
         }
 
     }

@@ -17,12 +17,12 @@ public class HorizontalTower extends Piece {
         if (getInGame()) {
 
             return getNrId() + " | TorreHor | " + getPoints() + " | " + getTeam() + " | "
-                    + getName() + " @(" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
+                    + getName() + " @ (" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
 
         } else {
 
             return getNrId() + " | TorreHor | " + getPoints() + " | " + getTeam() + " | "
-                    + getName() + " @(n/a)";
+                    + getName() + " @ (n/a)";
         }
 
     }

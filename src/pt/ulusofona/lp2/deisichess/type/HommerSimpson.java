@@ -21,12 +21,12 @@ public class HommerSimpson extends Piece {
             if (getInGame()) {
 
                 return getNrId() + " | Hommer Simpson | " + getPoints() + " | " + getTeam() + " | "
-                        + getName() + " @(" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
+                        + getName() + " @ (" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
 
             } else {
 
                 return getNrId() + " | Hommer Simpson | " + getPoints() + " | " + getTeam() + " | "
-                        + getName() + " @(n/a)";
+                        + getName() + " @ (n/a)";
             }
         }
         return "Doh! zzzzzz";

@@ -17,12 +17,12 @@ public class MagicPony extends Piece {
         if (getInGame()) {
 
             return getNrId() + " | Ponei Mágico | " + getPoints() + " | " + getTeam() + " | "
-                    + getName() + " @(" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
+                    + getName() + " @ (" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
 
         } else {
 
             return getNrId() + " | Ponei Mágico | " + getPoints() + " | " + getTeam() + " | "
-                    + getName() + " @(n/a)";
+                    + getName() + " @ (n/a)";
         }
 
     }

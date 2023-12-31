@@ -75,12 +75,12 @@ public class Joker extends Piece {
 
         if (getInGame()) {
 
-            str.append(getPoints()).append(" | ").append(getTeam()).append(" | ").append(getName()).append(" @(");
+            str.append(getPoints()).append(" | ").append(getTeam()).append(" | ").append(getName()).append(" @ (");
             str.append(getCoords().split(",")[0]).append(", ").append(getCoords().split(",")[1]).append(")");
 
         } else {
 
-            str.append(getPoints()).append(" | ").append(getTeam()).append(" | ").append(getName()).append(" @(n/a)");
+            str.append(getPoints()).append(" | ").append(getTeam()).append(" | ").append(getName()).append(" @ (n/a)");
         }
         return str.toString();
     }
