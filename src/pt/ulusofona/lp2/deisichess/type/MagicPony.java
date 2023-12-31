@@ -27,6 +27,11 @@ public class MagicPony extends Piece {
 
     }
 
+    public MagicPony copy() {
+
+        return new MagicPony(getNrId(), getName(), getTeam());
+    }
+
     @Override
     public String[] getPieceInfo() {
         return new String[0];

@@ -9,6 +9,11 @@ public class PeterGriffin extends Piece {
         super(nrId, name, team, 2, 8, null);
     }
 
+    public PeterGriffin copy() {
+
+        return new PeterGriffin(getNrId(), getName(), getTeam());
+    }
+
     @Override
     public String[] getPieceInfo() {
         return new String[0];

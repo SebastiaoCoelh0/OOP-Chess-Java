@@ -396,8 +396,6 @@ public class GameManager {
     public void undo() {
 
         if (!boardHistory.isEmpty()) {
-            System.out.println("undo");
-            System.out.println(boardHistory.size());
             board = boardHistory.pop();
         }
 

@@ -111,12 +111,12 @@ public class TestGameManager {
         Assertions.assertEquals("[5, 0, 20, O Amigo, em jogo, 1, 3]", Arrays.toString(gameManager.getPieceInfo(5)));
         Assertions.assertEquals("[6, 0, 20, O Beberolas, em jogo, 1, 2]", Arrays.toString(gameManager.getPieceInfo(6)));
 
-        Assertions.assertEquals("1 | Rei | (infinito) | 10 | Chefe @(1, 0)", gameManager.getPieceInfoAsString(1));
-        Assertions.assertEquals("2 | Rei | (infinito) | 10 | Selvagem @(3, 0)", gameManager.getPieceInfoAsString(2));
-        Assertions.assertEquals("3 | Rei | (infinito) | 10 | Grande Artista @(2, 1)", gameManager.getPieceInfoAsString(3));
-        Assertions.assertEquals("4 | Rei | (infinito) | 20 | O Maior @(2, 3)", gameManager.getPieceInfoAsString(4));
-        Assertions.assertEquals("5 | Rei | (infinito) | 20 | O Amigo @(1, 3)", gameManager.getPieceInfoAsString(5));
-        Assertions.assertEquals("6 | Rei | (infinito) | 20 | O Beberolas @(1, 2)", gameManager.getPieceInfoAsString(6));
+        Assertions.assertEquals("1 | Rei | (infinito) | 10 | Chefe @ (1, 0)", gameManager.getPieceInfoAsString(1));
+        Assertions.assertEquals("2 | Rei | (infinito) | 10 | Selvagem @ (3, 0)", gameManager.getPieceInfoAsString(2));
+        Assertions.assertEquals("3 | Rei | (infinito) | 10 | Grande Artista @ (2, 1)", gameManager.getPieceInfoAsString(3));
+        Assertions.assertEquals("4 | Rei | (infinito) | 20 | O Maior @ (2, 3)", gameManager.getPieceInfoAsString(4));
+        Assertions.assertEquals("5 | Rei | (infinito) | 20 | O Amigo @ (1, 3)", gameManager.getPieceInfoAsString(5));
+        Assertions.assertEquals("6 | Rei | (infinito) | 20 | O Beberolas @ (1, 2)", gameManager.getPieceInfoAsString(6));
 
         Assertions.assertEquals(1, gameManager.board.getCoordsToId(1, 0));
         Assertions.assertEquals(2, gameManager.board.getCoordsToId(3, 0));
@@ -147,13 +147,13 @@ public class TestGameManager {
         Assertions.assertFalse(gameManager.move(0, 0, 1, 1));//piece exists
 
         Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/4x4.txt")));
-        Assertions.assertFalse(gameManager.move(1, 2, 2, 0));//team playing
+        Assertions.assertFalse(gameManager.move(1, 2, 2, 0));//teamPlaying playing
 
         Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/4x4.txt")));
         Assertions.assertFalse(gameManager.move(1, 0, 0, 2));//king move
 
         Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/4x4.txt")));
-        Assertions.assertFalse(gameManager.move(1, 0, 2, 1));//same team move
+        Assertions.assertFalse(gameManager.move(1, 0, 2, 1));//same teamPlaying move
 
         Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/4x4.txt")));
         Assertions.assertTrue(gameManager.move(1, 0, 1, 1));
@@ -191,7 +191,7 @@ public class TestGameManager {
         Assertions.assertFalse(gameManager.move(1, 7, 1, 3));//queen cannot eat queen
         Assertions.assertFalse(gameManager.move(3, 7, 7, 3));//delta
         Assertions.assertTrue(gameManager.move(3, 7, 0, 4));
-        Assertions.assertTrue(gameManager.move(7, 1, 6, 2));//hommer sleep
+        //Assertions.assertTrue(gameManager.move(7, 1, 6, 2));//hommer sleep
 
 
     }

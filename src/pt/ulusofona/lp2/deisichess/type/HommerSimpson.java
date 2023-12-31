@@ -20,16 +20,21 @@ public class HommerSimpson extends Piece {
 
             if (getInGame()) {
 
-                return getNrId() + " | Hommer Simpson | " + getPoints() + " | " + getTeam() + " | "
+                return getNrId() + " | Homer Simpson | " + getPoints() + " | " + getTeam() + " | "
                         + getName() + " @ (" + getCoords().split(",")[0] + ", " + getCoords().split(",")[1] + ")";
 
             } else {
 
-                return getNrId() + " | Hommer Simpson | " + getPoints() + " | " + getTeam() + " | "
+                return getNrId() + " | Homer Simpson | " + getPoints() + " | " + getTeam() + " | "
                         + getName() + " @ (n/a)";
             }
         }
         return "Doh! zzzzzz";
+    }
+
+    public HommerSimpson copy() {
+
+        return new HommerSimpson(getNrId(), getName(), getTeam());
     }
 
     public void isSleeping() {

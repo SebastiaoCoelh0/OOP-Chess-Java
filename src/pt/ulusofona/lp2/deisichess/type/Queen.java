@@ -29,6 +29,11 @@ public class Queen extends Piece {
 
     }
 
+    public Queen copy() {
+
+        return new Queen(getNrId(), getName(), getTeam());
+    }
+
     @Override
     public String[] getPieceInfo() {
         return new String[0];

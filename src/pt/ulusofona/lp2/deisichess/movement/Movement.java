@@ -10,4 +10,6 @@ public abstract class Movement {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+
 }

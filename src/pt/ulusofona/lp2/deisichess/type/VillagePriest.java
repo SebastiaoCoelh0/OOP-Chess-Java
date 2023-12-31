@@ -24,7 +24,11 @@ public class VillagePriest extends Piece {
             return getNrId() + " | Padre da Vila | " + getPoints() + " | " + getTeam() + " | "
                     + getName() + " @ (n/a)";
         }
+    }
 
+    public VillagePriest copy() {
+
+        return new VillagePriest(getNrId(), getName(), getTeam());
     }
 
     @Override

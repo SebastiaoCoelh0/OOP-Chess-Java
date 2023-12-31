@@ -23,9 +23,13 @@ public class King extends Piece {
 
         } else {
 
-            return getNrId() + " | " + getPieceType() + " | " + getPoints() + " | " + getTeam() + " | "
-                    + getName() + " @ (n/a)";
+            return getNrId() + " | Rei | (infinito) | " + getTeam() + " | " + getName() + " @ (n/a)";
         }
+    }
+
+    public King copy() {
+
+        return new King(getNrId(), getName(), getTeam());
     }
 
     public boolean validPieceMovement(int x0, int y0, int x1, int y1, Board board) {

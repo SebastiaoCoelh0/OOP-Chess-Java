@@ -12,6 +12,11 @@ public class Joker extends Piece {
         super(nrId, name, team, 4, 7, new Movement[]{});
     }
 
+    public Joker copy() {
+
+        return new Joker(getNrId(), getName(), getTeam());
+    }
+
     @Override
     public String[] getPieceInfo() {
         return new String[0];
@@ -85,18 +90,9 @@ public class Joker extends Piece {
         return str.toString();
     }
 
-    public Board cloneBoard(Board board) throws CloneNotSupportedException {
-        return (Board) board.clone();
-    }
-
     public boolean validPieceMovement(int x0, int y0, int x1, int y1, Board board) {
 
-        Board boardCopy = null;
-        try {
-            boardCopy = cloneBoard(board);
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+        Board boardCopy = board.copyClone();
 
         try {
             return currentPiece.validPieceMovement(x0, y0, x1, y1, boardCopy);

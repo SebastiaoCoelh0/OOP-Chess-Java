@@ -24,7 +24,11 @@ public class HorizontalTower extends Piece {
             return getNrId() + " | TorreHor | " + getPoints() + " | " + getTeam() + " | "
                     + getName() + " @ (n/a)";
         }
+    }
 
+    public HorizontalTower copy() {
+
+        return new HorizontalTower(getNrId(), getName(), getTeam());
     }
 
     @Override

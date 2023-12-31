@@ -121,6 +121,14 @@ abstract public class Piece {
         setCoords(x, y);
     }
 
+    public void setPointsCaptured(int pointsCaptured) {
+        this.pointsCaptured = pointsCaptured;
+    }
+
+    public int getPointsCaptured() {
+        return pointsCaptured;
+    }
+
     public void capture() {
         setInGame(false);
     }

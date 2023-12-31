@@ -24,7 +24,11 @@ public class VerticalTower extends Piece {
             return getNrId() + " | TorreVert | " + getPoints() + " | " + getTeam() + " | "
                     + getName() + " @ (n/a)";
         }
+    }
 
+    public VerticalTower copy() {
+
+        return new VerticalTower(getNrId(), getName(), getTeam());
     }
 
     @Override
