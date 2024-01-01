@@ -197,6 +197,39 @@ public class TestGameManager {
     }
 
     @Test
+    void testMoveVideo() {
+
+        GameManager gameManager = new GameManager();
+        gameManager.loadGameTest(new File("test-files/8x8.txt"));
+
+        Assertions.assertTrue(gameManager.move(3, 0, 0, 3));
+        Assertions.assertTrue(gameManager.move(1, 7, 4, 4));
+        Assertions.assertTrue(gameManager.move(1, 0, 1, 1));
+        Assertions.assertTrue(gameManager.move(2, 7, 0, 5));
+        Assertions.assertTrue(gameManager.move(5, 0, 5, 7));
+        Assertions.assertTrue(gameManager.move(0, 5, 2, 3));
+        Assertions.assertFalse(gameManager.move(6, 0, 5, 1));
+        Assertions.assertTrue(gameManager.move(2, 0, 0, 2));
+        Assertions.assertTrue(gameManager.move(4, 4, 4, 2));
+        Assertions.assertTrue(gameManager.move(0, 3, 2, 5));
+        Assertions.assertTrue(gameManager.move(0, 7, 1, 7));
+        Assertions.assertFalse(gameManager.move(1, 1, 1, 7));
+        Assertions.assertFalse(gameManager.move(4, 2, 3, 3));
+        Assertions.assertFalse(gameManager.move(1, 1, 1, 7));
+        Assertions.assertTrue(gameManager.move(6, 0, 5, 1));
+        Assertions.assertTrue(gameManager.move(3, 7, 0, 4));
+        Assertions.assertTrue(gameManager.move(7, 0, 7, 3));
+        Assertions.assertTrue(gameManager.move(4, 2, 5, 1));
+        Assertions.assertTrue(gameManager.move(1, 1, 1, 5));
+        Assertions.assertTrue(gameManager.move(5, 1, 2, 1));
+        Assertions.assertTrue(gameManager.move(1, 5, 1, 7));
+        System.out.println(gameManager.getGameResults());
+        Assertions.assertTrue(gameManager.gameOver());
+
+
+    }
+
+    @Test
     void testDraw10Plays() {
 
         GameManager gameManager = new GameManager();

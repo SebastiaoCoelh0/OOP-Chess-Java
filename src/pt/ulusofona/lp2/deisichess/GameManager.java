@@ -199,13 +199,6 @@ public class GameManager {
 
             if (Integer.parseInt(getSquareInfo(x0, y0)[2]) == Integer.parseInt(getSquareInfo(x1, y1)[2])) {
 
-                if (getCurrentTeamID() == 10) {
-
-                    board.addInvalidAttemptsBlack();
-                } else {
-
-                    board.addInvalidAttemptsWhite();
-                }
                 return false;
             }
         }
@@ -216,6 +209,8 @@ public class GameManager {
 
 
         if (!checkCoordsLimits(x0) || !checkCoordsLimits(y0) || !checkCoordsLimits(x1) || !checkCoordsLimits(y1)) {
+
+
             return false;
         }
         if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0) || !checkSameTeamMove(x0, y0, x1, y1)) {
@@ -228,18 +223,23 @@ public class GameManager {
 
     public boolean move(int x0, int y0, int x1, int y1) {
 
+        //tests: System.out.println("Assertions.assertTrue(gameManager.move(" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "));");
+
         if (!checkValidMove(x0, y0, x1, y1)) {
 
+            board.addInvalidAttempt();
             return false;
         }
 
-        try {
-            if (!board.getCoordsToPiece(x0, y0).validPieceMovement(x0, y0, x1, y1, board)) {
-                return false;
-            }
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
+
+        if (!board.getCoordsToPiece(x0, y0).validPieceMovement(x0, y0, x1, y1, board)) {
+
+            board.addInvalidAttempt();
+            return false;
         }
+
+        board.addValidPlays();
+
         if (board.getCoordsToId(x1, y1) != 0) { //eats piece
 
             board.resetPlaysWithoutCaptures();
@@ -248,12 +248,11 @@ public class GameManager {
 
             if (getCurrentTeamID() == 10) {
 
-                board.addValidPlaysBlack();
                 board.addCapturesBlack();
                 board.addPointsBlack(board.getIdToPiece(board.getCoordsToId(x1, y1)).getPoints());
+
             } else {
 
-                board.addValidPLaysWhite();
                 board.addCapturesWhite();
                 board.addPointsWhite(board.getIdToPiece(board.getCoordsToId(x1, y1)).getPoints());
             }
@@ -261,15 +260,8 @@ public class GameManager {
         } else {
 
             board.addPlaysWithoutCaptures();
-
-            if (getCurrentTeamID() == 10) {
-
-                board.addValidPlaysBlack();
-            } else {
-
-                board.addValidPLaysWhite();
-            }
         }
+
         board.getIdToPiece(Integer.parseInt(getSquareInfo(x0, y0)[0])).move(x1, y1); //atualiza as coords na peça
         board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0])); //atualiza as coords da peça na nova posição no tabuleiro
         board.setCoordsToId(x0, y0, 0); //atualiza as coords antigas da peça no tabuleiro
@@ -337,39 +329,19 @@ public class GameManager {
         ArrayList<String> results = new ArrayList<>();
         results.add("JOGO DE CRAZY CHESS");
 
-        int piecesTeamBlack = 0;
-        int piecesTeamWhite = 0;
-        int count = 0;
+        int kingsTeamBlack = board.countKingsTeam(10);
+        int kingsTeamWhite = board.countKingsTeam(20);
 
-        for (int pieceId = 1; count < board.getNumPieces(); pieceId++) {
 
-            if (board.getIdToPiece(pieceId) != null) {
-
-                count++;
-
-                if (board.getIdToPiece(pieceId).getInGame()) {
-
-                    if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 10)) {
-
-                        piecesTeamBlack++;
-
-                    } else {
-
-                        piecesTeamWhite++;
-                    }
-                }
-            }
-        }
-
-        if (piecesTeamBlack == 0 && piecesTeamWhite != 0) {
+        if (kingsTeamBlack == 0 && kingsTeamWhite != 0) {
 
             results.add("Resultado: VENCERAM AS BRANCAS");
 
-        } else if (piecesTeamWhite == 0 && piecesTeamBlack != 0) {
+        } else if (kingsTeamWhite == 0 && kingsTeamBlack != 0) {
 
             results.add("Resultado: VENCERAM AS PRETAS");
 
-        } else {
+        } else { // if (kingsTeamWhite == 1 && kingsTeamBlack == 1)  ou 10 jogadas sem captura
 
             results.add("Resultado: EMPATE");
         }
@@ -377,13 +349,13 @@ public class GameManager {
         results.add("---");
 
         results.add("Equipa das Pretas");
-        results.add(String.valueOf(board.getCapturesBlack()));
         results.add(String.valueOf(board.getValidPlaysBlack()));
+        results.add(String.valueOf(board.getCapturesBlack()));
         results.add(String.valueOf(board.getInvalidAttemptsBlack()));
 
         results.add("Equipa das Brancas");
-        results.add(String.valueOf(board.getCapturesWhite()));
         results.add(String.valueOf(board.getValidPlaysWhite()));
+        results.add(String.valueOf(board.getCapturesWhite()));
         results.add(String.valueOf(board.getInvalidAttemptsWhite()));
 
         return results;

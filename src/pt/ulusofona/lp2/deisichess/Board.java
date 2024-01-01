@@ -342,12 +342,34 @@ public class Board {
         capturesWhite++;
     }
 
+    public void addValidPlays() {
+
+        if (getTeamID() == 10) {
+
+            addValidPlaysBlack();
+
+        } else {
+
+            addValidPLaysWhite();
+        }
+
+    }
+
     public void addValidPlaysBlack() {
         validPlaysBlack++;
     }
 
     public void addValidPLaysWhite() {
         validPlaysWhite++;
+    }
+
+    public void addInvalidAttempt() {
+
+        if (getTeamID() == 10) {
+            addInvalidAttemptsBlack();
+        } else {
+            addInvalidAttemptsWhite();
+        }
     }
 
     public void addInvalidAttemptsBlack() {
@@ -388,5 +410,54 @@ public class Board {
 
     public int getInvalidAttemptsWhite() {
         return invalidAttemptsWhite;
+    }
+
+    public int countPicesTeam(int team) {
+
+        int count = 0;
+        int pieces = 0;
+        for (int pieceId = 1; count < getNumPieces(); pieceId++) {
+
+            if (getIdToPiece(pieceId) != null) {
+
+                count++;
+
+                if (getIdToPiece(pieceId).getInGame()) {
+
+                    if (getIdToPiece(pieceId).getTeam() == team) {
+
+                        pieces++;
+
+                    }
+                }
+            }
+        }
+
+        return pieces;
+    }
+
+    public int countKingsTeam(int team) {
+
+        int count = 0;
+        int kings = 0;
+
+        for (int pieceId = 1; count < getNumPieces(); pieceId++) {
+
+            if (getIdToPiece(pieceId) != null) {
+
+                count++;
+
+                if (getIdToPiece(pieceId).getInGame()) {
+
+                    if (getIdToPiece(pieceId).getTeam() == team && getIdToPiece(pieceId).isKing()) {
+
+                        kings++;
+
+                    }
+                }
+            }
+        }
+
+        return kings;
     }
 }

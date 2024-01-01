@@ -94,11 +94,6 @@ public class Joker extends Piece {
 
         Board boardCopy = board.copyClone();
 
-        try {
-            return currentPiece.validPieceMovement(x0, y0, x1, y1, boardCopy);
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-
+        return currentPiece.validPieceMovement(x0, y0, x1, y1, boardCopy);
     }
 }

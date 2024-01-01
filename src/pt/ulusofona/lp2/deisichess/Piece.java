@@ -76,7 +76,7 @@ abstract public class Piece {
         pointsCaptured += points;
     }
 
-    public abstract boolean validPieceMovement(int x0, int y0, int x1, int y1, Board board) throws CloneNotSupportedException;
+    public abstract boolean validPieceMovement(int x0, int y0, int x1, int y1, Board board);
 
     public boolean isKing() {
         return pieceType == 0;
