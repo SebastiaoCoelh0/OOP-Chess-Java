@@ -233,7 +233,7 @@ public class GameManager {
 
         boardHistory.push(board.copyClone()); //copys old board before making the move
 
-        //tests: System.out.println("Assertions.assertTrue(gameManager.move(" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "));");
+        //System.out.println("Assertions.assertTrue(gameManager.move(" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "));");
 
         if (!checkValidMove(x0, y0, x1, y1)) {
 
@@ -365,6 +365,7 @@ public class GameManager {
     }
 
     public void saveGame(File file) throws IOException {
+
 
     }
 

@@ -80,7 +80,6 @@ public class Joker extends Piece {
                 str.append("Homer Simpson | ");
                 break;
             default:
-                str.append("Joker | ");
         }
 
         if (getInGame()) {
@@ -98,6 +97,18 @@ public class Joker extends Piece {
     public boolean validPieceMovement(int x0, int y0, int x1, int y1, Board board) {
 
         Board boardCopy = board.copyClone();
+
+        if (currentPiece.isHommer()) {
+
+            HommerSimpson homer = (HommerSimpson) currentPiece;
+            if (board.getTurn() % 3 == 0) {
+
+                homer.isSleeping();
+            } else {
+
+                homer.isNotSleeping();
+            }
+        }
 
         return currentPiece.validPieceMovement(x0, y0, x1, y1, boardCopy);
     }

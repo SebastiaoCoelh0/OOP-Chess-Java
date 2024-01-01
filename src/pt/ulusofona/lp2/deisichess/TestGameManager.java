@@ -281,6 +281,19 @@ public class TestGameManager {
     }
 
     @Test
+    void testJoker() {
+
+        GameManager gameManager = new GameManager();
+        gameManager.loadGameTest(new File("test-files/8x8.txt"));
+        Assertions.assertTrue(gameManager.move(7, 0, 4, 3));
+        Assertions.assertTrue(gameManager.move(7, 7, 5, 5));
+        Assertions.assertTrue(gameManager.move(4, 3, 6, 5));
+        Assertions.assertTrue(gameManager.move(5, 5, 4, 5));
+        Assertions.assertTrue(gameManager.move(6, 5, 6, 3));
+        Assertions.assertTrue(gameManager.move(4, 5, 5, 4));
+    }
+
+    @Test
     void testDraw10Plays() {
 
         GameManager gameManager = new GameManager();
