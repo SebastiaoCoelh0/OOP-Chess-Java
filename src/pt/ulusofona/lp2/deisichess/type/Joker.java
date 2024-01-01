@@ -45,6 +45,11 @@ public class Joker extends Piece {
         }
     }
 
+    public boolean isJokerAsQueen() {
+
+        return currentPiece.isQueen();
+    }
+
     public void changeType(int turn) {
         currentPiece = jokerMovement(turn);
     }

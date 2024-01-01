@@ -45,6 +45,17 @@ public class Queen extends Piece {
             return false;
         }
 
+        if (board.getCoordsToPiece(x1, y1).isJoker()) {
+
+            Joker temp = (Joker) board.getCoordsToPiece(x1, y1);
+
+            if (temp.isJokerAsQueen()) {
+
+                return false;
+            }
+
+        }
+
         for (Movement movement : getMovementsPiece()) {
 
             if (movement.canMovePiece(x0, y0, x1, y1, board, 5)) {
