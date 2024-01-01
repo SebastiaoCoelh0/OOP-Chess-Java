@@ -1,14 +1,21 @@
 package pt.ulusofona.lp2.deisichess;
 
-import java.io.IOException;
+public class InvalidGameInputException extends Throwable {
 
-public class InvalidGameInputException extends IOException {
+    int lineWithError;
+    String problemDescription;
+
+    public InvalidGameInputException(int lineWithError, String problemDescription) {
+        this.lineWithError = lineWithError;
+        this.problemDescription = problemDescription;
+    }
 
     public int getLineWithError() {
-        return -1;
+        return lineWithError;
     }
 
     public String getProblemDescription() {
-        return "erro";
+
+        return problemDescription;
     }
 }

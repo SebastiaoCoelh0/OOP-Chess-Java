@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-//TODO tirar getter e setters com funcoes que façam as tarefas na classe
+//TODO stats, sugestao, save, confirmacao do load
 /*TODO LIST
 
     8 tipos de peças
@@ -69,6 +69,8 @@ public class GameManager {
 
         } catch (IOException io) {
             return false;
+        } catch (InvalidGameInputException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -137,9 +139,17 @@ public class GameManager {
 
             String[] parts = lineReader.split(":");
 
+            if (parts.length > 4) {
+
+                throw new InvalidGameInputException(3 + i, "DADOS A MAIS (Esperava: 4 ; Obtive: " + parts.length + ")");
+
+            } else if (parts.length < 4) {
+
+                throw new InvalidGameInputException(3 + i, "DADOS A MENOS (Esperava: 4 ; Obtive: " + parts.length + ")");
+            }
+
             Piece piecesTemp = createNewPiece(Integer.parseInt(parts[1]), Integer.parseInt(parts[0]), parts[3], Integer.parseInt(parts[2]));
             idToPiece.put(Integer.parseInt(parts[0]), piecesTemp);
-
         }
 
         for (int line = 0; line < board.getSize(); line++) {

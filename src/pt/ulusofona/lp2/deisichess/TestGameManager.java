@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import pt.ulusofona.lp2.deisichess.movement.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class TestGameManager {
@@ -19,6 +20,30 @@ public class TestGameManager {
 
         gameManager = new GameManager();
         Assertions.assertFalse(gameManager.loadGameTest(new File("test-files/iDontExist.txt")));
+
+    }
+
+    @Test
+    public void filesWithErrors() throws IOException {
+
+        GameManager gameManager = new GameManager();
+
+        try {
+            gameManager.loadGame(new File("test-files/testFileError1.txt"));
+        } catch (InvalidGameInputException e) {
+            Assertions.assertEquals(3, e.lineWithError);
+            Assertions.assertEquals("DADOS A MAIS (Esperava: 4 ; Obtive: 5)", e.problemDescription);
+            //throw new RuntimeException(e);
+        }
+
+        try {
+            gameManager.loadGame(new File("test-files/testFileError2.txt"));
+        } catch (InvalidGameInputException e) {
+            Assertions.assertEquals(4, e.lineWithError);
+            Assertions.assertEquals("DADOS A MENOS (Esperava: 4 ; Obtive: 3)", e.problemDescription);
+            //throw new RuntimeException(e);
+        }
+
 
     }
 
