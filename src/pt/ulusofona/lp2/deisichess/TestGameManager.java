@@ -71,13 +71,19 @@ public class TestGameManager {
     }
 
     @Test
-    public void vitoriaInicio() {
+    public void vitoriaInicio1() {
 
         GameManager gameManager = new GameManager();
 
         gameManager.loadGameTest(new File("test-files/vitoriaInicio1.txt"));
         Assertions.assertTrue(gameManager.gameOver());
         Assertions.assertEquals("Resultado: VENCERAM AS PRETAS", gameManager.getGameResults().get(1));
+    }
+
+    @Test
+    public void vitoriaInicio2() {
+
+        GameManager gameManager = new GameManager();
 
         gameManager.loadGameTest(new File("test-files/vitoriaInicio2.txt"));
         Assertions.assertTrue(gameManager.gameOver());
@@ -178,10 +184,10 @@ public class TestGameManager {
         Assertions.assertEquals("Resultado: VENCERAM AS BRANCAS", gameManager.getGameResults().get(1));
         Assertions.assertEquals("0", gameManager.getGameResults().get(4));
         Assertions.assertEquals("4", gameManager.getGameResults().get(5));
-        Assertions.assertEquals("1", gameManager.getGameResults().get(6));
+        Assertions.assertEquals("2", gameManager.getGameResults().get(6));
         Assertions.assertEquals("3", gameManager.getGameResults().get(8));
         Assertions.assertEquals("4", gameManager.getGameResults().get(9));
-        Assertions.assertEquals("1", gameManager.getGameResults().get(10));
+        Assertions.assertEquals("2", gameManager.getGameResults().get(10));
 
         Assertions.assertTrue(gameManager.gameOver());
 
@@ -223,7 +229,6 @@ public class TestGameManager {
         Assertions.assertTrue(gameManager.move(1, 1, 1, 5));
         Assertions.assertTrue(gameManager.move(5, 1, 2, 1));
         Assertions.assertTrue(gameManager.move(1, 5, 1, 7));
-        System.out.println(gameManager.getGameResults());
         Assertions.assertTrue(gameManager.gameOver());
 
 

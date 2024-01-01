@@ -6,10 +6,4 @@ public abstract class Movement {
 
     public abstract boolean canMovePiece(int x0, int y0, int x1, int y1, Board board, int delta);
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-
 }

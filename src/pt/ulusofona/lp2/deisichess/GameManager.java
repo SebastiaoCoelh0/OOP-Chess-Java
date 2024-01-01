@@ -167,7 +167,7 @@ public class GameManager {
         }
 
         board.setIdToPiece(idToPiece);
-        boardHistory.push(board);
+        boardHistory.push(board.copyClone());
     }
 
     public String[] getSquareInfo(int x, int y) {
@@ -266,7 +266,7 @@ public class GameManager {
         board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0])); //atualiza as coords da peça na nova posição no tabuleiro
         board.setCoordsToId(x0, y0, 0); //atualiza as coords antigas da peça no tabuleiro
         board.endTurn();
-        boardHistory.push(board);
+        boardHistory.push(board.copyClone());
         return true;
     }
 
@@ -288,8 +288,8 @@ public class GameManager {
 
     public boolean gameOver() {
 
-        int kingsTeamBlack = 0;
-        int kingsTeamWhite = 0;
+        int kingsTeamBlack = board.countKingsTeam(10);
+        int kingsTeamWhite = board.countKingsTeam(20);
         int otherPiece = 0;
         int count = 0;
 
@@ -298,17 +298,11 @@ public class GameManager {
             if (board.getIdToPiece(pieceId) != null) {
 
                 count++;
+
                 if (board.getIdToPiece(pieceId).getInGame()) {
 
-                    if (board.getIdToPiece(pieceId).isKing()) {
+                    if (!board.getIdToPiece(pieceId).isKing()) {
 
-                        if (Objects.equals(board.getIdToPiece(pieceId).getTeam(), 10)) {
-
-                            kingsTeamBlack++;
-                        } else {
-                            kingsTeamWhite++;
-                        }
-                    } else {
                         otherPiece++;
                     }
                 }
@@ -349,13 +343,13 @@ public class GameManager {
         results.add("---");
 
         results.add("Equipa das Pretas");
-        results.add(String.valueOf(board.getValidPlaysBlack()));
         results.add(String.valueOf(board.getCapturesBlack()));
+        results.add(String.valueOf(board.getValidPlaysBlack()));
         results.add(String.valueOf(board.getInvalidAttemptsBlack()));
 
         results.add("Equipa das Brancas");
-        results.add(String.valueOf(board.getValidPlaysWhite()));
         results.add(String.valueOf(board.getCapturesWhite()));
+        results.add(String.valueOf(board.getValidPlaysWhite()));
         results.add(String.valueOf(board.getInvalidAttemptsWhite()));
 
         return results;
@@ -369,6 +363,7 @@ public class GameManager {
 
         if (!boardHistory.isEmpty()) {
             board = boardHistory.pop();
+            board.updateTurnBasedPieces();
         }
 
     }

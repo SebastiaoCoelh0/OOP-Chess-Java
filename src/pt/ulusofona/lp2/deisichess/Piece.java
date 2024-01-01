@@ -25,33 +25,6 @@ abstract public class Piece {
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-
-        Piece clonedPiece = (Piece) super.clone();
-
-        if (movementsPiece != null) {
-
-            clonedPiece.movementsPiece = new Movement[movementsPiece.length];
-
-            for (int i = 0; i < movementsPiece.length; i++) {
-
-                clonedPiece.movementsPiece[i] = (Movement) movementsPiece[i].clone();
-            }
-        }
-
-        clonedPiece.nrId = this.nrId;
-        clonedPiece.name = new String(this.name);
-        clonedPiece.pieceType = this.pieceType;
-        clonedPiece.team = this.team;
-        clonedPiece.coords = new String(this.coords);
-        clonedPiece.points = this.points;
-        clonedPiece.pointsCaptured = this.pointsCaptured;
-        clonedPiece.inGame = this.inGame;
-
-        return clonedPiece;
-    }
-
-    @Override
     public String toString() {
 
 
