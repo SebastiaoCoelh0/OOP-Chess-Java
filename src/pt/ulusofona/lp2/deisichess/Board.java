@@ -2,9 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 import pt.ulusofona.lp2.deisichess.type.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Board {
 
@@ -160,6 +158,37 @@ public class Board {
         clonedBoard.invalidAttemptsWhite = this.invalidAttemptsWhite;
 
         return clonedBoard;
+    }
+
+    public List<Comparable> getHints(int x, int y) {
+
+        if (getCoordsToPiece(x, y) == null || getCoordsToPiece(x, y).getTeam() != getTeamID()) {
+            return null;
+        }
+
+        List<Comparable> hints = new ArrayList<Comparable>();
+
+        for (int column = 0; column < getSize(); column++) {
+
+            for (int line = 0; line < getSize(); line++) {
+
+                if (getCoordsToPiece(x, y).validPieceMovement(x, y, column, line, this)) {
+
+                    if (getCoordsToPiece(column, line) != null) {
+
+                        if (getCoordsToPiece(column, line).getTeam() != getCoordsToPiece(x, y).getTeam()) {
+
+                            hints.add(new Hint(column, line, getCoordsToPiece(column, line).getPoints()));
+                        }
+                    } else {
+
+                        hints.add(new Hint(column, line, 0));
+                    }
+                }
+            }
+        }
+
+        return hints;
     }
 
     public String getPieceInfoAsString(int id) {

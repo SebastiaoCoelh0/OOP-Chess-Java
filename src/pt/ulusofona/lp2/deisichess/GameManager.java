@@ -202,11 +202,11 @@ public class GameManager {
         return board.checkTeamPlaying(x, y);
     }
 
-    public boolean checkSameTeamMove(int x0, int y0, int x1, int y1) {
+    public boolean checkSameTeamMove(int x1, int y1) {
 
-        if (getSquareInfo(x1, y1) != null && getSquareInfo(x1, y1).length != 0) {
+        if (board.getCoordsToPiece(x1, y1) != null) {
 
-            if (Integer.parseInt(getSquareInfo(x0, y0)[2]) == Integer.parseInt(getSquareInfo(x1, y1)[2])) {
+            if (board.checkTeamPlaying(x1, y1)) {
 
                 return false;
             }
@@ -221,7 +221,7 @@ public class GameManager {
 
             return false;
         }
-        if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0) || !checkSameTeamMove(x0, y0, x1, y1)) {
+        if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0) || !checkSameTeamMove(x1, y1)) {
 
             return false;
         }
@@ -378,8 +378,7 @@ public class GameManager {
 
     public List<Comparable> getHints(int x, int y) {
 
-        //se for pedido para a outra equipa ou um quadrado vazio da return de null
-        return new ArrayList<>();
+        return board.getHints(x, y);
     }
 
     public Map<String, String> customizeBoard() {
