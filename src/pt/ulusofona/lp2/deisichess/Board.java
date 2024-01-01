@@ -42,16 +42,20 @@ public class Board {
                 case 0:
                     King temp0 = (King) entry.getValue();
                     temp0 = temp0.copy();
+                    temp0.setInGame(entry.getValue().getInGame());
                     if (entry.getValue().getCoords() != null) {
 
                         temp0.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
+                    //System.out.println(this);
+                    //System.out.println(temp0.getCoords());
                     temp0.setPointsCaptured(entry.getValue().getPointsCaptured());
                     clonedBoard.idToPiece.put(entry.getKey(), temp0);
                     break;
                 case 1:
                     Queen temp1 = (Queen) entry.getValue();
                     temp1 = temp1.copy();
+                    temp1.setInGame(entry.getValue().getInGame());
                     if (entry.getValue().getCoords() != null) {
 
                         temp1.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
@@ -62,6 +66,7 @@ public class Board {
                 case 2:
                     MagicPony temp2 = (MagicPony) entry.getValue();
                     temp2 = temp2.copy();
+                    temp2.setInGame(entry.getValue().getInGame());
                     if (entry.getValue().getCoords() != null) {
 
                         temp2.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
@@ -72,6 +77,7 @@ public class Board {
                 case 3:
                     VillagePriest temp3 = (VillagePriest) entry.getValue();
                     temp3 = temp3.copy();
+                    temp3.setInGame(entry.getValue().getInGame());
                     if (entry.getValue().getCoords() != null) {
 
                         temp3.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
@@ -82,6 +88,7 @@ public class Board {
                 case 4:
                     HorizontalTower temp4 = (HorizontalTower) entry.getValue();
                     temp4 = temp4.copy();
+                    temp4.setInGame(entry.getValue().getInGame());
                     if (entry.getValue().getCoords() != null) {
 
                         temp4.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
@@ -92,6 +99,7 @@ public class Board {
                 case 5:
                     VerticalTower temp5 = (VerticalTower) entry.getValue();
                     temp5 = temp5.copy();
+                    temp5.setInGame(entry.getValue().getInGame());
                     if (entry.getValue().getCoords() != null) {
 
                         temp5.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
@@ -102,6 +110,7 @@ public class Board {
                 case 6:
                     HommerSimpson temp6 = (HommerSimpson) entry.getValue();
                     temp6 = temp6.copy();
+                    temp6.setInGame(entry.getValue().getInGame());
                     if (entry.getValue().getCoords() != null) {
 
                         temp6.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
@@ -112,6 +121,7 @@ public class Board {
                 case 7:
                     Joker temp7 = (Joker) entry.getValue();
                     temp7 = temp7.copy();
+                    temp7.setInGame(entry.getValue().getInGame());
                     if (entry.getValue().getCoords() != null) {
 
                         temp7.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
@@ -122,6 +132,7 @@ public class Board {
                 case 8:
                     PeterGriffin temp8 = (PeterGriffin) entry.getValue();
                     temp8 = temp8.copy();
+                    temp8.setInGame(entry.getValue().getInGame());
                     if (entry.getValue().getCoords() != null) {
 
                         temp8.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
@@ -133,7 +144,6 @@ public class Board {
                     return null;
             }
         }
-
 
         clonedBoard.size = this.size;
         clonedBoard.numPieces = this.numPieces;

@@ -167,7 +167,6 @@ public class GameManager {
         }
 
         board.setIdToPiece(idToPiece);
-        //testeUNDO boardHistory.push(board.copyClone());
     }
 
     public String[] getSquareInfo(int x, int y) {
@@ -210,7 +209,6 @@ public class GameManager {
 
         if (!checkCoordsLimits(x0) || !checkCoordsLimits(y0) || !checkCoordsLimits(x1) || !checkCoordsLimits(y1)) {
 
-
             return false;
         }
         if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0) || !checkSameTeamMove(x0, y0, x1, y1)) {
@@ -222,8 +220,9 @@ public class GameManager {
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
-        
-        boardHistory.push(board.copyClone());
+
+        boardHistory.push(board.copyClone()); //copys old board before making the move
+
         //tests: System.out.println("Assertions.assertTrue(gameManager.move(" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "));");
 
         if (!checkValidMove(x0, y0, x1, y1)) {
@@ -267,7 +266,6 @@ public class GameManager {
         board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0])); //atualiza as coords da peça na nova posição no tabuleiro
         board.setCoordsToId(x0, y0, 0); //atualiza as coords antigas da peça no tabuleiro
         board.endTurn();
-        //testUNDO boardHistory.push(board.copyClone());
         return true;
     }
 
