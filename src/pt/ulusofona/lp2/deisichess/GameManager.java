@@ -167,7 +167,7 @@ public class GameManager {
         }
 
         board.setIdToPiece(idToPiece);
-        boardHistory.push(board.copyClone());
+        //testeUNDO boardHistory.push(board.copyClone());
     }
 
     public String[] getSquareInfo(int x, int y) {
@@ -222,7 +222,8 @@ public class GameManager {
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
-
+        
+        boardHistory.push(board.copyClone());
         //tests: System.out.println("Assertions.assertTrue(gameManager.move(" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "));");
 
         if (!checkValidMove(x0, y0, x1, y1)) {
@@ -266,7 +267,7 @@ public class GameManager {
         board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0])); //atualiza as coords da peça na nova posição no tabuleiro
         board.setCoordsToId(x0, y0, 0); //atualiza as coords antigas da peça no tabuleiro
         board.endTurn();
-        boardHistory.push(board.copyClone());
+        //testUNDO boardHistory.push(board.copyClone());
         return true;
     }
 
@@ -360,7 +361,6 @@ public class GameManager {
     }
 
     public void undo() {
-
         if (!boardHistory.isEmpty()) {
             board = boardHistory.pop();
             board.updateTurnBasedPieces();

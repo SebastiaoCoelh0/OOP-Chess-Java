@@ -54,6 +54,30 @@ public class TestGameManager {
     }
 
     @Test
+    public void testUndo() {
+
+        GameManager gameManager = new GameManager();
+        gameManager.loadGameTest(new File("test-files/8x8.txt"));
+
+        //System.out.println("board history tem: " + gameManager.boardHistory);
+        Assertions.assertEquals("[1, 0, 10, O Poderoso Chefao, 0_10.png]", Arrays.toString(gameManager.getSquareInfo(0, 0)));
+        Assertions.assertEquals("[]", Arrays.toString(gameManager.getSquareInfo(0, 1)));
+        Assertions.assertTrue(gameManager.move(0, 0, 0, 1));
+        Assertions.assertEquals("[]", Arrays.toString(gameManager.getSquareInfo(0, 0)));
+        Assertions.assertEquals("[1, 0, 10, O Poderoso Chefao, 0_10.png]", Arrays.toString(gameManager.getSquareInfo(0, 1)));
+
+        //System.out.println("board history tem: " + gameManager.boardHistory);
+        gameManager.undo();
+        //System.out.println("board history tem: " + gameManager.boardHistory);
+
+        Assertions.assertEquals("[1, 0, 10, O Poderoso Chefao, 0_10.png]", Arrays.toString(gameManager.getSquareInfo(0, 0)));
+        Assertions.assertEquals("[]", Arrays.toString(gameManager.getSquareInfo(0, 1)));
+
+        //Assertions.assertFalse(gameManager.gameOver());
+        Assertions.assertTrue(gameManager.move(0, 0, 0, 1));
+    }
+
+    @Test
     public void info() {
 
         GameManager gameManager = new GameManager();
