@@ -45,7 +45,7 @@ public class Queen extends Piece {
             return false;
         }
 
-        if (board.getCoordsToPiece(x1, y1).isJoker()) {
+        if (board.getCoordsToPiece(x1, y1) != null && board.getCoordsToPiece(x1, y1).isJoker()) {
 
             Joker temp = (Joker) board.getCoordsToPiece(x1, y1);
 
