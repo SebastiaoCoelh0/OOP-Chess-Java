@@ -202,7 +202,7 @@ public class GameManager {
         return board.checkTeamPlaying(x, y);
     }
 
-    public boolean checkSameTeamMove(int x1, int y1) {
+    public boolean checkSameTeamMove(int x0, int y0, int x1, int y1) {
 
         if (board.getCoordsToPiece(x1, y1) != null) {
 
@@ -221,7 +221,7 @@ public class GameManager {
 
             return false;
         }
-        if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0) || !checkSameTeamMove(x1, y1)) {
+        if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0) || !checkSameTeamMove(x0, y0, x1, y1)) {
 
             return false;
         }

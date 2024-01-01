@@ -235,17 +235,7 @@ public class Board {
 
     public Boolean checkTeamPlaying(int x, int y) {
 
-        int temp;
-
-        if (Objects.equals(teamPlaying, "BLACK")) {
-
-            temp = 10;
-        } else {
-
-            temp = 20;
-        }
-
-        return getCoordsToPiece(x, y).getTeam() == temp;
+        return getCoordsToPiece(x, y).getTeam() == getTeamID();
     }
 
     public void addPointsWhite(int points) {
@@ -322,7 +312,7 @@ public class Board {
 
     public void jokerUpdate() {
 
-        for (int id = 0; id < getNumPieces(); id++) {
+        for (int id = 0; id <= getNumPieces(); id++) {
 
             if (getIdToPiece(id) != null) {
 
