@@ -616,7 +616,12 @@ public class Board {
 
         addCapturedPieceType(x1, y1);
         addPointCapture(x0, y0, x1, y1); //adds points and number of pieces captured
-        if (!getCoordsToPiece(x0, y0).isPetter() && !getCoordsToPiece(x1, y1).isHommer()) {
+
+        if (!getCoordsToPiece(x0, y0).isPetter()) {
+
+            getCoordsToPiece(x1, y1).capture();
+
+        } else if (!getCoordsToPiece(x1, y1).isHommer()) {
 
             getCoordsToPiece(x1, y1).capture();
         }
