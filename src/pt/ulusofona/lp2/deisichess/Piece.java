@@ -103,6 +103,10 @@ abstract public class Piece {
         return pieceType == 7;
     }
 
+    public boolean isPetter() {
+        return pieceType == 8;
+    }
+
     public boolean isHommer() {
         return pieceType == 6;
     }
@@ -140,6 +144,20 @@ abstract public class Piece {
 
     public int getPointsCaptured() {
         return pointsCaptured;
+    }
+
+    public void setTeam(int team) {
+        this.team = team;
+    }
+
+    public void changeTeam() {
+
+        if (getTeam() == 10) {
+
+            setTeam(20);
+        } else {
+            setTeam(10);
+        }
     }
 
     public void capture() {

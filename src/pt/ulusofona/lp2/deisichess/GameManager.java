@@ -8,8 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
-//TODO stats, sugestao, save, confirmacao do load
-/*TODO LIST
+/*
 
     8 tipos de peças
         0- Rei 1 quadrado cada diracao -1000
@@ -22,9 +21,6 @@ import java.util.*;
            move se na diagonal apenas uma posição -2
         7- Joker vai mudando de turno a turno 1º turno rainha - ponei - padre - th - tv - hommer -4
         8- peça extra: ideia petter griffin
-
-     //TODO ALTERACOES API 16:30
-
  */
 public class GameManager {
 
@@ -34,7 +30,6 @@ public class GameManager {
     Board board = new Board();
     Stack<Board> boardHistory = new Stack<>();
 
-    //TODO
     public boolean loadGameTest(File file) { //chamar esta funcao nos testes
         try {
             loadGame(file);
@@ -265,7 +260,7 @@ public class GameManager {
         int otherPiece = 0;
         int count = 0;
 
-        for (int pieceId = 1; count < board.getNumPieces(); pieceId++) {
+        for (int pieceId = 0; count < board.getNumPieces(); pieceId++) {
 
             if (board.getIdToPiece(pieceId) != null) {
 
@@ -337,10 +332,12 @@ public class GameManager {
             writer.write(String.valueOf(board.getNumPieces()));
             writer.newLine();
 
-            for (int id = 0; id <= board.getNumPieces(); id++) {
+            int countPieces1 = 0;
+
+            for (int id = 0; countPieces1 < board.getNumPieces(); id++) {
 
                 if (board.getIdToPiece(id) != null) {
-
+                    countPieces1++;
                     writer.write(board.getIdToPiece(id).getPieceText());
                     writer.newLine();
                 }
@@ -371,10 +368,12 @@ public class GameManager {
             writer.write(board.getStatsText());
             writer.newLine();
 
-            for (int id = 0; id <= board.getNumPieces(); id++) {
+            int countPieces2 = 0;
+            for (int id = 0; countPieces2 < board.getNumPieces(); id++) {
 
                 if (board.getIdToPiece(id) != null) {
 
+                    countPieces2++;
                     writer.write(board.getIdToPiece(id).getPieceStatsText());
                     writer.newLine();
                 }

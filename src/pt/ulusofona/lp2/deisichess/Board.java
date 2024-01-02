@@ -402,10 +402,13 @@ public class Board {
 
     public void hommerCanMove() {
 
-        for (int id = 0; id < getNumPieces(); id++) {
+        int countPiece = 0;
+
+        for (int id = 0; countPiece < getNumPieces(); id++) {
 
             if (getIdToPiece(id) != null) {
 
+                countPiece++;
                 if (getIdToPiece(id).isHommer()) {
 
                     HommerSimpson hommerSimpson = (HommerSimpson) getIdToPiece(id);
@@ -424,8 +427,11 @@ public class Board {
 
     public void jokerUpdate() {
 
-        for (int id = 0; id <= getNumPieces(); id++) {
+        int countPiece = 0;
 
+        for (int id = 0; countPiece < getNumPieces(); id++) {
+
+            countPiece++;
             if (getIdToPiece(id) != null) {
 
                 if (getIdToPiece(id).isJoker()) {
@@ -443,7 +449,7 @@ public class Board {
         return size;
     }
 
-    public int getNumPieces() {
+    public int getNumPieces() { //confirmar se ja foi a todas as peças ou nao!!
         return numPieces;
     }
 
@@ -575,7 +581,7 @@ public class Board {
         int count = 0;
         int kings = 0;
 
-        for (int pieceId = 1; count < getNumPieces(); pieceId++) {
+        for (int pieceId = 0; count < getNumPieces(); pieceId++) {
 
             if (getIdToPiece(pieceId) != null) {
 
@@ -610,7 +616,10 @@ public class Board {
 
         addCapturedPieceType(x1, y1);
         addPointCapture(x0, y0, x1, y1); //adds points and number of pieces captured
-        getCoordsToPiece(x1, y1).capture();
+        if (!getCoordsToPiece(x0, y0).isPetter() && !getCoordsToPiece(x1, y1).isHommer()) {
+
+            getCoordsToPiece(x1, y1).capture();
+        }
         addCaptures();
     }
 

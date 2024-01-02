@@ -19,6 +19,7 @@ public class Hint implements Comparable<Hint> {
         return "(" + x + "," + y + ") -> " + points;
     }
 
+    @Override
     public int compareTo(Hint other) {
 
         if (this.points == other.points) {

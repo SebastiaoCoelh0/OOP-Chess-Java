@@ -6,10 +6,13 @@ import pt.ulusofona.lp2.deisichess.movement.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class TestGameManager {
-    
+
     @Test
     public void loadFile() {
 
@@ -19,6 +22,132 @@ public class TestGameManager {
 
         gameManager = new GameManager();
         Assertions.assertFalse(gameManager.loadGameTest(new File("test-files/iDontExist.txt")));
+
+    }
+
+    //fazer teste mais baralhadas e rainha tenta capturar joker
+    @Test
+    public void hint() {
+
+        GameManager gameManager = new GameManager();
+        Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/8x8.txt")));
+        List<Comparable> hintsTemp = gameManager.getHints(5, 0);
+        Collections.sort(hintsTemp);
+        Assertions.assertEquals("(5,7) -> 3", hintsTemp.get(0).toString());
+        Assertions.assertTrue(gameManager.move(1, 0, 4, 3));
+        Assertions.assertTrue(gameManager.move(5, 7, 5, 4));
+        hintsTemp = gameManager.getHints(4, 3);
+        Collections.sort(hintsTemp);
+        Assertions.assertEquals("(0,7) -> 1000", hintsTemp.get(0).toString());
+        Assertions.assertEquals("(4,7) -> 3", hintsTemp.get(1).toString());
+        Assertions.assertEquals("(5,4) -> 3", hintsTemp.get(2).toString());
+    }
+
+    @Test
+    public void petterGriffin() {
+
+        GameManager gameManager = new GameManager();
+        Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/petterTest.txt")));
+        Assertions.assertTrue(gameManager.move(7, 3, 6, 3));//Move apenas para o homer nao estar a dormir
+        Assertions.assertTrue(gameManager.move(7, 4, 6, 4));//Move apenas para o homer nao estar a dormir
+        Assertions.assertTrue(gameManager.move(6, 6, 7, 7));
+        Assertions.assertEquals(1000, gameManager.getBoard().getCoordsToPiece(7, 7).getPointsCaptured());
+        Assertions.assertEquals("Doh! zzzzzz", gameManager.getBoard().getCoordsToPiece(7, 7).toString());
+        Assertions.assertTrue(gameManager.move(7, 6, 7, 7));
+        Assertions.assertEquals("4 | 8 | 2 | 20 | Quase o DDT @ (7, 7)", gameManager.getBoard().getCoordsToPiece(7, 7).toString());
+        Assertions.assertEquals(2, gameManager.getBoard().getCoordsToPiece(7, 7).getPointsCaptured());
+        Assertions.assertEquals("2 | Homer Simpson | 2 | 20 | O Amarelo @ (6, 7)", gameManager.getBoard().getCoordsToPiece(6, 7).toString());
+        Assertions.assertEquals(1000, gameManager.getBoard().getCoordsToPiece(6, 7).getPointsCaptured());
+        Assertions.assertTrue(gameManager.move(1, 0, 1, 2));
+        Assertions.assertEquals("1 | 8 | 2 | 10 | O Dono Disto Tudo @ (1, 2)", gameManager.getBoard().getCoordsToPiece(1, 2).toString());
+    }
+
+    @Test
+    public void save() {
+
+        GameManager gameManager = new GameManager();
+        Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/8x8.txt")));
+
+        Assertions.assertFalse(gameManager.move(1, 0, 0, 0));
+        Assertions.assertFalse(gameManager.move(2, 0, 1, 0));
+        Assertions.assertFalse(gameManager.move(2, 0, 1, 0));
+        Assertions.assertFalse(gameManager.move(3, 0, 2, 0));
+        Assertions.assertFalse(gameManager.move(3, 0, 2, 0));
+        Assertions.assertFalse(gameManager.move(3, 0, 2, 0));
+        Assertions.assertFalse(gameManager.move(4, 0, 3, 0));
+        Assertions.assertFalse(gameManager.move(4, 0, 3, 0));
+        Assertions.assertFalse(gameManager.move(4, 0, 3, 0));
+        Assertions.assertFalse(gameManager.move(4, 0, 3, 0));
+        Assertions.assertFalse(gameManager.move(5, 0, 4, 0));
+        Assertions.assertFalse(gameManager.move(5, 0, 4, 0));
+        Assertions.assertFalse(gameManager.move(5, 0, 4, 0));
+        Assertions.assertFalse(gameManager.move(5, 0, 4, 0));
+        Assertions.assertFalse(gameManager.move(5, 0, 4, 0));
+        Assertions.assertFalse(gameManager.move(6, 0, 5, 0));
+        Assertions.assertFalse(gameManager.move(6, 0, 5, 0));
+        Assertions.assertFalse(gameManager.move(6, 0, 5, 0));
+        Assertions.assertFalse(gameManager.move(6, 0, 5, 0));
+        Assertions.assertFalse(gameManager.move(6, 0, 5, 0));
+        Assertions.assertFalse(gameManager.move(6, 0, 5, 0));
+        Assertions.assertFalse(gameManager.move(6, 0, 5, 0));
+        Assertions.assertFalse(gameManager.move(7, 0, 6, 0));
+        Assertions.assertFalse(gameManager.move(7, 0, 6, 0));
+        Assertions.assertFalse(gameManager.move(7, 0, 6, 0));
+        Assertions.assertFalse(gameManager.move(7, 0, 6, 0));
+        Assertions.assertFalse(gameManager.move(7, 0, 6, 0));
+        Assertions.assertFalse(gameManager.move(7, 0, 6, 0));
+        Assertions.assertFalse(gameManager.move(7, 0, 6, 0));
+        Assertions.assertTrue(gameManager.move(0, 0, 0, 1));
+        Assertions.assertFalse(gameManager.move(7, 7, 6, 7));
+        Assertions.assertFalse(gameManager.move(7, 7, 6, 7));
+        Assertions.assertFalse(gameManager.move(7, 7, 6, 7));
+        Assertions.assertFalse(gameManager.move(7, 7, 6, 7));
+        Assertions.assertFalse(gameManager.move(7, 7, 6, 7));
+        Assertions.assertFalse(gameManager.move(7, 7, 6, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertFalse(gameManager.move(6, 7, 5, 7));
+        Assertions.assertTrue(gameManager.move(5, 7, 5, 0));
+        Assertions.assertTrue(gameManager.move(1, 0, 0, 0));
+
+        Assertions.assertEquals("20:Homer Jay Simpson:12:0", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(0));
+        Assertions.assertEquals("10:Hommie:7:0", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(1));
+        Assertions.assertEquals("10:O Beberolas:7:0", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(2));
+        ArrayList<String> teste = gameManager.getGameResults();
+
+        try {
+            gameManager.saveGame(new File("test-files/ficheiroTeste.txt"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        gameManager.loadGameTest(new File("test-files/8x8.txt"));
+
+        gameManager.loadGameTest(new File("test-files/ficheiroTeste.txt"));
+
+        Assertions.assertEquals("20:Homer Jay Simpson:12:0", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(0));
+        Assertions.assertEquals("10:Hommie:7:0", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(1));
+        Assertions.assertEquals("10:O Beberolas:7:0", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(2));
+        Assertions.assertEquals(20, gameManager.getCurrentTeamID());
+        Assertions.assertEquals(teste, gameManager.getGameResults());
+    }
+
+    @Test
+    public void statType() {
+
+        Assertions.assertEquals("TOP_5_CAPTURAS", StatType.TOP_5_CAPTURAS.name());
+        Assertions.assertEquals("PECAS_MAIS_BARALHADAS", StatType.PECAS_MAIS_BARALHADAS.name());
+        Assertions.assertEquals("TOP_5_PONTOS", StatType.TOP_5_PONTOS.name());
+        Assertions.assertEquals("TIPOS_CAPTURADOS", StatType.TIPOS_CAPTURADOS.name());
+        Assertions.assertEquals("PECAS_MAIS_5_CAPTURAS", StatType.PECAS_MAIS_5_CAPTURAS.name());
 
     }
 
@@ -81,8 +210,8 @@ public class TestGameManager {
         try {
             gameManager.loadGame(new File("test-files/testFileError1.txt"));
         } catch (InvalidGameInputException e) {
-            Assertions.assertEquals(3, e.lineWithError);
-            Assertions.assertEquals("DADOS A MAIS (Esperava: 4 ; Obtive: 5)", e.problemDescription);
+            Assertions.assertEquals(3, e.getLineWithError());
+            Assertions.assertEquals("DADOS A MAIS (Esperava: 4 ; Obtive: 5)", e.getProblemDescription());
             //throw new RuntimeException(e);
         }
 
@@ -108,6 +237,8 @@ public class TestGameManager {
         Assertions.assertFalse(test.canMovePiece(0, 0, 0, 3, gameManager.board, 1));
         Assertions.assertFalse(test.canMovePiece(0, 0, 1, 0, gameManager.board, 1));
         Assertions.assertFalse(test.canMovePiece(0, 0, 1, 1, gameManager.board, 1));
+        Assertions.assertFalse(test.canMovePiece(2, 0, 2, 2, gameManager.board, 3));
+        Assertions.assertFalse(test.canMovePiece(2, 2, 2, 0, gameManager.board, 3));
 
         test = new MoveHorizontal();
         Assertions.assertTrue(test.canMovePiece(0, 0, 1, 0, gameManager.board, 1));
@@ -155,7 +286,10 @@ public class TestGameManager {
         GameManager gameManager = new GameManager();
         gameManager.loadGameTest(new File("test-files/8x8.txt"));
 
-
+        Assertions.assertEquals("14 | TorreVert | 3 | 20 | Torre Trapalhona @ (5, 7)", gameManager.getBoard().getCoordsToPiece(5, 7).toString());
+        Assertions.assertTrue(gameManager.move(5, 0, 5, 7));
+        Assertions.assertEquals("6 | TorreVert | 3 | 10 | O Maior Grande @ (5, 7)", gameManager.getBoard().getCoordsToPiece(5, 7).toString());
+        Assertions.assertEquals("14 | TorreVert | 3 | 20 | Torre Trapalhona @ (n/a)", gameManager.getBoard().getIdToPiece(14).toString());
     }
 
     @Test
