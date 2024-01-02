@@ -38,9 +38,19 @@ fun pecasMais5Capturas(gameManager: GameManager): List<String> {
 
 fun pecasMaisBaralhadas(gameManager: GameManager): List<String> {
 
-    return gameManager.getBoard().listPieces.filter { it.getInvalidMoves() > 0 }
-        .sortedByDescending { it.getInvalidMoves() / it.getValidMoves() }.take(3)
-        .map { "" + it.getTeam() + ":" + it.getName() + ":" + it.getInvalidMoves() + ":" + it.getValidMoves() }
+    val list0ValidMoves =
+        gameManager.getBoard().listPieces.filter { it.getInvalidMoves() > 0 }.filter { it.getValidMoves() == 0 }
+            .sortedByDescending { it.getInvalidMoves() }
+            .map { "" + it.getTeam() + ":" + it.getName() + ":" + it.getInvalidMoves() + ":" + it.getValidMoves() }
+
+    val listNormal =
+        gameManager.getBoard().listPieces.filter { it.getInvalidMoves() > 0 }.filter { it.getValidMoves() != 0 }
+            .sortedByDescending { (it.getInvalidMoves() / it.getValidMoves()) }
+            .map { "" + it.getTeam() + ":" + it.getName() + ":" + it.getInvalidMoves() + ":" + it.getValidMoves() }
+
+    val listFinal = list0ValidMoves + listNormal
+
+    return listFinal.take(3)
 }
 
 fun tiposCapturados(gameManager: GameManager): List<String> {

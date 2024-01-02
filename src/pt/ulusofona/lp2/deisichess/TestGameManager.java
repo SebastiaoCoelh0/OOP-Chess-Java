@@ -9,8 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class TestGameManager {
-
-
+    
     @Test
     public void loadFile() {
 
@@ -29,7 +28,9 @@ public class TestGameManager {
         GameManager gameManager = new GameManager();
         Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/8x8.txt")));
 
+        Assertions.assertFalse(gameManager.move(1, 0, 1, 0)); //invalido rainha
         Assertions.assertTrue(gameManager.move(1, 0, 1, 3));
+        Assertions.assertFalse(gameManager.move(7, 7, 7, 7)); //invalido joker branco
         Assertions.assertFalse(gameManager.move(0, 7, 1, 7)); //invalido chefe indios
         Assertions.assertTrue(gameManager.move(0, 7, 0, 6));
         Assertions.assertTrue(gameManager.move(1, 3, 5, 7));
@@ -58,8 +59,9 @@ public class TestGameManager {
 
         Assertions.assertEquals("PRETA:A Dama Selvagem:6", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_5_CAPTURAS).invoke(gameManager).get(0));
 
-        Assertions.assertEquals("20:Chefe dos Indios:2:2", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(0));
-        Assertions.assertEquals("10:A Dama Selvagem:1:7", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(1));
+        Assertions.assertEquals("20:O Bobo da Corte:1:0", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(0));
+        Assertions.assertEquals("20:Chefe dos Indios:2:2", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(1));
+        Assertions.assertEquals("10:A Dama Selvagem:2:7", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(2));
 
         Assertions.assertEquals("Homer Simpson", StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager).get(0));
         Assertions.assertEquals("Joker/TorreHor", StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager).get(1));
