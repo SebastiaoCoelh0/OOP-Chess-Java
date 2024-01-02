@@ -11,6 +11,9 @@ abstract public class Piece {
     String coords; //x,y
     int points;
     int pointsCaptured = 0;
+    int piecesCaptured = 0;
+    int validMoves = 0;
+    int invalidMoves = 0;
     Boolean inGame = false; //ou true caso em jogo
     Movement[] movementsPiece = null;
 
@@ -41,11 +44,48 @@ abstract public class Piece {
 
     }
 
+    public void addInvalidMove() {
+        invalidMoves++;
+    }
+
+    public int getInvalidMoves() {
+        return invalidMoves;
+    }
+
+    public void setInvalidMoves(int invalidMoves) {
+        this.invalidMoves = invalidMoves;
+    }
+
+    public void addvalidMove() {
+        validMoves++;
+    }
+
+    public int getValidMoves() {
+        return validMoves;
+    }
+
+    public void setValidMoves(int validMoves) {
+        this.validMoves = validMoves;
+    }
+
+    public void addPiecesCaptured() {
+        piecesCaptured++;
+    }
+
+    public int getPiecesCaptured() {
+        return piecesCaptured;
+    }
+
+    public void setPiecesCaptured(int piecesCaptured) {
+        this.piecesCaptured = piecesCaptured;
+    }
+
     public Movement[] getMovementsPiece() {
         return movementsPiece;
     }
 
     public void addPointCapture(int points) {
+        addPiecesCaptured();
         pointsCaptured += points;
     }
 
@@ -140,5 +180,27 @@ abstract public class Piece {
 
     public void setCoords(int x, int y) {
         this.coords = x + "," + y;
+    }
+
+    public String getPieceText() {
+
+        return getNrId() + ":" + getPieceType() + ":" + getTeam() + ":" + getName();
+    }
+
+
+    public void setStats(String line) {
+
+        String[] parts = line.split(":");
+        setPointsCaptured(Integer.parseInt(parts[1]));
+        setValidMoves(Integer.parseInt(parts[2]));
+        setInvalidMoves(Integer.parseInt(parts[3]));
+        setPiecesCaptured(Integer.parseInt(parts[4]));
+        setPointsCaptured(Integer.parseInt(parts[5]));
+    }
+
+    public String getPieceStatsText() {
+
+        return getNrId() + ":" + getPointsCaptured() + ":" + getValidMoves() + ":" + getInvalidMoves() + ":" +
+                getPiecesCaptured() + ":" + getPointsCaptured();
     }
 }

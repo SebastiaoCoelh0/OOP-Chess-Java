@@ -79,6 +79,26 @@ public class TestGameManager {
     }
 
     @Test
+    public void homer() {
+
+        GameManager gameManager = new GameManager();
+        gameManager.loadGameTest(new File("test-files/homerTest.txt"));
+
+        Assertions.assertFalse(gameManager.move(3, 4, 2, 3));//HOMER
+        Assertions.assertTrue(gameManager.move(5, 0, 5, 1));
+        Assertions.assertTrue(gameManager.move(6, 7, 5, 6));//HOMER
+        Assertions.assertTrue(gameManager.move(3, 4, 2, 3));//HOMER
+        Assertions.assertFalse(gameManager.move(5, 6, 4, 5));//HOMER
+        Assertions.assertTrue(gameManager.move(0, 7, 0, 6));
+        Assertions.assertTrue(gameManager.move(2, 3, 3, 4));//HOMER
+        Assertions.assertTrue(gameManager.move(5, 6, 4, 5));//HOMER
+        Assertions.assertFalse(gameManager.move(3, 4, 4, 5));//HOMER
+        Assertions.assertTrue(gameManager.move(5, 1, 5, 0));
+        Assertions.assertTrue(gameManager.move(4, 5, 5, 6));//HOMER
+
+    }
+
+    @Test
     public void testUndo() {
 
         GameManager gameManager = new GameManager();

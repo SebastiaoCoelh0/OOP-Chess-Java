@@ -5,10 +5,7 @@ import pt.ulusofona.lp2.deisichess.type.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 //TODO stats, sugestao, save, confirmacao do load
@@ -25,30 +22,6 @@ import java.util.*;
            move se na diagonal apenas uma posição -2
         7- Joker vai mudando de turno a turno 1º turno rainha - ponei - padre - th - tv - hommer -4
         8- peça extra: ideia petter griffin
-
-    Peças nao podem saltar por cima de outras
-    Tool tip alterada agora aparece
-        nome da peca
-        valor
-
-    Equipa preta passou a ser a 10 e a branca a equipa 20
-
-    Termina o jogo quando:
-        a equipa adversaria deixa de ter reis
-        apenas ha um rei de cada equipa e o jogo empata
-        10 jogadas sem capturas
-
-     Ficheiro Gravar:
-        grava o jogo numa alura especifica
-        em que pode ser qualquer equipa a jogar e ja com stats
-
-     Alteração do ficheiro txt que guarda a info pertinente na ultima linha, NAO ALTERAR O RESTO DA ESTRUTURA
-     caso nao tenha nada nessa linha e um jogo normal
-     tem que ler e guardar com o mesmo formato
-
-     UNDO vai desfazendo ate voltar ao estado inicial
-
-     Sugerir jogada mostra todas as coordenadas de movimento possivel de uma peca selecionada, oordenada por pontos
 
      //TODO ALTERACOES API 16:30
 
@@ -108,35 +81,17 @@ public class GameManager {
 
         BufferedReader reader;
         reader = new BufferedReader(new FileReader(file));
-
         HashMap<Integer, Piece> idToPiece = new HashMap<>();
-
         String lineReader;
-        //TODO FORMATO VALIDO
-        try {
-            lineReader = reader.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        lineReader = reader.readLine();
 
         board.setSize(Integer.parseInt(lineReader));
-
-        try {
-            lineReader = reader.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        lineReader = reader.readLine();
         board.setNumPieces(Integer.parseInt(lineReader));
 
         for (int i = 0; i < board.getNumPieces(); i++) {
 
-            try {
-                lineReader = reader.readLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
+            lineReader = reader.readLine();
             String[] parts = lineReader.split(":");
 
             if (parts.length > 4) {
@@ -154,12 +109,7 @@ public class GameManager {
 
         for (int line = 0; line < board.getSize(); line++) {
 
-            try {
-                lineReader = reader.readLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
+            lineReader = reader.readLine();
             String[] parts = lineReader.split(":");
 
             for (int column = 0; column < parts.length; column++) {
@@ -173,6 +123,23 @@ public class GameManager {
                 } else {
                     board.setCoordsToId(column, line, 0); //empty square
                 }
+            }
+        }
+
+        //check for more info
+        lineReader = reader.readLine();
+
+        if (lineReader != null) {
+
+            board.setTeamPlaying(Integer.parseInt(lineReader));
+            lineReader = reader.readLine();
+            board.setStats(lineReader);
+            lineReader = reader.readLine();
+
+            while (lineReader != null) {
+
+                idToPiece.get(Integer.parseInt(lineReader.split(":")[0])).setStats(lineReader);
+                lineReader = reader.readLine();
             }
         }
 
@@ -221,7 +188,7 @@ public class GameManager {
 
             return false;
         }
-        if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0) || !checkSameTeamMove(x0, y0, x1, y1)) {
+        if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0)) {
 
             return false;
         }
@@ -241,39 +208,35 @@ public class GameManager {
             return false;
         }
 
+        if (!checkSameTeamMove(x0, y0, x1, y1)) {
+
+            board.addInvalidAttempt();
+            board.getCoordsToPiece(x0, y0).addInvalidMove();
+
+            return false;
+        }
 
         if (!board.getCoordsToPiece(x0, y0).validPieceMovement(x0, y0, x1, y1, board)) {
 
             board.addInvalidAttempt();
+            board.getCoordsToPiece(x0, y0).addInvalidMove();
+
             return false;
         }
 
-        board.addValidPlays();
+        board.addValidPlays(x0, y0);
 
-        if (board.getCoordsToId(x1, y1) != 0) { //eats piece
+        if (board.getCoordsToId(x1, y1) != 0) { //captures piece
 
-            board.resetPlaysWithoutCaptures();
-            board.addPointCapture(x0, y0, x1, y1);
-            board.getIdToPiece(Integer.parseInt(getSquareInfo(x1, y1)[0])).capture();
-
-            if (getCurrentTeamID() == 10) {
-
-                board.addCapturesBlack();
-                board.addPointsBlack(board.getIdToPiece(board.getCoordsToId(x1, y1)).getPoints());
-
-            } else {
-
-                board.addCapturesWhite();
-                board.addPointsWhite(board.getIdToPiece(board.getCoordsToId(x1, y1)).getPoints());
-            }
+            board.captures(x0, y0, x1, y1);
 
         } else {
 
             board.addPlaysWithoutCaptures();
         }
 
-        board.getIdToPiece(Integer.parseInt(getSquareInfo(x0, y0)[0])).move(x1, y1); //atualiza as coords na peça
-        board.setCoordsToId(x1, y1, Integer.parseInt(getSquareInfo(x0, y0)[0])); //atualiza as coords da peça na nova posição no tabuleiro
+        board.getCoordsToPiece(x0, y0).move(x1, y1); //atualiza as coords na peça
+        board.setCoordsToId(x1, y1, board.getCoordsToId(x0, y0)); //atualiza as coords da peça na nova posição no tabuleiro
         board.setCoordsToId(x0, y0, 0); //atualiza as coords antigas da peça no tabuleiro
         board.endTurn();
         return true;
@@ -366,7 +329,61 @@ public class GameManager {
 
     public void saveGame(File file) throws IOException {
 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
 
+            writer.write(String.valueOf(board.getSize()));
+            writer.newLine();
+
+            writer.write(String.valueOf(board.getNumPieces()));
+            writer.newLine();
+
+            for (int id = 0; id <= board.getNumPieces(); id++) {
+
+                if (board.getIdToPiece(id) != null) {
+
+                    writer.write(board.getIdToPiece(id).getPieceText());
+                    writer.newLine();
+                }
+            }
+
+            for (int line = 0; line < board.getSize(); line++) {
+
+                for (int column = 0; column < board.getSize(); column++) {
+
+                    if (board.getCoordsToPiece(column, line) != null) {
+
+                        writer.write(String.valueOf(board.getCoordsToId(column, line)));
+                    } else {
+
+                        writer.write("0");
+                    }
+                    if (column != board.getSize() - 1) {
+                        writer.write(":");
+                    }
+                }
+
+                writer.newLine();
+            }
+
+            //team plying, captures, valid plays, invalid attempts
+            writer.write(String.valueOf(getCurrentTeamID()));
+            writer.newLine();
+            writer.write(board.getStatsText());
+            writer.newLine();
+
+            for (int id = 0; id <= board.getNumPieces(); id++) {
+
+                if (board.getIdToPiece(id) != null) {
+
+                    writer.write(board.getIdToPiece(id).getPieceStatsText());
+                    writer.newLine();
+                }
+            }
+
+
+        } catch (IOException e) {
+            throw new IOException("Error while saving game", e);
+        }
     }
 
     public void undo() {

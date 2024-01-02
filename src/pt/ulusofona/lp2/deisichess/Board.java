@@ -12,8 +12,6 @@ public class Board {
     HashMap<String, Integer> coordsToId = new HashMap<String, Integer>(); //"x,y" to id
     HashMap<Integer, Piece> idToPiece = new HashMap<Integer, Piece>(); //id,Pieces
     String teamPlaying = "BLACK";
-    int pointsBlack = 0;
-    int pointsWhite = 0;
     int playsWithoutCaptures = 0;
     int capturesBlack = 0;
     int capturesWhite = 0;
@@ -21,8 +19,10 @@ public class Board {
     int validPlaysWhite = 0;
     int invalidAttemptsBlack = 0;
     int invalidAttemptsWhite = 0;
+    boolean[] capturedPiecesTypes = new boolean[9]; //each position is a piece type
 
     public Board() {
+        Arrays.fill(capturedPiecesTypes, false);
     }
 
     public Board copyClone() {
@@ -45,9 +45,11 @@ public class Board {
 
                         temp0.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
-                    //System.out.println(this);
-                    //System.out.println(temp0.getCoords());
                     temp0.setPointsCaptured(entry.getValue().getPointsCaptured());
+                    temp0.setValidMoves(entry.getValue().getValidMoves());
+                    temp0.setInvalidMoves(entry.getValue().getInvalidMoves());
+                    temp0.setPiecesCaptured(entry.getValue().getPiecesCaptured());
+
                     clonedBoard.idToPiece.put(entry.getKey(), temp0);
                     break;
                 case 1:
@@ -59,6 +61,9 @@ public class Board {
                         temp1.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
                     temp1.setPointsCaptured(entry.getValue().getPointsCaptured());
+                    temp1.setValidMoves(entry.getValue().getValidMoves());
+                    temp1.setInvalidMoves(entry.getValue().getInvalidMoves());
+                    temp1.setPiecesCaptured(entry.getValue().getPiecesCaptured());
                     clonedBoard.idToPiece.put(entry.getKey(), temp1);
                     break;
                 case 2:
@@ -70,6 +75,9 @@ public class Board {
                         temp2.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
                     temp2.setPointsCaptured(entry.getValue().getPointsCaptured());
+                    temp2.setValidMoves(entry.getValue().getValidMoves());
+                    temp2.setInvalidMoves(entry.getValue().getInvalidMoves());
+                    temp2.setPiecesCaptured(entry.getValue().getPiecesCaptured());
                     clonedBoard.idToPiece.put(entry.getKey(), temp2);
                     break;
                 case 3:
@@ -81,6 +89,9 @@ public class Board {
                         temp3.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
                     temp3.setPointsCaptured(entry.getValue().getPointsCaptured());
+                    temp3.setValidMoves(entry.getValue().getValidMoves());
+                    temp3.setInvalidMoves(entry.getValue().getInvalidMoves());
+                    temp3.setPiecesCaptured(entry.getValue().getPiecesCaptured());
                     clonedBoard.idToPiece.put(entry.getKey(), temp3);
                     break;
                 case 4:
@@ -92,6 +103,9 @@ public class Board {
                         temp4.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
                     temp4.setPointsCaptured(entry.getValue().getPointsCaptured());
+                    temp4.setValidMoves(entry.getValue().getValidMoves());
+                    temp4.setInvalidMoves(entry.getValue().getInvalidMoves());
+                    temp4.setPiecesCaptured(entry.getValue().getPiecesCaptured());
                     clonedBoard.idToPiece.put(entry.getKey(), temp4);
                     break;
                 case 5:
@@ -103,6 +117,9 @@ public class Board {
                         temp5.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
                     temp5.setPointsCaptured(entry.getValue().getPointsCaptured());
+                    temp5.setValidMoves(entry.getValue().getValidMoves());
+                    temp5.setInvalidMoves(entry.getValue().getInvalidMoves());
+                    temp5.setPiecesCaptured(entry.getValue().getPiecesCaptured());
                     clonedBoard.idToPiece.put(entry.getKey(), temp5);
                     break;
                 case 6:
@@ -114,6 +131,9 @@ public class Board {
                         temp6.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
                     temp6.setPointsCaptured(entry.getValue().getPointsCaptured());
+                    temp6.setValidMoves(entry.getValue().getValidMoves());
+                    temp6.setInvalidMoves(entry.getValue().getInvalidMoves());
+                    temp6.setPiecesCaptured(entry.getValue().getPiecesCaptured());
                     clonedBoard.idToPiece.put(entry.getKey(), temp6);
                     break;
                 case 7:
@@ -125,6 +145,9 @@ public class Board {
                         temp7.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
                     temp7.setPointsCaptured(entry.getValue().getPointsCaptured());
+                    temp7.setValidMoves(entry.getValue().getValidMoves());
+                    temp7.setInvalidMoves(entry.getValue().getInvalidMoves());
+                    temp7.setPiecesCaptured(entry.getValue().getPiecesCaptured());
                     clonedBoard.idToPiece.put(entry.getKey(), temp7);
                     break;
                 case 8:
@@ -136,6 +159,9 @@ public class Board {
                         temp8.setCoords(Integer.parseInt(entry.getValue().getCoords().split(",")[0]), Integer.parseInt(entry.getValue().getCoords().split(",")[1]));
                     }
                     temp8.setPointsCaptured(entry.getValue().getPointsCaptured());
+                    temp8.setValidMoves(entry.getValue().getValidMoves());
+                    temp8.setInvalidMoves(entry.getValue().getInvalidMoves());
+                    temp8.setPiecesCaptured(entry.getValue().getPiecesCaptured());
                     clonedBoard.idToPiece.put(entry.getKey(), temp8);
                     break;
                 default:
@@ -147,8 +173,6 @@ public class Board {
         clonedBoard.numPieces = this.numPieces;
         clonedBoard.turn = this.turn;
         clonedBoard.teamPlaying = this.teamPlaying;
-        clonedBoard.pointsBlack = this.pointsBlack;
-        clonedBoard.pointsWhite = this.pointsWhite;
         clonedBoard.playsWithoutCaptures = this.playsWithoutCaptures;
         clonedBoard.capturesBlack = this.capturesBlack;
         clonedBoard.capturesWhite = this.capturesWhite;
@@ -156,6 +180,7 @@ public class Board {
         clonedBoard.validPlaysWhite = this.validPlaysWhite;
         clonedBoard.invalidAttemptsBlack = this.invalidAttemptsBlack;
         clonedBoard.invalidAttemptsWhite = this.invalidAttemptsWhite;
+        clonedBoard.capturedPiecesTypes = this.capturedPiecesTypes;
 
         return clonedBoard;
     }
@@ -230,20 +255,18 @@ public class Board {
 
     public void addPointCapture(int x0, int y0, int x1, int y1) {
 
+
         getCoordsToPiece(x0, y0).addPointCapture(getCoordsToPiece(x1, y1).getPoints());
+    }
+
+    public void addCapturedPieceType(int x, int y) {
+
+        capturedPiecesTypes[getCoordsToPiece(x, y).getPieceType()] = true;
     }
 
     public Boolean checkTeamPlaying(int x, int y) {
 
         return getCoordsToPiece(x, y).getTeam() == getTeamID();
-    }
-
-    public void addPointsWhite(int points) {
-        pointsWhite += points;
-    }
-
-    public void addPointsBlack(int points) {
-        pointsBlack += points;
     }
 
     public int getPlaysWithoutCaptures() {
@@ -372,7 +395,23 @@ public class Board {
         capturesWhite++;
     }
 
-    public void addValidPlays() {
+    public void addCaptures() {
+
+        resetPlaysWithoutCaptures();
+
+        if (getTeamID() == 10) {
+
+            addCapturesBlack();
+
+        } else {
+
+            addCapturesWhite();
+        }
+    }
+
+    public void addValidPlays(int x, int y) {
+
+        getCoordsToPiece(x, y).addvalidMove();
 
         if (getTeamID() == 10) {
 
@@ -465,5 +504,69 @@ public class Board {
         }
 
         return kings;
+    }
+
+    public void setTeamPlaying(int teamID) {
+
+        if (teamID == 10) {
+
+            this.teamPlaying = "BLACK";
+        } else {
+
+            this.teamPlaying = "WHITE";
+        }
+    }
+
+    public void captures(int x0, int y0, int x1, int y1) {
+
+        addCapturedPieceType(x1, y1);
+        addPointCapture(x0, y0, x1, y1); //adds points and number of pieces captured
+        getCoordsToPiece(x1, y1).capture();
+        addCaptures();
+    }
+
+    public void setCapturesBlack(int capturesBlack) {
+        this.capturesBlack = capturesBlack;
+    }
+
+    public void setCapturesWhite(int capturesWhite) {
+        this.capturesWhite = capturesWhite;
+    }
+
+    public void setValidPlaysBlack(int validPlaysBlack) {
+        this.validPlaysBlack = validPlaysBlack;
+    }
+
+    public void setValidPlaysWhite(int validPlaysWhite) {
+        this.validPlaysWhite = validPlaysWhite;
+    }
+
+    public void setInvalidAttemptsBlack(int invalidAttemptsBlack) {
+        this.invalidAttemptsBlack = invalidAttemptsBlack;
+    }
+
+    public void setInvalidAttemptsWhite(int invalidAttemptsWhite) {
+        this.invalidAttemptsWhite = invalidAttemptsWhite;
+    }
+
+    public void setStats(String line) {
+
+        String[] parts = line.split(":");
+
+        setCapturesBlack(Integer.parseInt(parts[0]));
+        setCapturesWhite(Integer.parseInt(parts[1]));
+
+        setValidPlaysBlack(Integer.parseInt(parts[2]));
+        setValidPlaysWhite(Integer.parseInt(parts[3]));
+
+        setInvalidAttemptsBlack(Integer.parseInt(parts[4]));
+        setInvalidAttemptsWhite(Integer.parseInt(parts[5]));
+
+    }
+
+    public String getStatsText() {
+
+        return getCapturesBlack() + ":" + getCapturesWhite() + ":" + getValidPlaysBlack() + ":" +
+                getValidPlaysWhite() + ":" + getInvalidAttemptsBlack() + ":" + getInvalidAttemptsWhite();
     }
 }
