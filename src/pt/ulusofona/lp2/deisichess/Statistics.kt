@@ -39,7 +39,7 @@ fun pecasMais5Capturas(gameManager: GameManager): List<String> {
 fun pecasMaisBaralhadas(gameManager: GameManager): List<String> {
 
     return gameManager.getBoard().listPieces.filter { it.getInvalidMoves() > 0 }
-        .sortedBy { it.getInvalidMoves() / it.getValidMoves() }.take(3)
+        .sortedByDescending { it.getInvalidMoves() / it.getValidMoves() }.take(3)
         .map { "" + it.getTeam() + ":" + it.getName() + ":" + it.getInvalidMoves() + ":" + it.getValidMoves() }
 }
 

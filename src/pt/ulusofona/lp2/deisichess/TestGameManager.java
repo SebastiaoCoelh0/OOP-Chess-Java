@@ -24,6 +24,54 @@ public class TestGameManager {
     }
 
     @Test
+    public void stats() {
+
+        GameManager gameManager = new GameManager();
+        Assertions.assertTrue(gameManager.loadGameTest(new File("test-files/8x8.txt")));
+
+        Assertions.assertTrue(gameManager.move(1, 0, 1, 3));
+        Assertions.assertFalse(gameManager.move(0, 7, 1, 7)); //invalido chefe indios
+        Assertions.assertTrue(gameManager.move(0, 7, 0, 6));
+        Assertions.assertTrue(gameManager.move(1, 3, 5, 7));
+        Assertions.assertFalse(gameManager.move(0, 6, 1, 7)); //invalido chefe indios
+        Assertions.assertTrue(gameManager.move(0, 6, 0, 7));
+        Assertions.assertTrue(gameManager.move(5, 7, 6, 7));
+        Assertions.assertTrue(gameManager.move(1, 7, 1, 3));
+        Assertions.assertFalse(gameManager.move(6, 7, 7, 7)); //rainha tenta comer joker rainha
+        Assertions.assertTrue(gameManager.move(6, 7, 4, 7));
+        Assertions.assertTrue(gameManager.move(1, 3, 4, 0));
+        Assertions.assertTrue(gameManager.move(4, 7, 7, 7));
+        Assertions.assertTrue(gameManager.move(4, 0, 3, 0));
+        Assertions.assertTrue(gameManager.move(7, 7, 3, 7));
+        Assertions.assertTrue(gameManager.move(3, 0, 2, 0));
+        Assertions.assertTrue(gameManager.move(3, 7, 2, 7));
+        Assertions.assertTrue(gameManager.move(2, 0, 1, 0));
+        Assertions.assertTrue(gameManager.move(0, 0, 1, 0));
+
+        Assertions.assertEquals("A Dama Selvagem (PRETA) fez 6 capturas", StatisticsKt.getStatsCalculator(StatType.TOP_5_CAPTURAS).invoke(gameManager).get(0));
+        Assertions.assertEquals("A Barulhenta do Bairro (BRANCA) fez 3 capturas", StatisticsKt.getStatsCalculator(StatType.TOP_5_CAPTURAS).invoke(gameManager).get(1));
+        Assertions.assertEquals("O Poderoso Chefao (PRETA) fez 1 capturas", StatisticsKt.getStatsCalculator(StatType.TOP_5_CAPTURAS).invoke(gameManager).get(2));
+
+        Assertions.assertEquals("A Dama Selvagem (PRETA) tem 20 pontos", StatisticsKt.getStatsCalculator(StatType.TOP_5_PONTOS).invoke(gameManager).get(0));
+        Assertions.assertEquals("A Barulhenta do Bairro (BRANCA) tem 11 pontos", StatisticsKt.getStatsCalculator(StatType.TOP_5_PONTOS).invoke(gameManager).get(1));
+        Assertions.assertEquals("O Poderoso Chefao (PRETA) tem 8 pontos", StatisticsKt.getStatsCalculator(StatType.TOP_5_PONTOS).invoke(gameManager).get(2));
+
+        Assertions.assertEquals("PRETA:A Dama Selvagem:6", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_5_CAPTURAS).invoke(gameManager).get(0));
+
+        Assertions.assertEquals("20:Chefe dos Indios:2:2", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(0));
+        Assertions.assertEquals("10:A Dama Selvagem:1:7", StatisticsKt.getStatsCalculator(StatType.PECAS_MAIS_BARALHADAS).invoke(gameManager).get(1));
+
+        Assertions.assertEquals("Homer Simpson", StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager).get(0));
+        Assertions.assertEquals("Joker/TorreHor", StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager).get(1));
+        Assertions.assertEquals("Padre da Vila", StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager).get(2));
+        Assertions.assertEquals("Ponei Mágico", StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager).get(3));
+        Assertions.assertEquals("Rainha", StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager).get(4));
+        Assertions.assertEquals("TorreHor", StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager).get(5));
+        Assertions.assertEquals("TorreVert", StatisticsKt.getStatsCalculator(StatType.TIPOS_CAPTURADOS).invoke(gameManager).get(6));
+
+    }
+
+    @Test
     public void filesWithErrors() throws IOException {
 
         GameManager gameManager = new GameManager();
