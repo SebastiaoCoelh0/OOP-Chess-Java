@@ -216,6 +216,84 @@ public class Board {
         return hints;
     }
 
+    public boolean[] getCapturedPiecesTypes() {
+        return capturedPiecesTypes;
+    }
+
+    public boolean getCapturedPiecesTypesPos(int pos) {
+        return capturedPiecesTypes[pos];
+    }
+
+    public String getPieceNameText(int type) {
+
+        switch (type) {
+
+            case 0:
+                return "Rei";
+
+            case 1:
+                return "Rainha";
+
+            case 2:
+                return "Ponei Mágico";
+
+            case 3:
+                return "Padre da Vila";
+
+            case 4:
+                return "TorreHor";
+
+            case 5:
+                return "TorreVert";
+
+            case 6:
+                return "Homer Simpson";
+
+            case 7:
+
+                int remainder = getTurn() % 6;
+                switch (remainder) {
+                    case 0:
+                        return "Joker/Rainha";
+                    case 1:
+                        return "Joker/Ponei Mágico";
+                    case 2:
+                        return "Joker/Padre da Vila";
+                    case 3:
+                        return "Joker/TorreHor";
+                    case 4:
+                        return "Joker/TorreVert";
+                    case 5:
+                        return "Joker/Homer Simpson";
+                    default: //error
+                }
+
+            case 8:
+                return "Petter Griffin";
+
+            default:
+                return "";
+        }
+    }
+
+    public String[] getCapturedPiecesTypesArrayString() {
+
+        String[] arrayStr = new String[getCapturedPiecesTypes().length];
+
+        for (int pos = 0; pos < arrayStr.length; pos++) {
+
+            if (getCapturedPiecesTypesPos(pos)) {
+
+                arrayStr[pos] = getPieceNameText(pos);
+
+            } else {
+                arrayStr[pos] = "";
+            }
+
+        }
+        return arrayStr;
+    }
+
     public String getPieceInfoAsString(int id) {
 
         if (getIdToPiece(id) == null) {
@@ -223,6 +301,17 @@ public class Board {
         }
 
         return getIdToPiece(id).toString();
+    }
+
+    public List<Piece> getListPieces() {
+
+        List<Piece> list = new ArrayList<>();
+
+        for (Map.Entry<Integer, Piece> entry : idToPiece.entrySet()) {
+
+            list.add(entry.getValue());
+        }
+        return list;
     }
 
     public String[] getSquareInfo(int x, int y) {

@@ -131,7 +131,7 @@ public class GameManager {
 
         if (lineReader != null) {
 
-            board.setTeamPlaying(Integer.parseInt(lineReader));
+            board.setTeamPlaying(Integer.parseInt(lineReader)); //erro jogar ate ao fim gravar e ler ficheiro
             lineReader = reader.readLine();
             board.setStats(lineReader);
             lineReader = reader.readLine();
@@ -418,4 +418,7 @@ public class GameManager {
         return jpanel;
     }
 
+    public Board getBoard() {
+        return board;
+    }
 }

@@ -12,7 +12,7 @@ public class TestGameManager {
 
 
     @Test
-    public void openFile() {
+    public void loadFile() {
 
         GameManager gameManager = new GameManager();
 
@@ -95,6 +95,16 @@ public class TestGameManager {
         Assertions.assertFalse(gameManager.move(3, 4, 4, 5));//HOMER
         Assertions.assertTrue(gameManager.move(5, 1, 5, 0));
         Assertions.assertTrue(gameManager.move(4, 5, 5, 6));//HOMER
+
+    }
+
+    @Test
+    public void toStringPecaComida() {
+
+
+        GameManager gameManager = new GameManager();
+        gameManager.loadGameTest(new File("test-files/8x8.txt"));
+
 
     }
 

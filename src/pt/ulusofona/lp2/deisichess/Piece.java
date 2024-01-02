@@ -203,4 +203,13 @@ abstract public class Piece {
         return getNrId() + ":" + getPointsCaptured() + ":" + getValidMoves() + ":" + getInvalidMoves() + ":" +
                 getPiecesCaptured() + ":" + getPointsCaptured();
     }
+
+    public String getTeamText() {
+
+        if (getTeam() == 10) {
+            return "PRETA";
+        } else {
+            return "BRANCA";
+        }
+    }
 }

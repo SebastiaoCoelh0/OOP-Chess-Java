@@ -54,13 +54,11 @@ public class HommerSimpson extends Piece {
             for (Movement movement : getMovementsPiece()) {
 
                 if (movement.canMovePiece(x0, y0, x1, y1, board, 1)) {
+
                     return true;
                 }
-
             }
         }
-
-
         return false;
     }
 }
