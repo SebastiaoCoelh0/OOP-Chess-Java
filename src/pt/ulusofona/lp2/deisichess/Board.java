@@ -431,8 +431,8 @@ public class Board {
 
         for (int id = 0; countPiece < getNumPieces(); id++) {
 
-            countPiece++;
             if (getIdToPiece(id) != null) {
+                countPiece++;
 
                 if (getIdToPiece(id).isJoker()) {
 

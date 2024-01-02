@@ -171,9 +171,6 @@ public class TestGameManager {
         Assertions.assertFalse(gameManager.move(6, 7, 7, 7)); //rainha tenta comer joker rainha
         Assertions.assertTrue(gameManager.move(6, 7, 4, 7));
         Assertions.assertTrue(gameManager.move(1, 3, 4, 0));
-        System.out.println(gameManager.board.getTurn());
-        System.out.println(gameManager.board.getCoordsToPiece(4, 7).toString());
-        System.out.println(gameManager.board.getCoordsToPiece(7, 7).toString());
         Assertions.assertTrue(gameManager.move(4, 7, 7, 7));
         Assertions.assertTrue(gameManager.move(4, 0, 3, 0));
         Assertions.assertTrue(gameManager.move(7, 7, 3, 7));
