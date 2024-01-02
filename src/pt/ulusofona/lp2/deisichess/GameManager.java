@@ -8,20 +8,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
-/*
-
-    8 tipos de peças
-        0- Rei 1 quadrado cada diracao -1000
-        1- Rainha 5 quadrados cada direcao RAINHA NAO PODE CAPTURAR RAINHA -8
-        2- Ponei magico 2 casas em qualquer direcao, roda 90 graus e depois mais 2 casas -5
-        3- Padre da vila move se nas diagonais no maximo 3 posiçoes -3
-        4- Torre Horizontal -3
-        5- Torre Vertical -3
-        6- Hommer Simpson esta a dormir de 3 em 3 turnos começando no primeiro (no turno 0, 3, 6, 9, 12, ...)
-           move se na diagonal apenas uma posição -2
-        7- Joker vai mudando de turno a turno 1º turno rainha - ponei - padre - th - tv - hommer -4
-        8- peça extra: ideia petter griffin
- */
 public class GameManager {
 
     public GameManager() {
@@ -181,6 +167,9 @@ public class GameManager {
 
         if (!checkCoordsLimits(x0) || !checkCoordsLimits(y0) || !checkCoordsLimits(x1) || !checkCoordsLimits(y1)) {
 
+            if (checkCoordsLimits(x0) && checkCoordsLimits(y0)) {
+                board.getCoordsToPiece(x0, y0).addInvalidMove();
+            }
             return false;
         }
         if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0)) {

@@ -25,7 +25,6 @@ public class TestGameManager {
 
     }
 
-    //fazer teste mais baralhadas e rainha tenta capturar joker
     @Test
     public void hint() {
 
