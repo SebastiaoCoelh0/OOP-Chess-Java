@@ -175,7 +175,7 @@ public class GameManager {
         }
         if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0)) {
 
-            if (!checkTeamPlaying(x0, y0)) {
+            if (board.getCoordsToPiece(x0, y0) != null && !checkTeamPlaying(x0, y0)) {
 
                 board.getCoordsToPiece(x0, y0).addInvalidMove();
             }
