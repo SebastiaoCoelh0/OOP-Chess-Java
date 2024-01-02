@@ -168,12 +168,17 @@ public class GameManager {
         if (!checkCoordsLimits(x0) || !checkCoordsLimits(y0) || !checkCoordsLimits(x1) || !checkCoordsLimits(y1)) {
 
             if (checkCoordsLimits(x0) && checkCoordsLimits(y0)) {
+
                 board.getCoordsToPiece(x0, y0).addInvalidMove();
             }
             return false;
         }
         if (!checkPieceExists(x0, y0) || !checkTeamPlaying(x0, y0)) {
 
+            if (!checkTeamPlaying(x0, y0)) {
+
+                board.getCoordsToPiece(x0, y0).addInvalidMove();
+            }
             return false;
         }
 
