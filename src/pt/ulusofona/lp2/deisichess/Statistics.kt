@@ -33,14 +33,13 @@ fun top5Pontos(gameManager: GameManager): List<String> {
 fun pecasMais5Capturas(gameManager: GameManager): List<String> {
 
     return gameManager.getBoard().listPieces.filter { it.getPiecesCaptured() > 5 }
-        .sortedBy { it.getInvalidMoves() / it.getValidMoves() }
         .map { it.teamText + ":" + it.getName() + ":" + it.getPiecesCaptured() }
 }
 
 fun pecasMaisBaralhadas(gameManager: GameManager): List<String> {
 
     return gameManager.getBoard().listPieces.filter { it.getInvalidMoves() > 0 }
-        .sortedBy { it.getInvalidMoves() / it.getValidMoves() }
+        .sortedBy { it.getInvalidMoves() / it.getValidMoves() }.take(3)
         .map { "" + it.getTeam() + ":" + it.getName() + ":" + it.getInvalidMoves() + ":" + it.getValidMoves() }
 }
 
